@@ -9,8 +9,8 @@ public class ViewPagerWithTabsActivity extends com.blunderer.materialdesignlibra
     @Override
     protected ViewPagerHandler getViewPagerHandler() {
         return new ViewPagerHandler()
-                .addPage(R.string.title_section1, MainFragment.newInstance("Material Design ViewPager"))
-                .addPage(R.string.title_section2, MainFragment.newInstance("Material Design ViewPager"));
+                .addPage(R.string.title_section1, MainFragment.newInstance("Material Design ViewPager with Tabs"))
+                .addPage(R.string.title_section2, MainFragment.newInstance("Material Design ViewPager with Tabs"));
     }
 
     @Override
