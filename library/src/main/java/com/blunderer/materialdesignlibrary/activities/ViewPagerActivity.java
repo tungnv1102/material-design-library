@@ -2,8 +2,6 @@ package com.blunderer.materialdesignlibrary.activities;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.blunderer.materialdesignlibrary.R;
@@ -14,7 +12,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.List;
 
-public abstract class ViewPagerActivity extends ActionBarActivity {
+public abstract class ViewPagerActivity extends AActivity {
 
     private List<ViewPagerItem> viewPagerItems;
     private final ViewPager.OnPageChangeListener mOnPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -36,13 +34,7 @@ public abstract class ViewPagerActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_pager);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        super.onCreate(savedInstanceState, R.layout.activity_view_pager);
 
         ViewPagerHandler handler = getViewPagerHandler();
         if (handler != null && handler.getViewPagerItems() != null)

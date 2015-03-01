@@ -2,8 +2,6 @@ package com.blunderer.materialdesignlibrary.activities;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.AdapterView;
@@ -12,26 +10,20 @@ import android.widget.ListView;
 
 import com.blunderer.materialdesignlibrary.R;
 
-public abstract class ListViewActivity extends ActionBarActivity {
+public abstract class ListViewActivity extends AActivity {
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ListViewActivity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listview);
+        super.onCreate(savedInstanceState, R.layout.activity_listview);
 
         mActivity = this;
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         ViewStub stub = (ViewStub) findViewById(R.id.activity_listview_view);
         View inflatedView;
-        ListView listView;
+        final ListView listView;
         try {
             stub.setLayoutResource(useCustomContentView() ? getCustomContentView() : R.layout.listview);
             inflatedView = stub.inflate();
