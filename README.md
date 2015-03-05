@@ -12,6 +12,9 @@ It offers a lot of Material Design classes easily to use like a CardView or a Na
 ![NavigationDrawer](images/screen06.png) ![CardView with Image on the Top](images/screen07.png)
 ![ListView with Pull To Refresh](images/screen02.png) ![ViewPager with Tabs](images/screen08.png)
 
+### Wiki
+View wiki here: [Material Design Library Wiki](https://github.com/DenisMondon/material-design-library/wiki)  
+
 ### Usage
 
 **1.** Add the dependency in your build.gradle.
