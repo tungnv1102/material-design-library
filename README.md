@@ -21,7 +21,7 @@ View wiki here: [Material Design Library Wiki](https://github.com/DenisMondon/ma
 
 ```groovy
 dependencies {
-    compile 'com.blunderer:materialdesignlibrary:1.1.2'
+    compile 'com.blunderer:materialdesignlibrary:1.1.3'
 }
 ```
 
@@ -74,7 +74,7 @@ public class MyActivity extends NavigationDrawerActivity {
                 .addItem(R.string.title_item2, new MainFragment())
                 .addSection(R.string.title_section2)
                 .addItem(R.string.title_item3, new MainFragment())
-                .addItem(R.string.title_item4, new MainFragment());
+                .addItem(R.string.title_item4, new Intent(this, MyActivity.class));
     }
 
     @Override
