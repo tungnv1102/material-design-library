@@ -19,11 +19,13 @@ public class NavigationDrawerBottomAdapter extends ArrayAdapter<NavigationDrawer
     private int mLayoutResourceId;
     private int mCount;
 
-    public NavigationDrawerBottomAdapter(Context context, int layoutResourceId, List<NavigationDrawerItemBottom> objects) {
+    public NavigationDrawerBottomAdapter(Context context,
+                                         int layoutResourceId,
+                                         List<NavigationDrawerItemBottom> objects) {
         super(context, layoutResourceId, objects);
 
         mLayoutResourceId = layoutResourceId;
-        mCount = objects.size() > 2 ? 2 : objects.size();
+        mCount = objects.size();
     }
 
     @Override
@@ -40,13 +42,13 @@ public class NavigationDrawerBottomAdapter extends ArrayAdapter<NavigationDrawer
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(mLayoutResourceId, parent, false);
+            convertView = LayoutInflater.from(getContext())
+                    .inflate(mLayoutResourceId, parent, false);
             holder = new ViewHolder();
             holder.title = (TextView) convertView.findViewById(R.id.navigation_drawer_row_title);
             holder.icon = (ImageView) convertView.findViewById(R.id.navigation_drawer_row_icon);
             convertView.setTag(holder);
-        } else
-            holder = (ViewHolder) convertView.getTag();
+        } else holder = (ViewHolder) convertView.getTag();
 
         NavigationDrawerItemBottom tool = getItem(position);
 
@@ -55,15 +57,16 @@ public class NavigationDrawerBottomAdapter extends ArrayAdapter<NavigationDrawer
             try {
                 holder.title.setText(tool.getTitleResource());
             } catch (Resources.NotFoundException e) {
+                holder.title.setText("");
             }
         }
 
         if (tool.useIconResource()) {
-            holder.icon.setVisibility(View.GONE);
             try {
                 holder.icon.setImageResource(tool.getIconResource());
                 holder.icon.setVisibility(View.VISIBLE);
             } catch (Resources.NotFoundException e) {
+                holder.icon.setVisibility(View.GONE);
             }
         }
 

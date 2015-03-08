@@ -28,7 +28,7 @@
             android:layout_marginRight="12dp"
             android:scaleType="centerInside"
             android:visibility="gone"
-            android:contentDescription="@string/icone" />
+            android:contentDescription="@string/icon" />
 
         <TextView
             android:id="@+id/navigation_drawer_row_title"

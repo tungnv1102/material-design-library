@@ -5,6 +5,6 @@
     <string name="navigation_drawer_close">Fermer le menu de gauche</string>
     <string name="settings">Paramètres</string>
     <string name="help_and_feedback">Aide et commentaires</string>
-    <string name="icone">Icône</string>
+    <string name="icon">Icône</string>
 
 </resources>

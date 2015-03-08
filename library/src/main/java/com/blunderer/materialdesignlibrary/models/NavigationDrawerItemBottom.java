@@ -12,7 +12,6 @@ public class NavigationDrawerItemBottom extends NavigationDrawerItem {
 
     private int mIconResource;
     private View.OnClickListener mOnClickListener;
-
     private boolean mUseIconResource = false;
 
     public NavigationDrawerItemBottom(int definedTool) {

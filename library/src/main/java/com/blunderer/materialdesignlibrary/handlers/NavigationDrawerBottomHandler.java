@@ -16,21 +16,36 @@ public class NavigationDrawerBottomHandler {
     }
 
     public NavigationDrawerBottomHandler addSettings(View.OnClickListener onClickListener) {
-        NavigationDrawerItemBottom item = new NavigationDrawerItemBottom(NavigationDrawerItemBottom.SETTINGS);
+        NavigationDrawerItemBottom item = new NavigationDrawerItemBottom(
+                NavigationDrawerItemBottom.SETTINGS);
         item.setOnClickListener(onClickListener);
         mItems.add(item);
         return this;
     }
 
     public NavigationDrawerBottomHandler addHelpAndFeedback(View.OnClickListener onClickListener) {
-        NavigationDrawerItemBottom item = new NavigationDrawerItemBottom(NavigationDrawerItemBottom.HELP_AND_FEEDBACK);
+        NavigationDrawerItemBottom item = new NavigationDrawerItemBottom(
+                NavigationDrawerItemBottom.HELP_AND_FEEDBACK);
         item.setOnClickListener(onClickListener);
         mItems.add(item);
         return this;
     }
 
-    public NavigationDrawerBottomHandler addItem(int titleResource, int iconResource, View.OnClickListener onClickListener) {
-        NavigationDrawerItemBottom item = new NavigationDrawerItemBottom(NavigationDrawerItemBottom.CUSTOM);
+    public NavigationDrawerBottomHandler addItem(int titleResource,
+                                                 View.OnClickListener onClickListener) {
+        NavigationDrawerItemBottom item = new NavigationDrawerItemBottom(
+                NavigationDrawerItemBottom.CUSTOM);
+        item.setTitleResource(titleResource);
+        item.setOnClickListener(onClickListener);
+        mItems.add(item);
+        return this;
+    }
+
+    public NavigationDrawerBottomHandler addItem(int titleResource,
+                                                 int iconResource,
+                                                 View.OnClickListener onClickListener) {
+        NavigationDrawerItemBottom item = new NavigationDrawerItemBottom(
+                NavigationDrawerItemBottom.CUSTOM);
         item.setTitleResource(titleResource);
         item.setIconResource(iconResource);
         item.setOnClickListener(onClickListener);

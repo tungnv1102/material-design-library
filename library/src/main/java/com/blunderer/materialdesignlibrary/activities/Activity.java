@@ -21,8 +21,7 @@ public abstract class Activity extends AActivity {
 
     @Override
     public View findViewById(int id) {
-        if (mView != null)
-            return mView.findViewById(id);
+        if (mView != null) return mView.findViewById(id);
         return super.findViewById(id);
     }
 

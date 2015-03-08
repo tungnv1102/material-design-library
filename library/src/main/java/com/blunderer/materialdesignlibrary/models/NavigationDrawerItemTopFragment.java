@@ -3,12 +3,10 @@ package com.blunderer.materialdesignlibrary.models;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-public class NavigationDrawerItemNormal extends NavigationDrawerItem {
+public class NavigationDrawerItemTopFragment extends NavigationDrawerItem {
 
     private int mIconResource;
-    private View.OnClickListener mOnClickListener;
     private Fragment mFragment;
-
     private boolean mUseIconResource = false;
 
     public int getIconResource() {
@@ -18,14 +16,6 @@ public class NavigationDrawerItemNormal extends NavigationDrawerItem {
     public void setIconResource(int iconResource) {
         mUseIconResource = true;
         mIconResource = iconResource;
-    }
-
-    public View.OnClickListener getOnClickListener() {
-        return mOnClickListener;
-    }
-
-    public void setOnClickListener(View.OnClickListener onClickListener) {
-        mOnClickListener = onClickListener;
     }
 
     public Fragment getFragment() {

@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.blunderer.materialdesignlibrary.R;
-import com.blunderer.materialdesignlibrary.adapters.ViewPagerWithTabsAdapter;
+import com.blunderer.materialdesignlibrary.adapters.ViewPagerAdapter;
 import com.blunderer.materialdesignlibrary.handlers.ViewPagerHandler;
 import com.blunderer.materialdesignlibrary.models.ViewPagerItem;
 
@@ -20,21 +20,31 @@ public abstract class ViewPagerWithTabsActivity extends AActivity {
 
         List<ViewPagerItem> viewPagerItems = null;
         ViewPagerHandler handler = getViewPagerHandler();
-        if (handler != null && handler.getViewPagerItems() != null)
+        if (handler != null && handler.getViewPagerItems() != null) {
             viewPagerItems = handler.getViewPagerItems();
+        }
 
         if (viewPagerItems != null && viewPagerItems.size() > 0) {
             ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
-            pager.setAdapter(new ViewPagerWithTabsAdapter(this, getSupportFragmentManager(), viewPagerItems));
-            int defaultViewPagerItemSelectedPosition = defaultViewPagerItemSelectedPosition();
-            if (defaultViewPagerItemSelectedPosition >= 0 && defaultViewPagerItemSelectedPosition < viewPagerItems.size())
-                pager.setCurrentItem(defaultViewPagerItemSelectedPosition);
+            pager.setAdapter(new ViewPagerAdapter(this,
+                    getSupportFragmentManager(), viewPagerItems));
 
-            PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-            tabs.setTextColor(getResources().getColor(android.R.color.white));
-            tabs.setViewPager(pager);
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-                tabs.setTabBackground(android.R.attr.selectableItemBackground);
+            int defaultViewPagerItemSelectedPosition = defaultViewPagerItemSelectedPosition();
+            if (defaultViewPagerItemSelectedPosition >= 0 &&
+                    defaultViewPagerItemSelectedPosition < viewPagerItems.size()) {
+                pager.setCurrentItem(defaultViewPagerItemSelectedPosition);
+            }
+
+            showTabs(pager);
+        }
+    }
+
+    private void showTabs(ViewPager pager) {
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabs.setTextColor(getResources().getColor(android.R.color.white));
+        tabs.setViewPager(pager);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            tabs.setTabBackground(android.R.attr.selectableItemBackground);
         }
     }
 

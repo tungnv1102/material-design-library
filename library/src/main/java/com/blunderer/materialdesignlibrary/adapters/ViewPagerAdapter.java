@@ -9,12 +9,14 @@ import com.blunderer.materialdesignlibrary.models.ViewPagerItem;
 
 import java.util.List;
 
-public class ViewPagerWithTabsAdapter extends FragmentPagerAdapter {
+public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     private Context mContext;
     private List<ViewPagerItem> mViewPagerItems;
 
-    public ViewPagerWithTabsAdapter(Context context, FragmentManager fm, List<ViewPagerItem> viewPagerItems) {
+    public ViewPagerAdapter(Context context,
+                            FragmentManager fm,
+                            List<ViewPagerItem> viewPagerItems) {
         super(fm);
 
         mContext = context;

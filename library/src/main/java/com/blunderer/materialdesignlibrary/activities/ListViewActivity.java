@@ -25,18 +25,20 @@ public abstract class ListViewActivity extends AActivity {
         View inflatedView;
         final ListView listView;
         try {
-            stub.setLayoutResource(useCustomContentView() ? getCustomContentView() : R.layout.listview);
+            stub.setLayoutResource(useCustomContentView()
+                    ? getCustomContentView() : R.layout.listview);
             inflatedView = stub.inflate();
-            if (inflatedView instanceof ListView)
-                listView = (ListView) inflatedView;
-            else
-                listView = (ListView) inflatedView.findViewById(android.R.id.list);
+
+            if (inflatedView instanceof ListView) listView = (ListView) inflatedView;
+            else listView = (ListView) inflatedView.findViewById(android.R.id.list);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("CustomContentView must have a valid layoutResource");
+            throw new IllegalArgumentException(
+                    "CustomContentView must have a valid layoutResource");
         }
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_listview_with_refresh_refresh);
-        if (pullToRefreshList()) {
+        mSwipeRefreshLayout = (SwipeRefreshLayout)
+                findViewById(R.id.activity_listview_with_refresh_refresh);
+        if (pullToRefreshEnabled()) {
             mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
                 @Override
@@ -46,8 +48,7 @@ public abstract class ListViewActivity extends AActivity {
 
             });
             mSwipeRefreshLayout.setColorSchemeResources(getPullToRefreshColorResources());
-        } else
-            mSwipeRefreshLayout.setEnabled(false);
+        } else mSwipeRefreshLayout.setEnabled(false);
 
         if (listView != null) {
             ListAdapter adapter = getListAdapter();
@@ -56,7 +57,8 @@ public abstract class ListViewActivity extends AActivity {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                    public void onItemClick(AdapterView<?> adapterView,
+                                            View view, int position, long id) {
                         mActivity.onItemClick(adapterView, view, position, id);
                     }
 
@@ -64,7 +66,8 @@ public abstract class ListViewActivity extends AActivity {
                 listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
                     @Override
-                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                    public boolean onItemLongClick(AdapterView<?> adapterView,
+                                                   View view, int position, long id) {
                         return mActivity.onItemLongClick(adapterView, view, position, id);
                     }
 
@@ -74,8 +77,7 @@ public abstract class ListViewActivity extends AActivity {
     }
 
     protected void setRefreshing(boolean refreshing) {
-        if (mSwipeRefreshLayout != null)
-            mSwipeRefreshLayout.setRefreshing(refreshing);
+        if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(refreshing);
     }
 
     protected abstract ListAdapter getListAdapter();
@@ -91,14 +93,20 @@ public abstract class ListViewActivity extends AActivity {
      */
     protected abstract int getCustomContentView();
 
-    protected abstract boolean pullToRefreshList();
+    protected abstract boolean pullToRefreshEnabled();
 
     protected abstract int[] getPullToRefreshColorResources();
 
     protected abstract void onRefresh();
 
-    protected abstract void onItemClick(AdapterView<?> adapterView, View view, int position, long l);
+    protected abstract void onItemClick(AdapterView<?> adapterView,
+                                        View view,
+                                        int position,
+                                        long l);
 
-    protected abstract boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l);
+    protected abstract boolean onItemLongClick(AdapterView<?> adapterView,
+                                               View view,
+                                               int position,
+                                               long l);
 
 }

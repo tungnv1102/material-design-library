@@ -35,7 +35,8 @@ public class CardView extends android.support.v7.widget.CardView {
     public CardView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MDLCardView, 0, 0);
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs,
+                R.styleable.MDLCardView, 0, 0);
 
         int imageType;
         try {
@@ -49,18 +50,17 @@ public class CardView extends android.support.v7.widget.CardView {
             a.recycle();
         }
 
-        setRadius((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
+        setRadius((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2,
+                getResources().getDisplayMetrics()));
         setPreventCornerOverlap(false);
         setCardBackgroundColor(context.getResources().getColor(R.color.cardview_background));
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (imageType == 1 && mImage != null)
-            inflateCardViewImageLeft(inflater);
-        else if (imageType == 2 && mImage != null)
-            inflateCardViewImageTop(inflater);
-        else
-            inflateCardViewNormal(inflater);
+
+        if (imageType == 1 && mImage != null) inflateCardViewImageLeft(inflater);
+        else if (imageType == 2 && mImage != null) inflateCardViewImageTop(inflater);
+        else inflateCardViewNormal(inflater);
     }
 
     private void inflateCardViewNormal(LayoutInflater inflater) {
@@ -103,8 +103,10 @@ public class CardView extends android.support.v7.widget.CardView {
     private void handleImage(ViewGroup layout, int position) {
         SelectableRoundedImageView image = (SelectableRoundedImageView) layout.getChildAt(position);
         image.setImageDrawable(mImage);
-        if (TextUtils.isEmpty(mDescriptionText) && TextUtils.isEmpty(mNormalButtonText) && TextUtils.isEmpty(mHighlightButtonText))
+        if (TextUtils.isEmpty(mDescriptionText) && TextUtils.isEmpty(mNormalButtonText) &&
+                TextUtils.isEmpty(mHighlightButtonText)) {
             image.setCornerRadiiDP(2, 2, 2, 2);
+        }
     }
 
     private void handleTitle(ViewGroup layout, int position) {
@@ -126,10 +128,12 @@ public class CardView extends android.support.v7.widget.CardView {
     private void handleCardViewNormalAndImageLeftButtons(ViewGroup layout, int position) {
         if (!TextUtils.isEmpty(mNormalButtonText) || !TextUtils.isEmpty(mHighlightButtonText)) {
             View separatorButtons = layout.getChildAt(position);
-            if (!TextUtils.isEmpty(mTitleText) || !TextUtils.isEmpty(mDescriptionText))
+            if (!TextUtils.isEmpty(mTitleText) || !TextUtils.isEmpty(mDescriptionText)) {
                 separatorButtons.setVisibility(VISIBLE);
-            else
-                layout.setPadding(layout.getPaddingLeft(), 0, layout.getPaddingRight(), layout.getPaddingBottom());
+            } else {
+                layout.setPadding(layout.getPaddingLeft(), 0,
+                        layout.getPaddingRight(), layout.getPaddingBottom());
+            }
 
             handleButtons(layout, position);
         }
@@ -138,8 +142,7 @@ public class CardView extends android.support.v7.widget.CardView {
     private void handleCardViewImageTopButtons(ViewGroup layout, int position) {
         if (!TextUtils.isEmpty(mNormalButtonText) || !TextUtils.isEmpty(mHighlightButtonText)) {
             View separatorButtons = layout.getChildAt(position);
-            if (!TextUtils.isEmpty(mDescriptionText))
-                separatorButtons.setVisibility(VISIBLE);
+            if (!TextUtils.isEmpty(mDescriptionText)) separatorButtons.setVisibility(VISIBLE);
 
             handleButtons(layout, position);
         }
@@ -157,8 +160,9 @@ public class CardView extends android.support.v7.widget.CardView {
 
                 @Override
                 public void onClick(View view) {
-                    if (mOnNormalButtonClickListener != null)
+                    if (mOnNormalButtonClickListener != null) {
                         mOnNormalButtonClickListener.onClick(view);
+                    }
                 }
 
             });
@@ -172,8 +176,9 @@ public class CardView extends android.support.v7.widget.CardView {
 
                 @Override
                 public void onClick(View view) {
-                    if (mOnHighlightButtonClickListener != null)
+                    if (mOnHighlightButtonClickListener != null) {
                         mOnHighlightButtonClickListener.onClick(view);
+                    }
                 }
 
             });
@@ -183,15 +188,30 @@ public class CardView extends android.support.v7.widget.CardView {
     private void handleSpacing(ViewGroup layout, int position) {
         View spacingView = layout.getChildAt(position);
         int spacingViewHeight = 0;
-        if (!TextUtils.isEmpty(mTitleText) && TextUtils.isEmpty(mDescriptionText) && TextUtils.isEmpty(mNormalButtonText) && TextUtils.isEmpty(mHighlightButtonText))
+        if (!TextUtils.isEmpty(mTitleText) && TextUtils.isEmpty(mDescriptionText) &&
+                TextUtils.isEmpty(mNormalButtonText) && TextUtils.isEmpty(mHighlightButtonText)) {
             spacingViewHeight = 6;
-        else if (!TextUtils.isEmpty(mTitleText) && TextUtils.isEmpty(mDescriptionText) && (!TextUtils.isEmpty(mNormalButtonText) || !TextUtils.isEmpty(mHighlightButtonText)))
+        } else if (!TextUtils.isEmpty(mTitleText) &&
+                TextUtils.isEmpty(mDescriptionText) &&
+                (!TextUtils.isEmpty(mNormalButtonText) ||
+                        !TextUtils.isEmpty(mHighlightButtonText))) {
             spacingViewHeight = 10;
-        else if (TextUtils.isEmpty(mTitleText) && TextUtils.isEmpty(mDescriptionText) && TextUtils.isEmpty(mNormalButtonText) && TextUtils.isEmpty(mHighlightButtonText))
+        } else if (TextUtils.isEmpty(mTitleText) &&
+                TextUtils.isEmpty(mDescriptionText) &&
+                TextUtils.isEmpty(mNormalButtonText) &&
+                TextUtils.isEmpty(mHighlightButtonText)) {
             spacingViewHeight = 2;
-        else if (!TextUtils.isEmpty(mDescriptionText) && (!TextUtils.isEmpty(mNormalButtonText) || !TextUtils.isEmpty(mHighlightButtonText)))
+        } else if (!TextUtils.isEmpty(mDescriptionText) &&
+                (!TextUtils.isEmpty(mNormalButtonText) ||
+                        !TextUtils.isEmpty(mHighlightButtonText))) {
             spacingViewHeight = 4;
-        spacingView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, spacingViewHeight, getResources().getDisplayMetrics())));
+        }
+
+        int spacingViewHeightPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                spacingViewHeight,
+                getResources().getDisplayMetrics());
+        spacingView.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, spacingViewHeightPx));
     }
 
     public OnClickListener getOnNormalButtonClickListener() {

@@ -26,4 +26,5 @@ public class ViewPagerHandler {
     public List<ViewPagerItem> getViewPagerItems() {
         return mItems;
     }
+
 }
