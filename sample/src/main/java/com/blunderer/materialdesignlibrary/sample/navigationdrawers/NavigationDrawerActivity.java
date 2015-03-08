@@ -1,21 +1,29 @@
 package com.blunderer.materialdesignlibrary.sample.navigationdrawers;
 
+import android.content.Intent;
+
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerBottomHandler;
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerTopHandler;
 import com.blunderer.materialdesignlibrary.sample.MainFragment;
 import com.blunderer.materialdesignlibrary.sample.R;
+import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerActivity;
 
-public class NavigationDrawerActivity extends com.blunderer.materialdesignlibrary.activities.NavigationDrawerActivity {
+public class NavigationDrawerActivity extends
+        com.blunderer.materialdesignlibrary.activities.NavigationDrawerActivity {
 
     @Override
     protected NavigationDrawerTopHandler getNavigationDrawerTopHandler() {
         return new NavigationDrawerTopHandler()
                 .addSection(R.string.title_section1)
-                .addItem(R.string.title_item1, MainFragment.newInstance("Material Design NavigationDrawer"))
-                .addItem(R.string.title_item2, MainFragment.newInstance("Material Design NavigationDrawer"))
+                .addItem(R.string.title_item1,
+                        MainFragment.newInstance("Material Design NavigationDrawer"))
+                .addItem(R.string.title_item2,
+                        MainFragment.newInstance("Material Design NavigationDrawer"))
                 .addSection(R.string.title_section2)
-                .addItem(R.string.title_item3, MainFragment.newInstance("Material Design NavigationDrawer"))
-                .addItem(R.string.title_item4, MainFragment.newInstance("Material Design NavigationDrawer"));
+                .addItem(R.string.title_item3,
+                        MainFragment.newInstance("Material Design NavigationDrawer"))
+                .addItem(R.string.title_item4,
+                        new Intent(getApplicationContext(), ViewPagerActivity.class));
     }
 
     @Override
@@ -23,6 +31,11 @@ public class NavigationDrawerActivity extends com.blunderer.materialdesignlibrar
         return new NavigationDrawerBottomHandler()
                 .addSettings(null)
                 .addHelpAndFeedback(null);
+    }
+
+    @Override
+    protected boolean replaceActionBarTitleByNavigationDrawerItemTitle() {
+        return true;
     }
 
     @Override

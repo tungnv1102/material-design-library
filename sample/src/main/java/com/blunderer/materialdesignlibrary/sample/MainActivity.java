@@ -41,7 +41,7 @@ public class MainActivity extends com.blunderer.materialdesignlibrary.activities
     }
 
     @Override
-    protected boolean pullToRefreshList() {
+    protected boolean pullToRefreshEnabled() {
         return false;
     }
 
@@ -56,7 +56,8 @@ public class MainActivity extends com.blunderer.materialdesignlibrary.activities
 
     @Override
     protected void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        Intent intent = new Intent(this, ((MainActivityFeature) adapterView.getAdapter().getItem(position)).getActivity());
+        Intent intent = new Intent(this,
+                ((MainActivityFeature) adapterView.getAdapter().getItem(position)).getActivity());
         startActivity(intent);
     }
 

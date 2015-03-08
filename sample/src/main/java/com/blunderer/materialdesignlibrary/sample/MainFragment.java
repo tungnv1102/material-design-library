@@ -27,9 +27,13 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.textview, container, false);
-        if (getArguments() == null || TextUtils.isEmpty(getArguments().getString(ARG_TEXT)))
-            throw new RuntimeException("PD !!!!!!!!!");
-        ((TextView) view.findViewById(android.R.id.text1)).setText(getArguments().getString(ARG_TEXT));
+
+        String text = "";
+        if (getArguments() != null && getArguments().containsKey(ARG_TEXT)) {
+            text = getArguments().getString(ARG_TEXT);
+            if (TextUtils.isEmpty(text)) text = "";
+        }
+        ((TextView) view.findViewById(android.R.id.text1)).setText(text);
         return view;
     }
 

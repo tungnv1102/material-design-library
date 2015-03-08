@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ListViewWithRefreshAndCustomLayoutActivity extends com.blunderer.materialdesignlibrary.activities.ListViewActivity {
+public class ListViewWithRefreshAndCustomLayoutActivity extends
+        com.blunderer.materialdesignlibrary.activities.ListViewActivity {
 
     private List<String> mObjects;
     private ArrayAdapter<String> mAdapter;
@@ -39,7 +40,7 @@ public class ListViewWithRefreshAndCustomLayoutActivity extends com.blunderer.ma
     }
 
     @Override
-    protected boolean pullToRefreshList() {
+    protected boolean pullToRefreshEnabled() {
         return true;
     }
 
@@ -68,7 +69,6 @@ public class ListViewWithRefreshAndCustomLayoutActivity extends com.blunderer.ma
 
     @Override
     protected boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-        Toast.makeText(this, "Item " + (position + 1) + " long clicked!", Toast.LENGTH_SHORT).show();
         return true;
     }
 
