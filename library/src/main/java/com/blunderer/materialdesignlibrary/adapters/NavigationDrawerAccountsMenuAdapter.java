@@ -14,6 +14,7 @@ import com.blunderer.materialdesignlibrary.models.ListItem;
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerAccountsListItem;
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerAccountsListItemAccount;
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerAccountsListItemIntent;
+import com.blunderer.materialdesignlibrary.models.NavigationDrawerAccountsListItemOnClick;
 
 import java.util.List;
 
@@ -73,6 +74,19 @@ public class NavigationDrawerAccountsMenuAdapter extends
             if (itemNormal.useIconResource()) {
                 try {
                     holder.icon.setImageDrawable(itemNormal.getIcon());
+                    holder.icon.setVisibility(View.VISIBLE);
+                } catch (Resources.NotFoundException e) {
+                    holder.icon.setVisibility(View.GONE);
+                }
+            }
+        } else if (item instanceof NavigationDrawerAccountsListItemOnClick) {
+            NavigationDrawerAccountsListItemOnClick itemAccount =
+                    (NavigationDrawerAccountsListItemOnClick) item;
+            holder.title.setVisibility(View.VISIBLE);
+            holder.titleHeader.setVisibility(View.GONE);
+            if (itemAccount.useIconResource()) {
+                try {
+                    holder.icon.setImageDrawable(itemAccount.getIcon());
                     holder.icon.setVisibility(View.VISIBLE);
                 } catch (Resources.NotFoundException e) {
                     holder.icon.setVisibility(View.GONE);
