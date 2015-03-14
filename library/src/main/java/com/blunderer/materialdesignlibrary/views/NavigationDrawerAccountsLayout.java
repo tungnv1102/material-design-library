@@ -84,10 +84,9 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
     }
 
     /**
-     * <li>Set a ListView that will be used to show the Accounts Menu
-     * when clicking on the Accounts Layout.<br/><br/>
-     * <p/>
-     * <b>You should have set an adapter to the ListView before calling this method.</b></li>
+     * Set a ListView that will be used to show the Accounts Menu
+     * when clicking on the Accounts Layout.
+     * You should have set an adapter to the ListView before calling this method.
      *
      * @param listView the ListView that is used to show the Accounts Menu.
      */
@@ -104,7 +103,7 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
     }
 
     /**
-     * <li>Set a List of Accounts that will be displayed.</li>
+     * Set a List of Accounts that will be displayed.
      *
      * @param accounts the List of Accounts displayed.
      */
@@ -119,7 +118,7 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
     }
 
     /**
-     * <li>Set a List of Items for the Accounts Menu.</li>
+     * Set a List of Items for the Accounts Menu.
      *
      * @param accountsMenuItems the List of items for the Accounts Menu.
      */
@@ -137,7 +136,7 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
     }
 
     /**
-     * <li>Register a callback to be invoked when the current account has changed.</li>
+     * Register a callback to be invoked when the current account has changed.
      *
      * @param onAccountChangeListener The callback that will run.
      */
