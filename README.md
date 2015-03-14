@@ -9,7 +9,7 @@ It offers a lot of Material Design classes easily to use like a CardView or a Na
 ### Demo
 [![Material Design Library on Google Play Store](http://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.blunderer.materialdesignlibrary.sample)
 
-![NavigationDrawer](images/screen06.png) ![CardView with Image on the Top](images/screen07.png)
+![NavigationDrawer with Accounts](images/screen06.png) ![CardView with Image on the Top](images/screen07.png)
 ![ListView with Pull To Refresh](images/screen02.png) ![ViewPager with Tabs](images/screen08.png)
 
 ### Wiki
@@ -21,7 +21,7 @@ View wiki here: [Material Design Library Wiki](https://github.com/DenisMondon/ma
 
 ```groovy
 dependencies {
-    compile 'com.blunderer:materialdesignlibrary:1.1.3'
+    compile 'com.blunderer:materialdesignlibrary:1.1.4'
 }
 ```
 
@@ -53,7 +53,7 @@ Or if you want the Light Theme:
   Your Activity will contain a ListView (with or not the Material Design Pull To Refresh).
 
   * **NavigationDrawerActivity**  
-  Your Activity will contain a NavigationDrawer.
+  Your Activity will contain a NavigationDrawer (with or not Accounts).
 
   * **ViewPagerActivity**  
   Your Activity will contain a ViewPager (with or not the indicator).
@@ -66,6 +66,27 @@ Or if you want the Light Theme:
 import com.blunderer.materialdesignlibrary.activities.NavigationDrawerActivity;
 
 public class MyActivity extends NavigationDrawerActivity {
+
+    @Override
+    protected NavigationDrawerAccountsHandler getNavigationDrawerAccountsHandler() {
+        return new NavigationDrawerAccountsHandler()
+                .addAccount("Profile 1", "profile1@gmail.com",
+                        R.drawable.profile1, R.drawable.profile1_background)
+                .addAccount("Profile 2", "profile2@gmail.com",
+                        R.drawable.profile2, R.drawable.profile2_background);
+    }
+
+    @Override
+    protected NavigationDrawerAccountsMenuHandler getNavigationDrawerAccountsMenuHandler() {
+        return new NavigationDrawerAccountsMenuHandler(this)
+                .addAddAccount(new Intent(getApplicationContext(), AddAccountActivity.class))
+                .addManageAccounts(new Intent(getApplicationContext(), ManageAccountsActivity.class));
+    }
+
+    @Override
+    protected void onNavigationDrawerAccountChange(Account account) {
+        Toast.makeText(getApplicationContext(), "Account changed!", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     protected NavigationDrawerTopHandler getNavigationDrawerTopHandler() {
@@ -98,6 +119,11 @@ public class MyActivity extends NavigationDrawerActivity {
                     }
 
                 });
+    }
+
+    @Override
+    protected boolean replaceActionBarTitleByNavigationDrawerItemTitle() {
+        return true;
     }
 
     @Override
