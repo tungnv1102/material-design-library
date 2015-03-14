@@ -1,17 +1,13 @@
 package com.blunderer.materialdesignlibrary.models;
 
-import android.graphics.drawable.Drawable;
-
 public class Account {
 
     private String mTitle;
     private String mDescription;
-    private Drawable mPicture;
-    private Drawable mBackgroundImage;
-    private int mBackgroundColor;
+    private int mPictureResource = -1;
+    private int mBackgroundResource;
 
-    private boolean mUseBackgroundImage = false;
-    private boolean mUseBackgroundColor = false;
+    private boolean mUseBackground = false;
 
     public String getTitle() {
         return mTitle;
@@ -29,40 +25,25 @@ public class Account {
         this.mDescription = email;
     }
 
-    public Drawable getPicture() {
-        return mPicture;
+    public int getPictureResource() {
+        return mPictureResource;
     }
 
-    public void setPicture(Drawable picture) {
-        this.mPicture = picture;
+    public void setPictureResource(int pictureResource) {
+        this.mPictureResource = pictureResource;
     }
 
-    public Drawable getBackgroundImage() {
-        return mBackgroundImage;
+    public int getBackgroundResource() {
+        return mBackgroundResource;
     }
 
-    public void setBackgroundImage(Drawable backgroundImage) {
-        this.mBackgroundImage = backgroundImage;
-        mUseBackgroundImage = true;
-        mUseBackgroundColor = false;
+    public void setBackgroundResource(int backgroundImageResource) {
+        this.mBackgroundResource = backgroundImageResource;
+        mUseBackground = true;
     }
 
-    public int getBackgroundColor() {
-        return mBackgroundColor;
-    }
-
-    public void setBackgroundColor(int backgroundColor) {
-        this.mBackgroundColor = backgroundColor;
-        mUseBackgroundColor = true;
-        mUseBackgroundImage = false;
-    }
-
-    public boolean useBackgroundImage() {
-        return mUseBackgroundImage;
-    }
-
-    public boolean useBackgroundColor() {
-        return mUseBackgroundColor;
+    public boolean useBackgroundResource() {
+        return mUseBackground;
     }
 
 }

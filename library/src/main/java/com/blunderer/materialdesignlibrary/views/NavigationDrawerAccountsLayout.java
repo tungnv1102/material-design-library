@@ -149,13 +149,11 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
         Account currentAccount = getCurrentAccount();
         if (currentAccount == null) return;
 
-        if (currentAccount.useBackgroundImage()) {
-            mBackground.setImageDrawable(currentAccount.getBackgroundImage());
-        } else if (currentAccount.useBackgroundColor()) {
-            mBackground.setBackgroundColor(currentAccount.getBackgroundColor());
+        if (currentAccount.useBackgroundResource()) {
+            mBackground.setImageResource(currentAccount.getBackgroundResource());
         }
 
-        mPicture.setImageDrawable(currentAccount.getPicture());
+        mPicture.setImageResource(currentAccount.getPictureResource());
 
         if (!TextUtils.isEmpty(currentAccount.getTitle())) {
             mTitle.setText(currentAccount.getTitle());
@@ -167,11 +165,11 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
 
         Account secondAccount = getSecondAccount();
         if (secondAccount == null) return;
-        mSecondPicture.setImageDrawable(secondAccount.getPicture());
+        mSecondPicture.setImageResource(secondAccount.getPictureResource());
 
         Account thirdAccount = getThirdAccount();
         if (thirdAccount == null) return;
-        mThirdPicture.setImageDrawable(thirdAccount.getPicture());
+        mThirdPicture.setImageResource(thirdAccount.getPictureResource());
     }
 
     private Account getCurrentAccount() {
@@ -304,7 +302,9 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
                 moreAccount = new NavigationDrawerAccountsListItemAccount(getContext());
                 moreAccount.setTitle(account.getTitle());
                 moreAccount.setOnClickListener(generateAccountClickListener(i));
-                if (account.getPicture() != null) moreAccount.setIcon(account.getPicture());
+                if (account.getPictureResource() != -1) {
+                    moreAccount.setIcon(getContext(), account.getPictureResource());
+                }
                 mAccountsMenuItems.add(0, moreAccount);
             }
             mAccountsMenuAdapter.notifyDataSetChanged();
@@ -325,7 +325,9 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
                 moreAccount.setTitle(account.getTitle());
                 moreAccount.setOnClickListener(
                         generateAccountClickListener(mSecondAccountPosition));
-                if (account.getPicture() != null) moreAccount.setIcon(account.getPicture());
+                if (account.getPictureResource() != -1) {
+                    moreAccount.setIcon(getContext(), account.getPictureResource());
+                }
                 mAccountsMenuItems.remove(i - 1);
                 mAccountsMenuItems.add(0, moreAccount);
                 mAccountsMenuAdapter.notifyDataSetChanged();
