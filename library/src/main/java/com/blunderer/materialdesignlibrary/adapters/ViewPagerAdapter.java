@@ -1,6 +1,5 @@
 package com.blunderer.materialdesignlibrary.adapters;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -11,21 +10,17 @@ import java.util.List;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    private Context mContext;
     private List<ViewPagerItem> mViewPagerItems;
 
-    public ViewPagerAdapter(Context context,
-                            FragmentManager fm,
-                            List<ViewPagerItem> viewPagerItems) {
+    public ViewPagerAdapter(FragmentManager fm, List<ViewPagerItem> viewPagerItems) {
         super(fm);
 
-        mContext = context;
         mViewPagerItems = viewPagerItems;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mContext.getString(mViewPagerItems.get(position).getTitleResource());
+        return mViewPagerItems.get(position).getTitle();
     }
 
     @Override

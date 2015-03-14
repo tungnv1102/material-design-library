@@ -1,18 +1,23 @@
 package com.blunderer.materialdesignlibrary.models;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 
 public class ViewPagerItem {
 
-    private int mTitleResource;
+    private String mTitle;
     private Fragment mFragment;
 
-    public int getTitleResource() {
-        return mTitleResource;
+    public String getTitle() {
+        return mTitle;
     }
 
-    public void setTitleResource(int titleResource) {
-        this.mTitleResource = titleResource;
+    public void setTitle(Context context, int titleResource) {
+        this.mTitle = context.getString(titleResource);
+    }
+
+    public void setTitle(String title) {
+        this.mTitle = title;
     }
 
     public Fragment getFragment() {

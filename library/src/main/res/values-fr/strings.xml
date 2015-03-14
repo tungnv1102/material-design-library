@@ -6,5 +6,7 @@
     <string name="settings">Paramètres</string>
     <string name="help_and_feedback">Aide et commentaires</string>
     <string name="icon">Icône</string>
+    <string name="manage_accounts">Gérer les comptes</string>
+    <string name="add_account">Ajouter un compte</string>
 
 </resources>

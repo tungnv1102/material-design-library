@@ -24,7 +24,7 @@ public abstract class ViewPagerActivity extends AActivity {
 
         @Override
         public void onPageSelected(int position) {
-            replaceTitle(mViewPagerItems.get(position).getTitleResource());
+            replaceTitle(mViewPagerItems.get(position).getTitle());
         }
 
         @Override
@@ -44,8 +44,7 @@ public abstract class ViewPagerActivity extends AActivity {
 
         if (mViewPagerItems != null && mViewPagerItems.size() > 0) {
             ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
-            pager.setAdapter(new ViewPagerAdapter(this,
-                    getSupportFragmentManager(), mViewPagerItems));
+            pager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), mViewPagerItems));
 
             int defaultViewPagerItemSelectedPosition = defaultViewPagerPageSelectedPosition();
             if (defaultViewPagerItemSelectedPosition >= 0 &&
@@ -56,7 +55,7 @@ public abstract class ViewPagerActivity extends AActivity {
             showIndicator(pager);
 
             replaceTitle(mViewPagerItems
-                    .get(defaultViewPagerItemSelectedPosition).getTitleResource());
+                    .get(defaultViewPagerItemSelectedPosition).getTitle());
         }
     }
 
@@ -72,10 +71,8 @@ public abstract class ViewPagerActivity extends AActivity {
         }
     }
 
-    private void replaceTitle(int titleResource) {
-        if (replaceActionBarTitleByViewPagerPageTitle()) {
-            getSupportActionBar().setTitle(titleResource);
-        }
+    private void replaceTitle(String title) {
+        if (replaceActionBarTitleByViewPagerPageTitle()) getSupportActionBar().setTitle(title);
     }
 
     protected abstract ViewPagerHandler getViewPagerHandler();

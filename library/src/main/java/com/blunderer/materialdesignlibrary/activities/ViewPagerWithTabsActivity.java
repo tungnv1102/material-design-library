@@ -26,13 +26,12 @@ public abstract class ViewPagerWithTabsActivity extends AActivity {
 
         if (viewPagerItems != null && viewPagerItems.size() > 0) {
             ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
-            pager.setAdapter(new ViewPagerAdapter(this,
-                    getSupportFragmentManager(), viewPagerItems));
+            pager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), viewPagerItems));
 
-            int defaultViewPagerItemSelectedPosition = defaultViewPagerItemSelectedPosition();
-            if (defaultViewPagerItemSelectedPosition >= 0 &&
-                    defaultViewPagerItemSelectedPosition < viewPagerItems.size()) {
-                pager.setCurrentItem(defaultViewPagerItemSelectedPosition);
+            int defaultViewPagerPageSelectedPosition = defaultViewPagerPageSelectedPosition();
+            if (defaultViewPagerPageSelectedPosition >= 0 &&
+                    defaultViewPagerPageSelectedPosition < viewPagerItems.size()) {
+                pager.setCurrentItem(defaultViewPagerPageSelectedPosition);
             }
 
             showTabs(pager);
@@ -50,6 +49,6 @@ public abstract class ViewPagerWithTabsActivity extends AActivity {
 
     protected abstract ViewPagerHandler getViewPagerHandler();
 
-    protected abstract int defaultViewPagerItemSelectedPosition();
+    protected abstract int defaultViewPagerPageSelectedPosition();
 
 }

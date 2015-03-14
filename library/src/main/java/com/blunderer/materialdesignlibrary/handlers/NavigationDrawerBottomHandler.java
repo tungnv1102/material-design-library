@@ -1,31 +1,34 @@
 package com.blunderer.materialdesignlibrary.handlers;
 
+import android.content.Context;
 import android.view.View;
 
-import com.blunderer.materialdesignlibrary.models.NavigationDrawerItemBottom;
+import com.blunderer.materialdesignlibrary.models.NavigationDrawerListItemBottom;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NavigationDrawerBottomHandler {
 
-    private List<NavigationDrawerItemBottom> mItems;
+    private Context mContext;
+    private List<NavigationDrawerListItemBottom> mItems;
 
-    public NavigationDrawerBottomHandler() {
+    public NavigationDrawerBottomHandler(Context context) {
+        mContext = context;
         mItems = new ArrayList<>();
     }
 
     public NavigationDrawerBottomHandler addSettings(View.OnClickListener onClickListener) {
-        NavigationDrawerItemBottom item = new NavigationDrawerItemBottom(
-                NavigationDrawerItemBottom.SETTINGS);
+        NavigationDrawerListItemBottom item = new NavigationDrawerListItemBottom(mContext,
+                NavigationDrawerListItemBottom.SETTINGS);
         item.setOnClickListener(onClickListener);
         mItems.add(item);
         return this;
     }
 
     public NavigationDrawerBottomHandler addHelpAndFeedback(View.OnClickListener onClickListener) {
-        NavigationDrawerItemBottom item = new NavigationDrawerItemBottom(
-                NavigationDrawerItemBottom.HELP_AND_FEEDBACK);
+        NavigationDrawerListItemBottom item = new NavigationDrawerListItemBottom(mContext,
+                NavigationDrawerListItemBottom.HELP_AND_FEEDBACK);
         item.setOnClickListener(onClickListener);
         mItems.add(item);
         return this;
@@ -33,9 +36,9 @@ public class NavigationDrawerBottomHandler {
 
     public NavigationDrawerBottomHandler addItem(int titleResource,
                                                  View.OnClickListener onClickListener) {
-        NavigationDrawerItemBottom item = new NavigationDrawerItemBottom(
-                NavigationDrawerItemBottom.CUSTOM);
-        item.setTitleResource(titleResource);
+        NavigationDrawerListItemBottom item = new NavigationDrawerListItemBottom(mContext,
+                NavigationDrawerListItemBottom.CUSTOM);
+        item.setTitle(mContext, titleResource);
         item.setOnClickListener(onClickListener);
         mItems.add(item);
         return this;
@@ -44,16 +47,16 @@ public class NavigationDrawerBottomHandler {
     public NavigationDrawerBottomHandler addItem(int titleResource,
                                                  int iconResource,
                                                  View.OnClickListener onClickListener) {
-        NavigationDrawerItemBottom item = new NavigationDrawerItemBottom(
-                NavigationDrawerItemBottom.CUSTOM);
-        item.setTitleResource(titleResource);
-        item.setIconResource(iconResource);
+        NavigationDrawerListItemBottom item = new NavigationDrawerListItemBottom(mContext,
+                NavigationDrawerListItemBottom.CUSTOM);
+        item.setTitle(mContext, titleResource);
+        item.setIcon(mContext, iconResource);
         item.setOnClickListener(onClickListener);
         mItems.add(item);
         return this;
     }
 
-    public List<NavigationDrawerItemBottom> getNavigationDrawerBottomItems() {
+    public List<NavigationDrawerListItemBottom> getNavigationDrawerBottomItems() {
         return mItems;
     }
 

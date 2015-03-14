@@ -25,6 +25,7 @@ public class CardView extends android.support.v7.widget.CardView {
     private String mNormalButtonText;
     private String mHighlightButtonText;
 
+    // Listeners
     private OnClickListener mOnNormalButtonClickListener;
     private OnClickListener mOnHighlightButtonClickListener;
 

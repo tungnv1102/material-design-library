@@ -10,27 +10,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blunderer.materialdesignlibrary.R;
-import com.blunderer.materialdesignlibrary.models.NavigationDrawerItemBottom;
+import com.blunderer.materialdesignlibrary.models.NavigationDrawerListItemBottom;
 
 import java.util.List;
 
-public class NavigationDrawerBottomAdapter extends ArrayAdapter<NavigationDrawerItemBottom> {
+public class NavigationDrawerBottomAdapter extends ArrayAdapter<NavigationDrawerListItemBottom> {
 
     private int mLayoutResourceId;
-    private int mCount;
 
     public NavigationDrawerBottomAdapter(Context context,
                                          int layoutResourceId,
-                                         List<NavigationDrawerItemBottom> objects) {
+                                         List<NavigationDrawerListItemBottom> objects) {
         super(context, layoutResourceId, objects);
 
         mLayoutResourceId = layoutResourceId;
-        mCount = objects.size();
-    }
-
-    @Override
-    public int getCount() {
-        return mCount;
     }
 
     @Override
@@ -50,12 +43,12 @@ public class NavigationDrawerBottomAdapter extends ArrayAdapter<NavigationDrawer
             convertView.setTag(holder);
         } else holder = (ViewHolder) convertView.getTag();
 
-        NavigationDrawerItemBottom tool = getItem(position);
+        NavigationDrawerListItemBottom tool = getItem(position);
 
         if (tool.useTitleResource()) {
             holder.title.setVisibility(View.VISIBLE);
             try {
-                holder.title.setText(tool.getTitleResource());
+                holder.title.setText(tool.getTitle());
             } catch (Resources.NotFoundException e) {
                 holder.title.setText("");
             }
@@ -63,7 +56,7 @@ public class NavigationDrawerBottomAdapter extends ArrayAdapter<NavigationDrawer
 
         if (tool.useIconResource()) {
             try {
-                holder.icon.setImageResource(tool.getIconResource());
+                holder.icon.setImageDrawable(tool.getIcon());
                 holder.icon.setVisibility(View.VISIBLE);
             } catch (Resources.NotFoundException e) {
                 holder.icon.setVisibility(View.GONE);
