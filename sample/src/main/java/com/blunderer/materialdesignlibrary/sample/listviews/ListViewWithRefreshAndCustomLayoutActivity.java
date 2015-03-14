@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
-import android.widget.Toast;
 
 import com.blunderer.materialdesignlibrary.sample.R;
 
@@ -26,7 +25,7 @@ public class ListViewWithRefreshAndCustomLayoutActivity extends
                 getString(R.string.title_item2),
                 getString(R.string.title_item3)
         ));
-        return (mAdapter = new ArrayAdapter<>(this, R.layout.activity_listview_row, mObjects));
+        return (mAdapter = new ArrayAdapter<>(this, R.layout.listview_row, mObjects));
     }
 
     @Override

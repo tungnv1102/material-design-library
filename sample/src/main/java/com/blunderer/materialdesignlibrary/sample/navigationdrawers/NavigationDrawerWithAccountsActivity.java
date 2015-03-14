@@ -1,6 +1,7 @@
 package com.blunderer.materialdesignlibrary.sample.navigationdrawers;
 
 import android.content.Intent;
+import android.view.View;
 
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerAccountsHandler;
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerAccountsMenuHandler;
@@ -13,17 +14,39 @@ import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerActivity;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerFragment;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerWithTabsFragment;
 
-public class NavigationDrawerActivity extends
+public class NavigationDrawerWithAccountsActivity extends
         com.blunderer.materialdesignlibrary.activities.NavigationDrawerActivity {
 
     @Override
     protected NavigationDrawerAccountsHandler getNavigationDrawerAccountsHandler() {
-        return null;
+        return new NavigationDrawerAccountsHandler()
+                .addAccount("Blunderer", "blundererandroid@gmail.com",
+                        R.drawable.profile1, R.drawable.profile1_background)
+                .addAccount("Blunderer's cat", "cat@gmail.com",
+                        R.drawable.profile2, R.drawable.profile2_background)
+                .addAccount("Blunderer's dog", "dog@gmail.com",
+                        R.drawable.profile3, R.color.cyan)
+                .addAccount("Blunderer's monkey", "monkey@gmail.com",
+                        R.drawable.profile4, R.color.gray);
     }
 
     @Override
     protected NavigationDrawerAccountsMenuHandler getNavigationDrawerAccountsMenuHandler() {
-        return null;
+        return new NavigationDrawerAccountsMenuHandler(this)
+                .addAddAccount(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                    }
+
+                })
+                .addManageAccounts(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                    }
+
+                });
     }
 
     @Override

@@ -9,7 +9,7 @@ public class ViewPagerActivity extends
 
     @Override
     protected ViewPagerHandler getViewPagerHandler() {
-        return new ViewPagerHandler()
+        return new ViewPagerHandler(this)
                 .addPage(R.string.title_section1,
                         MainFragment.newInstance("Material Design ViewPager"))
                 .addPage(R.string.title_section2,

@@ -9,7 +9,7 @@ public class ViewPagerWithTabsActivity extends
 
     @Override
     protected ViewPagerHandler getViewPagerHandler() {
-        return new ViewPagerHandler()
+        return new ViewPagerHandler(this)
                 .addPage(R.string.title_section1,
                         MainFragment.newInstance("Material Design ViewPager with Tabs"))
                 .addPage(R.string.title_section2,
@@ -17,7 +17,7 @@ public class ViewPagerWithTabsActivity extends
     }
 
     @Override
-    protected int defaultViewPagerItemSelectedPosition() {
+    protected int defaultViewPagerPageSelectedPosition() {
         return 0;
     }
 

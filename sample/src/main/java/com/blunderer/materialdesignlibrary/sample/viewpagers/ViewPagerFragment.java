@@ -4,16 +4,13 @@ import com.blunderer.materialdesignlibrary.handlers.ViewPagerHandler;
 import com.blunderer.materialdesignlibrary.sample.MainFragment;
 import com.blunderer.materialdesignlibrary.sample.R;
 
-public class ViewPagerWithIndicatorActivity extends
-        com.blunderer.materialdesignlibrary.activities.ViewPagerActivity {
+public class ViewPagerFragment extends com.blunderer.materialdesignlibrary.fragments.ViewPagerFragment {
 
     @Override
     protected ViewPagerHandler getViewPagerHandler() {
-        return new ViewPagerHandler(this)
-                .addPage(R.string.title_section1,
-                        MainFragment.newInstance("Material Design ViewPager with Indicator"))
-                .addPage(R.string.title_section2,
-                        MainFragment.newInstance("Material Design ViewPager with Indicator"));
+        return new ViewPagerHandler(getActivity())
+                .addPage(R.string.title_item1, MainFragment.newInstance("Material Design Fragment ViewPager"))
+                .addPage(R.string.title_item2, MainFragment.newInstance("Material Design Fragment ViewPager"));
     }
 
     @Override

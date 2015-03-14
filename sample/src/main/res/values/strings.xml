@@ -11,5 +11,11 @@
     <string name="github">GitHub</string>
 
     <string name="custom_layout_with_listview">This is a custom Layout containing a ListView with android:id=\"@android:id/list\"</string>
+    <string name="fragment">Fragment</string>
+    <string name="activity">Activity</string>
+    <string name="fragment_listview">Fragment ListView</string>
+    <string name="fragment_viewpager">Fragment ViewPager</string>
+    <string name="fragment_viewpager_with_tabs">Fragment ViewPager with Tabs</string>
+    <string name="start_activity">Start Activity</string>
 
 </resources>

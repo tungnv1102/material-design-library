@@ -12,8 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ListViewWithRefreshActivity extends
-        com.blunderer.materialdesignlibrary.activities.ListViewActivity {
+public class ListViewFragment extends com.blunderer.materialdesignlibrary.fragments.ListViewFragment {
 
     private List<String> mObjects;
     private ArrayAdapter<String> mAdapter;
@@ -25,7 +24,7 @@ public class ListViewWithRefreshActivity extends
                 getString(R.string.title_item2),
                 getString(R.string.title_item3)
         ));
-        return (mAdapter = new ArrayAdapter<>(this, R.layout.listview_row, mObjects));
+        return (mAdapter = new ArrayAdapter<>(getActivity(), R.layout.listview_row, mObjects));
     }
 
     @Override
@@ -68,7 +67,7 @@ public class ListViewWithRefreshActivity extends
 
     @Override
     protected boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-        return true;
+        return false;
     }
 
 }

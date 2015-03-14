@@ -17,7 +17,7 @@ public class ListViewWithCustomLayoutActivity extends
     protected ListAdapter getListAdapter() {
         return new ArrayAdapter<>(
                 this,
-                R.layout.activity_listview_row,
+                R.layout.listview_row,
                 new ArrayList<>(Arrays.asList(
                         getString(R.string.title_item1),
                         getString(R.string.title_item2),

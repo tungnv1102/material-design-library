@@ -16,6 +16,7 @@ import com.blunderer.materialdesignlibrary.sample.listviews.ListViewWithCustomLa
 import com.blunderer.materialdesignlibrary.sample.listviews.ListViewWithRefreshActivity;
 import com.blunderer.materialdesignlibrary.sample.listviews.ListViewWithRefreshAndCustomLayoutActivity;
 import com.blunderer.materialdesignlibrary.sample.navigationdrawers.NavigationDrawerActivity;
+import com.blunderer.materialdesignlibrary.sample.navigationdrawers.NavigationDrawerWithAccountsActivity;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerActivity;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerWithIndicatorActivity;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerWithTabsActivity;
@@ -93,6 +94,10 @@ public class MainActivity extends com.blunderer.materialdesignlibrary.activities
         navigationDrawerFeature1.setActivity(NavigationDrawerActivity.class);
         navigationDrawerFeature1.setTitle("Normal");
         navigationDrawerFeature1.setDescription("A basic NavigationDrawer");
+        MainActivityFeature navigationDrawerFeature2 = new MainActivityFeature();
+        navigationDrawerFeature2.setActivity(NavigationDrawerWithAccountsActivity.class);
+        navigationDrawerFeature2.setTitle("With Accounts");
+        navigationDrawerFeature2.setDescription("A NavigationDrawer with accounts");
 
         MainActivityFeature listViewHeader = new MainActivityFeature();
         listViewHeader.setHeader(true);
@@ -149,6 +154,7 @@ public class MainActivity extends com.blunderer.materialdesignlibrary.activities
         List<MainActivityFeature> objects = new ArrayList<>();
         objects.add(navigationDrawerHeader);
         objects.add(navigationDrawerFeature1);
+        objects.add(navigationDrawerFeature2);
         objects.add(listViewHeader);
         objects.add(listViewFeature1);
         objects.add(listViewFeature2);
