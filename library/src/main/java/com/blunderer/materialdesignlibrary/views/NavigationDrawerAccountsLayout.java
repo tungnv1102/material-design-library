@@ -86,20 +86,29 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
     /**
      * Set a ListView that will be used to show the Accounts Menu
      * when clicking on the Accounts Layout.
-     * You should have set an adapter to the ListView before calling this method.
+     * You should also set its adapter by calling setListViewAdapter.
      *
-     * @param listView the ListView that is used to show the Accounts Menu.
+     * @param listView The ListView that is used to show the Accounts Menu.
      */
     public void setListView(ListView listView) {
         if (listView == null) throw new IllegalArgumentException("The ListView must not be null");
-        else if (listView.getAdapter() == null) {
-            throw new IllegalArgumentException(
-                    "You must set an Adapter to the ListView before calling setListView");
-        }
 
         mOriginalListView = listView;
-        mOriginalAdapter = listView.getAdapter();
-        initAccountsLayout();
+        if (mOriginalAdapter != null) initAccountsLayout();
+    }
+
+    /**
+     * Set Adapter for the Accounts Menu ListView.
+     * You should also set the ListView by calling setListView.
+     *
+     * @param adapter The Adapter that is used by the Accounts Menu ListView.
+     */
+    public void setListViewAdapter(ListAdapter adapter) {
+        if (adapter == null)
+            throw new IllegalArgumentException("The ListView Adapter must not be null");
+
+        mOriginalAdapter = adapter;
+        if (mOriginalListView != null) initAccountsLayout();
     }
 
     /**
@@ -142,6 +151,10 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
      */
     public void setOnAccountChangeListener(OnAccountChangeListener onAccountChangeListener) {
         mOnAccountChangeListener = onAccountChangeListener;
+    }
+
+    public void notifyListTopItemSelectedChanged() {
+        mOriginalListViewSelectedItemPosition = mOriginalListView.getCheckedItemPosition();
     }
 
     private void changeAccount() {
