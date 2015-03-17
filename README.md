@@ -21,7 +21,7 @@ View wiki here: [Material Design Library Wiki](https://github.com/DenisMondon/ma
 
 ```groovy
 dependencies {
-    compile 'com.blunderer:materialdesignlibrary:1.1.4'
+    compile 'com.blunderer:materialdesignlibrary:1.1.5'
 }
 ```
 
@@ -119,6 +119,11 @@ public class MyActivity extends NavigationDrawerActivity {
                     }
 
                 });
+    }
+
+    @Override
+    protected boolean overlayActionBar() {
+        return true;
     }
 
     @Override
