@@ -20,6 +20,12 @@ import carbon.widget.Button;
 
 public class CardView extends android.support.v7.widget.CardView {
 
+    // Positions
+    public final static int POSITION_NONE = 0;
+    public final static int POSITION_LEFT = 1;
+    public final static int POSITION_TOP = 2;
+
+    // Variables
     private Context mContext;
     private int mImagePosition;
     private Drawable mImage;
@@ -162,13 +168,13 @@ public class CardView extends android.support.v7.widget.CardView {
         LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (mImagePosition == 1) inflateCardViewImageLeft(inflater);
-        else if (mImagePosition == 2) inflateCardViewImageTop(inflater);
+        if (mImagePosition == POSITION_LEFT) inflateCardViewImageLeft(inflater);
+        else if (mImagePosition == POSITION_TOP) inflateCardViewImageTop(inflater);
         else inflateCardViewNormal(inflater);
     }
 
     private void refresh() {
-        if (mImagePosition == 1) {
+        if (mImagePosition == POSITION_LEFT) {
             LinearLayout layoutAll = (LinearLayout) getChildAt(0);
             handleImage(layoutAll, 0);
 
@@ -177,7 +183,7 @@ public class CardView extends android.support.v7.widget.CardView {
             handleDescription(layout, 1);
             handleSpacing(layout, 2);
             handleCardViewNormalAndImageLeftButtons(layout, 3);
-        } else if (mImagePosition == 2) {
+        } else if (mImagePosition == POSITION_TOP) {
             LinearLayout layoutAll = (LinearLayout) getChildAt(0);
             RelativeLayout layoutImageTitle = (RelativeLayout) layoutAll.getChildAt(0);
             handleImage(layoutImageTitle, 0);
