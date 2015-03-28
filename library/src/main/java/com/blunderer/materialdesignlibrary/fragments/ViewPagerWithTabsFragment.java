@@ -16,8 +16,11 @@ import com.blunderer.materialdesignlibrary.models.ViewPagerItem;
 
 import java.util.List;
 
-public abstract class ViewPagerWithTabsFragment extends Fragment {
+public abstract class ViewPagerWithTabsFragment extends Fragment
+        implements com.blunderer.materialdesignlibrary.interfaces.ViewPager {
 
+    protected ViewPager mViewPager;
+    protected PagerSlidingTabStrip mViewPagerTabs;
     private List<ViewPagerItem> mViewPagerItems;
 
     public ViewPagerWithTabsFragment() {
@@ -38,31 +41,27 @@ public abstract class ViewPagerWithTabsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_view_pager_with_tabs, container, false);
 
         if (mViewPagerItems != null && mViewPagerItems.size() > 0) {
-            ViewPager pager = (ViewPager) view.findViewById(R.id.viewpager);
-            pager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), mViewPagerItems));
+            mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
+            mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), mViewPagerItems));
 
             int defaultViewPagerPageSelectedPosition = defaultViewPagerPageSelectedPosition();
             if (defaultViewPagerPageSelectedPosition >= 0 &&
                     defaultViewPagerPageSelectedPosition < mViewPagerItems.size()) {
-                pager.setCurrentItem(defaultViewPagerPageSelectedPosition);
+                mViewPager.setCurrentItem(defaultViewPagerPageSelectedPosition);
             }
 
-            showTabs(pager, view);
+            showTabs(mViewPager, view);
         }
         return view;
     }
 
     private void showTabs(ViewPager pager, View view) {
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
-        tabs.setTextColor(getResources().getColor(android.R.color.white));
-        tabs.setViewPager(pager);
+        mViewPagerTabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
+        mViewPagerTabs.setTextColor(getResources().getColor(android.R.color.white));
+        mViewPagerTabs.setViewPager(pager);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            tabs.setTabBackground(android.R.attr.selectableItemBackground);
+            mViewPagerTabs.setTabBackground(android.R.attr.selectableItemBackground);
         }
     }
-
-    protected abstract ViewPagerHandler getViewPagerHandler();
-
-    protected abstract int defaultViewPagerPageSelectedPosition();
 
 }

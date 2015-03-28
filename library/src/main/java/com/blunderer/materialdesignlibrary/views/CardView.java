@@ -9,7 +9,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,13 +16,19 @@ import android.widget.TextView;
 import com.blunderer.materialdesignlibrary.R;
 import com.joooonho.SelectableRoundedImageView;
 
+import carbon.widget.Button;
+
 public class CardView extends android.support.v7.widget.CardView {
 
+    private Context mContext;
+    private int mImagePosition;
     private Drawable mImage;
     private String mTitleText;
     private String mDescriptionText;
     private String mNormalButtonText;
     private String mHighlightButtonText;
+    private Button mNormalButton;
+    private Button mHighlightButton;
 
     // Listeners
     private OnClickListener mOnNormalButtonClickListener;
@@ -36,12 +41,12 @@ public class CardView extends android.support.v7.widget.CardView {
     public CardView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        mContext = context;
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs,
                 R.styleable.MDLCardView, 0, 0);
 
-        int imageType;
         try {
-            imageType = a.getInt(R.styleable.MDLCardView_mdl_imagePosition, 0);
+            mImagePosition = a.getInt(R.styleable.MDLCardView_mdl_imagePosition, 0);
             mImage = a.getDrawable(R.styleable.MDLCardView_mdl_image);
             mTitleText = a.getString(R.styleable.MDLCardView_mdl_title);
             mDescriptionText = a.getString(R.styleable.MDLCardView_mdl_description);
@@ -56,49 +61,160 @@ public class CardView extends android.support.v7.widget.CardView {
         setPreventCornerOverlap(false);
         setCardBackgroundColor(context.getResources().getColor(R.color.cardview_background));
 
-        LayoutInflater inflater = (LayoutInflater) context
+        inflate();
+    }
+
+    public int getImagePosition() {
+        return mImagePosition;
+    }
+
+    public void setImagePosition(int imagePosition) {
+        mImagePosition = imagePosition;
+
+        inflate();
+    }
+
+    public Drawable getImage() {
+        return mImage;
+    }
+
+    public void setImageDrawable(Drawable imageDrawable) {
+        mImage = imageDrawable;
+
+        refresh();
+    }
+
+    public void setImageResource(int imageResource) {
+        mImage = mContext.getResources().getDrawable(imageResource);
+
+        refresh();
+    }
+
+    public String getTitle() {
+        return mTitleText;
+    }
+
+    public void setTitle(String title) {
+        mTitleText = title;
+
+        refresh();
+    }
+
+    public void setTitleResource(int titleResource) {
+        mTitleText = mContext.getString(titleResource);
+
+        refresh();
+    }
+
+    public String getDescription() {
+        return mDescriptionText;
+    }
+
+    public void setDescription(String description) {
+        mDescriptionText = description;
+
+        refresh();
+    }
+
+    public void setDescriptionResource(int descriptionResource) {
+        mDescriptionText = mContext.getString(descriptionResource);
+
+        refresh();
+    }
+
+    public Button getNormalButton() {
+        return mNormalButton;
+    }
+
+    public void setNormalButtonText(String normalButtonText) {
+        mNormalButtonText = normalButtonText;
+
+        refresh();
+    }
+
+    public Button getHighlightButton() {
+        return mHighlightButton;
+    }
+
+    public void setHighlightButtonText(String highlightButtonText) {
+        mHighlightButtonText = highlightButtonText;
+
+        refresh();
+    }
+
+    public OnClickListener getOnNormalButtonClickListener() {
+        return mOnNormalButtonClickListener;
+    }
+
+    public void setOnNormalButtonClickListener(OnClickListener onNormalButtonClickListener) {
+        mOnNormalButtonClickListener = onNormalButtonClickListener;
+    }
+
+    public OnClickListener getOnHighlightButtonClickListener() {
+        return mOnHighlightButtonClickListener;
+    }
+
+    public void setOnHighlightButtonClickListener(OnClickListener onHighlightButtonClickListener) {
+        mOnHighlightButtonClickListener = onHighlightButtonClickListener;
+    }
+
+    private void inflate() {
+        LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (imageType == 1 && mImage != null) inflateCardViewImageLeft(inflater);
-        else if (imageType == 2 && mImage != null) inflateCardViewImageTop(inflater);
+        if (mImagePosition == 1) inflateCardViewImageLeft(inflater);
+        else if (mImagePosition == 2) inflateCardViewImageTop(inflater);
         else inflateCardViewNormal(inflater);
     }
 
+    private void refresh() {
+        if (mImagePosition == 1) {
+            LinearLayout layoutAll = (LinearLayout) getChildAt(0);
+            handleImage(layoutAll, 0);
+
+            LinearLayout layout = (LinearLayout) layoutAll.getChildAt(1);
+            handleTitle(layout, 0);
+            handleDescription(layout, 1);
+            handleSpacing(layout, 2);
+            handleCardViewNormalAndImageLeftButtons(layout, 3);
+        } else if (mImagePosition == 2) {
+            LinearLayout layoutAll = (LinearLayout) getChildAt(0);
+            RelativeLayout layoutImageTitle = (RelativeLayout) layoutAll.getChildAt(0);
+            handleImage(layoutImageTitle, 0);
+            handleTitle(layoutImageTitle, 1);
+
+            LinearLayout layout = (LinearLayout) layoutAll.getChildAt(1);
+            handleDescription(layout, 0);
+            handleCardViewImageTopButtons(layout, 1);
+        } else {
+            LinearLayout layout = (LinearLayout) getChildAt(0);
+
+            handleTitle(layout, 0);
+            handleDescription(layout, 1);
+            handleSpacing(layout, 2);
+            handleCardViewNormalAndImageLeftButtons(layout, 3);
+        }
+    }
+
     private void inflateCardViewNormal(LayoutInflater inflater) {
+        removeAllViews();
         inflater.inflate(R.layout.cardview_normal, this, true);
 
-        LinearLayout layout = (LinearLayout) getChildAt(0);
-
-        handleTitle(layout, 0);
-        handleDescription(layout, 1);
-        handleSpacing(layout, 2);
-        handleCardViewNormalAndImageLeftButtons(layout, 3);
+        refresh();
     }
 
     private void inflateCardViewImageLeft(LayoutInflater inflater) {
+        removeAllViews();
         inflater.inflate(R.layout.cardview_image_left, this, true);
 
-        LinearLayout layoutAll = (LinearLayout) getChildAt(0);
-        handleImage(layoutAll, 0);
-
-        LinearLayout layout = (LinearLayout) layoutAll.getChildAt(1);
-        handleTitle(layout, 0);
-        handleDescription(layout, 1);
-        handleSpacing(layout, 2);
-        handleCardViewNormalAndImageLeftButtons(layout, 3);
+        refresh();
     }
 
     private void inflateCardViewImageTop(LayoutInflater inflater) {
+        removeAllViews();
         inflater.inflate(R.layout.cardview_image_top, this, true);
 
-        LinearLayout layoutAll = (LinearLayout) getChildAt(0);
-        RelativeLayout layoutImageTitle = (RelativeLayout) layoutAll.getChildAt(0);
-        handleImage(layoutImageTitle, 0);
-        handleTitle(layoutImageTitle, 1);
-
-        LinearLayout layout = (LinearLayout) layoutAll.getChildAt(1);
-        handleDescription(layout, 0);
-        handleCardViewImageTopButtons(layout, 1);
+        refresh();
     }
 
     private void handleImage(ViewGroup layout, int position) {
@@ -111,39 +227,39 @@ public class CardView extends android.support.v7.widget.CardView {
     }
 
     private void handleTitle(ViewGroup layout, int position) {
+        TextView title = (TextView) layout.getChildAt(position);
         if (!TextUtils.isEmpty(mTitleText)) {
-            TextView title = (TextView) layout.getChildAt(position);
             title.setText(mTitleText);
             title.setVisibility(VISIBLE);
-        }
+        } else title.setVisibility(GONE);
     }
 
     private void handleDescription(ViewGroup layout, int position) {
+        TextView description = (TextView) layout.getChildAt(position);
         if (!TextUtils.isEmpty(mDescriptionText)) {
-            TextView description = (TextView) layout.getChildAt(position);
             description.setText(mDescriptionText);
             description.setVisibility(VISIBLE);
-        }
+        } else description.setVisibility(GONE);
     }
 
     private void handleCardViewNormalAndImageLeftButtons(ViewGroup layout, int position) {
+        View separatorButtons = layout.getChildAt(position);
         if (!TextUtils.isEmpty(mNormalButtonText) || !TextUtils.isEmpty(mHighlightButtonText)) {
-            View separatorButtons = layout.getChildAt(position);
             if (!TextUtils.isEmpty(mTitleText) || !TextUtils.isEmpty(mDescriptionText)) {
                 separatorButtons.setVisibility(VISIBLE);
             } else {
                 layout.setPadding(layout.getPaddingLeft(), 0,
                         layout.getPaddingRight(), layout.getPaddingBottom());
             }
-
-            handleButtons(layout, position);
-        }
+        } else separatorButtons.setVisibility(GONE);
+        handleButtons(layout, position);
     }
 
     private void handleCardViewImageTopButtons(ViewGroup layout, int position) {
         if (!TextUtils.isEmpty(mNormalButtonText) || !TextUtils.isEmpty(mHighlightButtonText)) {
             View separatorButtons = layout.getChildAt(position);
             if (!TextUtils.isEmpty(mDescriptionText)) separatorButtons.setVisibility(VISIBLE);
+            else separatorButtons.setVisibility(GONE);
 
             handleButtons(layout, position);
         }
@@ -153,11 +269,11 @@ public class CardView extends android.support.v7.widget.CardView {
         LinearLayout buttonsLayout = (LinearLayout) layout.getChildAt(position + 1);
         buttonsLayout.setVisibility(VISIBLE);
 
+        mNormalButton = (Button) buttonsLayout.getChildAt(0);
         if (!TextUtils.isEmpty(mNormalButtonText)) {
-            Button normalButton = (Button) buttonsLayout.getChildAt(0);
-            normalButton.setText(mNormalButtonText);
-            normalButton.setVisibility(VISIBLE);
-            normalButton.setOnClickListener(new OnClickListener() {
+            mNormalButton.setText(mNormalButtonText);
+            mNormalButton.setVisibility(VISIBLE);
+            mNormalButton.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
@@ -167,13 +283,13 @@ public class CardView extends android.support.v7.widget.CardView {
                 }
 
             });
-        }
+        } else mNormalButton.setVisibility(GONE);
 
+        mHighlightButton = (Button) buttonsLayout.getChildAt(1);
         if (!TextUtils.isEmpty(mHighlightButtonText)) {
-            Button highlightButton = (Button) buttonsLayout.getChildAt(1);
-            highlightButton.setText(mHighlightButtonText);
-            highlightButton.setVisibility(VISIBLE);
-            highlightButton.setOnClickListener(new OnClickListener() {
+            mHighlightButton.setText(mHighlightButtonText);
+            mHighlightButton.setVisibility(VISIBLE);
+            mHighlightButton.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
@@ -183,7 +299,7 @@ public class CardView extends android.support.v7.widget.CardView {
                 }
 
             });
-        }
+        } else mHighlightButton.setVisibility(GONE);
     }
 
     private void handleSpacing(ViewGroup layout, int position) {
@@ -213,22 +329,6 @@ public class CardView extends android.support.v7.widget.CardView {
                 getResources().getDisplayMetrics());
         spacingView.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, spacingViewHeightPx));
-    }
-
-    public OnClickListener getOnNormalButtonClickListener() {
-        return mOnNormalButtonClickListener;
-    }
-
-    public void setOnNormalButtonClickListener(OnClickListener onNormalButtonClickListener) {
-        mOnNormalButtonClickListener = onNormalButtonClickListener;
-    }
-
-    public OnClickListener getOnHighlightButtonClickListener() {
-        return mOnHighlightButtonClickListener;
-    }
-
-    public void setOnHighlightButtonClickListener(OnClickListener onHighlightButtonClickListener) {
-        mOnHighlightButtonClickListener = onHighlightButtonClickListener;
     }
 
 }

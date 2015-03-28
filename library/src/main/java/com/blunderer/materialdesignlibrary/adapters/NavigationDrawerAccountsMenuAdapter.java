@@ -18,8 +18,8 @@ import com.blunderer.materialdesignlibrary.models.NavigationDrawerAccountsListIt
 
 import java.util.List;
 
-public class NavigationDrawerAccountsMenuAdapter extends
-        ArrayAdapter<NavigationDrawerAccountsListItem> {
+public class NavigationDrawerAccountsMenuAdapter
+        extends ArrayAdapter<NavigationDrawerAccountsListItem> {
 
     private int mLayoutResourceId;
 

@@ -13,9 +13,11 @@ import android.widget.ListView;
 
 import com.blunderer.materialdesignlibrary.R;
 
-public abstract class ListViewFragment extends Fragment {
+public abstract class ListViewFragment extends Fragment
+        implements com.blunderer.materialdesignlibrary.interfaces.ListView {
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
+    protected ListView mListView;
     private ListViewFragment mFragment;
 
     public ListViewFragment() {
@@ -34,14 +36,14 @@ public abstract class ListViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_listview, container, false);
 
         ViewStub stub = (ViewStub) view.findViewById(R.id.activity_listview_view);
-        final ListView listView;
         try {
             stub.setLayoutResource(useCustomContentView()
                     ? getCustomContentView() : R.layout.listview);
             View inflatedView = stub.inflate();
 
-            if (inflatedView instanceof ListView) listView = (ListView) inflatedView;
-            else listView = (ListView) inflatedView.findViewById(android.R.id.list);
+            if (inflatedView instanceof ListView)
+                mListView = (ListView) inflatedView;
+            else mListView = (ListView) inflatedView.findViewById(android.R.id.list);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(
                     "CustomContentView must have a valid layoutResource");
@@ -61,11 +63,11 @@ public abstract class ListViewFragment extends Fragment {
             mSwipeRefreshLayout.setColorSchemeResources(getPullToRefreshColorResources());
         } else mSwipeRefreshLayout.setEnabled(false);
 
-        if (listView != null) {
+        if (mListView != null) {
             ListAdapter adapter = getListAdapter();
             if (adapter != null) {
-                listView.setAdapter(adapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                mListView.setAdapter(adapter);
+                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                     @Override
                     public void onItemClick(AdapterView<?> adapterView,
@@ -74,7 +76,7 @@ public abstract class ListViewFragment extends Fragment {
                     }
 
                 });
-                listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapterView,
@@ -89,37 +91,9 @@ public abstract class ListViewFragment extends Fragment {
         return view;
     }
 
-    protected void setRefreshing(boolean refreshing) {
+    @Override
+    public void setRefreshing(boolean refreshing) {
         if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(refreshing);
     }
-
-    protected abstract ListAdapter getListAdapter();
-
-    protected abstract boolean useCustomContentView();
-
-    /**
-     * Return a custom content view.
-     * The layout MUST contain a ListView with android:id="@android:id/list".
-     * The method "useCustomContentView()" MUST return true.
-     *
-     * @return a resource
-     */
-    protected abstract int getCustomContentView();
-
-    protected abstract boolean pullToRefreshEnabled();
-
-    protected abstract int[] getPullToRefreshColorResources();
-
-    protected abstract void onRefresh();
-
-    protected abstract void onItemClick(AdapterView<?> adapterView,
-                                        View view,
-                                        int position,
-                                        long l);
-
-    protected abstract boolean onItemLongClick(AdapterView<?> adapterView,
-                                               View view,
-                                               int position,
-                                               long l);
 
 }

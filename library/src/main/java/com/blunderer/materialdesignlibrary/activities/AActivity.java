@@ -8,7 +8,7 @@ import com.blunderer.materialdesignlibrary.R;
 
 public abstract class AActivity extends ActionBarActivity {
 
-    private Toolbar mToolbar;
+    protected Toolbar mToolbar;
 
     public void onCreate(Bundle savedInstanceState, int contentView) {
         super.onCreate(savedInstanceState);
@@ -18,10 +18,6 @@ public abstract class AActivity extends ActionBarActivity {
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
-
-    protected Toolbar getToolbar() {
-        return mToolbar;
     }
 
 }

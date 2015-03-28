@@ -16,8 +16,11 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.List;
 
-public abstract class ViewPagerFragment extends Fragment {
+public abstract class ViewPagerFragment extends Fragment
+        implements com.blunderer.materialdesignlibrary.interfaces.ViewPager {
 
+    protected ViewPager mViewPager;
+    protected CirclePageIndicator mViewPagerIndicator;
     private List<ViewPagerItem> mViewPagerItems;
     private final ViewPager.OnPageChangeListener mOnPageChangeListener = new ViewPager
             .OnPageChangeListener() {
@@ -55,16 +58,16 @@ public abstract class ViewPagerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
 
         if (mViewPagerItems != null && mViewPagerItems.size() > 0) {
-            ViewPager pager = (ViewPager) view.findViewById(R.id.viewpager);
-            pager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), mViewPagerItems));
+            mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
+            mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), mViewPagerItems));
 
             int defaultViewPagerItemSelectedPosition = defaultViewPagerPageSelectedPosition();
             if (defaultViewPagerItemSelectedPosition >= 0 &&
                     defaultViewPagerItemSelectedPosition < mViewPagerItems.size()) {
-                pager.setCurrentItem(defaultViewPagerItemSelectedPosition);
+                mViewPager.setCurrentItem(defaultViewPagerItemSelectedPosition);
             }
 
-            showIndicator(view, pager);
+            showIndicator(view, mViewPager);
 
             replaceTitle(mViewPagerItems
                     .get(defaultViewPagerItemSelectedPosition).getTitle());
@@ -76,11 +79,11 @@ public abstract class ViewPagerFragment extends Fragment {
         if (!showViewPagerIndicator()) {
             pager.setOnPageChangeListener(mOnPageChangeListener);
         } else {
-            CirclePageIndicator viewPagerIndicator = (CirclePageIndicator)
+            mViewPagerIndicator = (CirclePageIndicator)
                     view.findViewById(R.id.viewpagerindicator);
-            viewPagerIndicator.setViewPager(pager);
-            viewPagerIndicator.setVisibility(View.VISIBLE);
-            viewPagerIndicator.setOnPageChangeListener(mOnPageChangeListener);
+            mViewPagerIndicator.setViewPager(pager);
+            mViewPagerIndicator.setVisibility(View.VISIBLE);
+            mViewPagerIndicator.setOnPageChangeListener(mOnPageChangeListener);
         }
     }
 
@@ -90,12 +93,8 @@ public abstract class ViewPagerFragment extends Fragment {
         }
     }
 
-    protected abstract ViewPagerHandler getViewPagerHandler();
-
     protected abstract boolean showViewPagerIndicator();
 
     protected abstract boolean replaceActionBarTitleByViewPagerPageTitle();
-
-    protected abstract int defaultViewPagerPageSelectedPosition();
 
 }

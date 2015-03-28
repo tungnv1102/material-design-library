@@ -10,10 +10,17 @@ import android.widget.ListView;
 
 import com.blunderer.materialdesignlibrary.R;
 
-public abstract class ListViewActivity extends AActivity {
+public abstract class ListViewActivity extends AActivity
+        implements com.blunderer.materialdesignlibrary.interfaces.ListView {
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
+    protected ListView mListView;
     private ListViewActivity mActivity;
+
+    @Override
+    public void setRefreshing(boolean refreshing) {
+        if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(refreshing);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +30,13 @@ public abstract class ListViewActivity extends AActivity {
 
         ViewStub stub = (ViewStub) findViewById(R.id.activity_listview_view);
         View inflatedView;
-        final ListView listView;
         try {
             stub.setLayoutResource(useCustomContentView()
                     ? getCustomContentView() : R.layout.listview);
             inflatedView = stub.inflate();
 
-            if (inflatedView instanceof ListView) listView = (ListView) inflatedView;
-            else listView = (ListView) inflatedView.findViewById(android.R.id.list);
+            if (inflatedView instanceof ListView) mListView = (ListView) inflatedView;
+            else mListView = (ListView) inflatedView.findViewById(android.R.id.list);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(
                     "CustomContentView must have a valid layoutResource");
@@ -50,11 +56,11 @@ public abstract class ListViewActivity extends AActivity {
             mSwipeRefreshLayout.setColorSchemeResources(getPullToRefreshColorResources());
         } else mSwipeRefreshLayout.setEnabled(false);
 
-        if (listView != null) {
+        if (mListView != null) {
             ListAdapter adapter = getListAdapter();
             if (adapter != null) {
-                listView.setAdapter(adapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                mListView.setAdapter(adapter);
+                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                     @Override
                     public void onItemClick(AdapterView<?> adapterView,
@@ -63,7 +69,7 @@ public abstract class ListViewActivity extends AActivity {
                     }
 
                 });
-                listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapterView,
@@ -75,38 +81,5 @@ public abstract class ListViewActivity extends AActivity {
             }
         }
     }
-
-    protected void setRefreshing(boolean refreshing) {
-        if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(refreshing);
-    }
-
-    protected abstract ListAdapter getListAdapter();
-
-    protected abstract boolean useCustomContentView();
-
-    /**
-     * Return a custom content view.
-     * The layout MUST contain a ListView with android:id="@android:id/list".
-     * The method "useCustomContentView()" MUST return true.
-     *
-     * @return a resource
-     */
-    protected abstract int getCustomContentView();
-
-    protected abstract boolean pullToRefreshEnabled();
-
-    protected abstract int[] getPullToRefreshColorResources();
-
-    protected abstract void onRefresh();
-
-    protected abstract void onItemClick(AdapterView<?> adapterView,
-                                        View view,
-                                        int position,
-                                        long l);
-
-    protected abstract boolean onItemLongClick(AdapterView<?> adapterView,
-                                               View view,
-                                               int position,
-                                               long l);
 
 }

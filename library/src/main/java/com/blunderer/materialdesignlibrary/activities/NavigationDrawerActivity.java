@@ -14,9 +14,9 @@ import com.blunderer.materialdesignlibrary.R;
 import com.blunderer.materialdesignlibrary.adapters.NavigationDrawerAdapter;
 import com.blunderer.materialdesignlibrary.adapters.NavigationDrawerBottomAdapter;
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerAccountsHandler;
-import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerAccountsMenuHandler;
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerBottomHandler;
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerTopHandler;
+import com.blunderer.materialdesignlibrary.interfaces.NavigationDrawer;
 import com.blunderer.materialdesignlibrary.listeners.OnAccountChangeListener;
 import com.blunderer.materialdesignlibrary.listeners.OnMoreAccountClickListener;
 import com.blunderer.materialdesignlibrary.models.Account;
@@ -25,6 +25,7 @@ import com.blunderer.materialdesignlibrary.models.NavigationDrawerAccountsListIt
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerAccountsListItemIntent;
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerAccountsListItemOnClick;
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerListItemBottom;
+import com.blunderer.materialdesignlibrary.models.NavigationDrawerListItemHeader;
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerListItemTopFragment;
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerListItemTopIntent;
 import com.blunderer.materialdesignlibrary.views.NavigationDrawerAccountsLayout;
@@ -33,21 +34,80 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class NavigationDrawerActivity extends AActivity
-        implements OnAccountChangeListener {
+        implements NavigationDrawer, OnAccountChangeListener {
 
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
+    protected DrawerLayout mDrawerLayout;
+    protected ActionBarDrawerToggle mDrawerToggle;
+    protected NavigationDrawerAccountsLayout mAccountsLayout;
+    protected ListView mTopListView;
+    protected ListView mBottomListView;
+    protected NavigationDrawerAdapter mListTopAdapter;
+    protected NavigationDrawerBottomAdapter mListBottomAdapter;
     private View mDrawerLeft;
     private NavigationDrawerListItemTopFragment mCurrentItem;
-    private NavigationDrawerAccountsLayout mAccountsLayout;
     private int mCurrentItemPosition = 0;
-    private ListView mTopListView;
-    private ListView mBottomListView;
-    private NavigationDrawerAdapter mListTopAdapter;
-    private NavigationDrawerBottomAdapter mListBottomAdapter;
     private List<ListItem> mNavigationDrawerItemsTop;
     private List<NavigationDrawerListItemBottom> mNavigationDrawerItemsBottom;
     private NavigationDrawerAccountsHandler mNavigationDrawerAccountsHandler;
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onAccountChange(Account account) {
+        onNavigationDrawerAccountChange(account);
+    }
+
+    /**
+     * Will update the Top ListView items.
+     *
+     * @param navigationDrawerTopHandler                  The handler that contains the new Top ListView items.
+     * @param defaultNavigationDrawerItemSelectedPosition The position of the item that will be selected.
+     */
+    @Override
+    public void updateNavigationDrawerTopHandler(
+            NavigationDrawerTopHandler navigationDrawerTopHandler,
+            int defaultNavigationDrawerItemSelectedPosition) {
+        replaceTopItems(navigationDrawerTopHandler);
+        selectDefaultItemPosition(defaultNavigationDrawerItemSelectedPosition, false, true);
+    }
+
+    /**
+     * Will update the Bottom ListView items.
+     *
+     * @param navigationDrawerBottomHandler The handler that contains the new Bottom ListView items.
+     */
+    @Override
+    public void updateNavigationDrawerBottomHandler(
+            NavigationDrawerBottomHandler navigationDrawerBottomHandler) {
+        replaceBottomItems(navigationDrawerBottomHandler);
+    }
+
+    @Override
+    public void closeNavigationDrawer() {
+        if (mDrawerLayout != null && mDrawerLeft != null) mDrawerLayout.closeDrawer(mDrawerLeft);
+    }
+
+    @Override
+    public void openNavigationDrawer() {
+        if (mDrawerLayout != null && mDrawerLeft != null) mDrawerLayout.openDrawer(mDrawerLeft);
+    }
+
+    @Override
+    public void performNavigationDrawerItemClick(int position) {
+        if (mNavigationDrawerItemsTop == null || mNavigationDrawerItemsTop.size() <= position ||
+                mNavigationDrawerItemsTop.get(position) instanceof NavigationDrawerListItemHeader) {
+            return;
+        }
+
+        int realPosition = isNavigationDrawerAccountHandlerEmpty() ? position : position + 1;
+        mTopListView.performItemClick(mTopListView.getChildAt(realPosition),
+                realPosition, mTopListView.getItemIdAtPosition(realPosition));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,42 +133,6 @@ public abstract class NavigationDrawerActivity extends AActivity
         super.onPostCreate(savedInstanceState);
 
         mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public void onAccountChange(Account account) {
-        onNavigationDrawerAccountChange(account);
-    }
-
-    /**
-     * Will update the Top ListView items.
-     *
-     * @param navigationDrawerTopHandler                  The handler that contains the new Top ListView items.
-     * @param defaultNavigationDrawerItemSelectedPosition The position of the item that is going to be selected.
-     */
-    protected void updateNavigationDrawerTopHandler(
-            NavigationDrawerTopHandler navigationDrawerTopHandler,
-            int defaultNavigationDrawerItemSelectedPosition) {
-        replaceTopItems(navigationDrawerTopHandler);
-        selectDefaultItemPosition(defaultNavigationDrawerItemSelectedPosition, false, true);
-    }
-
-
-    /**
-     * Will update the Bottom ListView items.
-     *
-     * @param navigationDrawerBottomHandler The handler that contains the new Top ListView items.
-     */
-    protected void updateNavigationDrawerBottomHandler(
-            NavigationDrawerBottomHandler navigationDrawerBottomHandler) {
-        replaceBottomItems(navigationDrawerBottomHandler);
     }
 
     private void defineListTop() {
@@ -155,7 +179,7 @@ public abstract class NavigationDrawerActivity extends AActivity
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,
                 mDrawerLayout,
-                getToolbar(),
+                mToolbar,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close) {
 
@@ -299,7 +323,7 @@ public abstract class NavigationDrawerActivity extends AActivity
             }
             replaceTitle(item.getTitle());
             mTopListView.setItemChecked(mCurrentItemPosition, true);
-            mDrawerLayout.closeDrawer(mDrawerLeft);
+            closeNavigationDrawer();
         } else if (item instanceof NavigationDrawerListItemTopIntent) {
             mTopListView.setItemChecked(mCurrentItemPosition, true);
             startActivity(((NavigationDrawerListItemTopIntent) item).getIntent());
@@ -356,21 +380,5 @@ public abstract class NavigationDrawerActivity extends AActivity
         return mNavigationDrawerAccountsHandler == null ||
                 mNavigationDrawerAccountsHandler.getNavigationDrawerAccounts().size() <= 0;
     }
-
-    protected abstract NavigationDrawerAccountsHandler getNavigationDrawerAccountsHandler();
-
-    protected abstract NavigationDrawerAccountsMenuHandler getNavigationDrawerAccountsMenuHandler();
-
-    protected abstract void onNavigationDrawerAccountChange(Account account);
-
-    protected abstract NavigationDrawerTopHandler getNavigationDrawerTopHandler();
-
-    protected abstract NavigationDrawerBottomHandler getNavigationDrawerBottomHandler();
-
-    protected abstract boolean overlayActionBar();
-
-    protected abstract boolean replaceActionBarTitleByNavigationDrawerItemTitle();
-
-    protected abstract int defaultNavigationDrawerItemSelectedPosition();
 
 }
