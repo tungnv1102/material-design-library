@@ -21,7 +21,7 @@ View wiki here: [Material Design Library Wiki](https://github.com/DenisMondon/ma
 
 ```groovy
 dependencies {
-    compile 'com.blunderer:materialdesignlibrary:1.1.5'
+    compile 'com.blunderer:materialdesignlibrary:1.1.6'
 }
 ```
 
@@ -68,7 +68,7 @@ import com.blunderer.materialdesignlibrary.activities.NavigationDrawerActivity;
 public class MyActivity extends NavigationDrawerActivity {
 
     @Override
-    protected NavigationDrawerAccountsHandler getNavigationDrawerAccountsHandler() {
+    public NavigationDrawerAccountsHandler getNavigationDrawerAccountsHandler() {
         return new NavigationDrawerAccountsHandler()
                 .addAccount("Profile 1", "profile1@gmail.com",
                         R.drawable.profile1, R.drawable.profile1_background)
@@ -77,19 +77,19 @@ public class MyActivity extends NavigationDrawerActivity {
     }
 
     @Override
-    protected NavigationDrawerAccountsMenuHandler getNavigationDrawerAccountsMenuHandler() {
+    public NavigationDrawerAccountsMenuHandler getNavigationDrawerAccountsMenuHandler() {
         return new NavigationDrawerAccountsMenuHandler(this)
                 .addAddAccount(new Intent(getApplicationContext(), AddAccountActivity.class))
                 .addManageAccounts(new Intent(getApplicationContext(), ManageAccountsActivity.class));
     }
 
     @Override
-    protected void onNavigationDrawerAccountChange(Account account) {
+    public void onNavigationDrawerAccountChange(Account account) {
         Toast.makeText(getApplicationContext(), "Account changed!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    protected NavigationDrawerTopHandler getNavigationDrawerTopHandler() {
+    public NavigationDrawerTopHandler getNavigationDrawerTopHandler() {
         return new NavigationDrawerTopHandler()
                 .addItem(R.string.title_item1, new MainFragment())
                 .addItem(R.string.title_item2, new MainFragment())
@@ -99,7 +99,7 @@ public class MyActivity extends NavigationDrawerActivity {
     }
 
     @Override
-    protected NavigationDrawerBottomHandler getNavigationDrawerBottomHandler() {
+    public NavigationDrawerBottomHandler getNavigationDrawerBottomHandler() {
         return new NavigationDrawerBottomHandler()
                 .addSettings(new View.OnClickListener() {
 
@@ -122,17 +122,17 @@ public class MyActivity extends NavigationDrawerActivity {
     }
 
     @Override
-    protected boolean overlayActionBar() {
+    public boolean overlayActionBar() {
         return true;
     }
 
     @Override
-    protected boolean replaceActionBarTitleByNavigationDrawerItemTitle() {
+    public boolean replaceActionBarTitleByNavigationDrawerItemTitle() {
         return true;
     }
 
     @Override
-    protected int defaultNavigationDrawerItemSelectedPosition() {
+    public int defaultNavigationDrawerItemSelectedPosition() {
         return 0;
     }
 
