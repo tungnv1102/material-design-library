@@ -13,7 +13,7 @@ import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerActivity;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerFragment;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerWithTabsFragment;
 
-public class NavigationDrawerActivity
+public class NavigationDrawerWithFullHeightActivity
         extends com.blunderer.materialdesignlibrary.activities.NavigationDrawerActivity {
 
     @Override
@@ -51,7 +51,7 @@ public class NavigationDrawerActivity
 
     @Override
     public boolean overlayActionBar() {
-        return false;
+        return true;
     }
 
     @Override

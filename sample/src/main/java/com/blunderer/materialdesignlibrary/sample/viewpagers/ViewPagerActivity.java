@@ -4,11 +4,11 @@ import com.blunderer.materialdesignlibrary.handlers.ViewPagerHandler;
 import com.blunderer.materialdesignlibrary.sample.MainFragment;
 import com.blunderer.materialdesignlibrary.sample.R;
 
-public class ViewPagerActivity extends
-        com.blunderer.materialdesignlibrary.activities.ViewPagerActivity {
+public class ViewPagerActivity
+        extends com.blunderer.materialdesignlibrary.activities.ViewPagerActivity {
 
     @Override
-    protected ViewPagerHandler getViewPagerHandler() {
+    public ViewPagerHandler getViewPagerHandler() {
         return new ViewPagerHandler(this)
                 .addPage(R.string.title_section1,
                         MainFragment.newInstance("Material Design ViewPager"))
@@ -17,18 +17,18 @@ public class ViewPagerActivity extends
     }
 
     @Override
-    protected boolean showViewPagerIndicator() {
+    public int defaultViewPagerPageSelectedPosition() {
+        return 0;
+    }
+
+    @Override
+    public boolean showViewPagerIndicator() {
         return false;
     }
 
     @Override
-    protected boolean replaceActionBarTitleByViewPagerPageTitle() {
+    public boolean replaceActionBarTitleByViewPagerPageTitle() {
         return true;
-    }
-
-    @Override
-    protected int defaultViewPagerPageSelectedPosition() {
-        return 0;
     }
 
 }

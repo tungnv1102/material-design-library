@@ -14,12 +14,16 @@ import com.blunderer.materialdesignlibrary.sample.cardviews.CardViewWithTopImage
 import com.blunderer.materialdesignlibrary.sample.listviews.ListViewActivity;
 import com.blunderer.materialdesignlibrary.sample.listviews.ListViewWithCustomLayoutActivity;
 import com.blunderer.materialdesignlibrary.sample.listviews.ListViewWithRefreshActivity;
-import com.blunderer.materialdesignlibrary.sample.listviews.ListViewWithRefreshAndCustomLayoutActivity;
 import com.blunderer.materialdesignlibrary.sample.navigationdrawers.NavigationDrawerActivity;
 import com.blunderer.materialdesignlibrary.sample.navigationdrawers.NavigationDrawerWithAccountsActivity;
+import com.blunderer.materialdesignlibrary.sample.navigationdrawers.NavigationDrawerWithAccountsAndFullHeightActivity;
+import com.blunderer.materialdesignlibrary.sample.navigationdrawers.NavigationDrawerWithFullHeightActivity;
+import com.blunderer.materialdesignlibrary.sample.scrollviews.ScrollViewActivity;
+import com.blunderer.materialdesignlibrary.sample.scrollviews.ScrollViewWithRefreshActivity;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerActivity;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerWithIndicatorActivity;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerWithTabsActivity;
+import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerWithTabsExpandedActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,43 +31,43 @@ import java.util.List;
 public class MainActivity extends com.blunderer.materialdesignlibrary.activities.ListViewActivity {
 
     @Override
-    protected ListAdapter getListAdapter() {
+    public ListAdapter getListAdapter() {
         return new MainActivityAdapter(this, R.layout.activity_main_row, getFeatures());
     }
 
     @Override
-    protected boolean useCustomContentView() {
+    public boolean useCustomContentView() {
         return false;
     }
 
     @Override
-    protected int getCustomContentView() {
+    public int getCustomContentView() {
         return 0;
     }
 
     @Override
-    protected boolean pullToRefreshEnabled() {
+    public boolean pullToRefreshEnabled() {
         return false;
     }
 
     @Override
-    protected int[] getPullToRefreshColorResources() {
+    public int[] getPullToRefreshColorResources() {
         return new int[0];
     }
 
     @Override
-    protected void onRefresh() {
+    public void onRefresh() {
     }
 
     @Override
-    protected void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Intent intent = new Intent(this,
                 ((MainActivityFeature) adapterView.getAdapter().getItem(position)).getActivity());
         startActivity(intent);
     }
 
     @Override
-    protected boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
         return false;
     }
 
@@ -98,6 +102,14 @@ public class MainActivity extends com.blunderer.materialdesignlibrary.activities
         navigationDrawerFeature2.setActivity(NavigationDrawerWithAccountsActivity.class);
         navigationDrawerFeature2.setTitle("With Accounts");
         navigationDrawerFeature2.setDescription("A NavigationDrawer with accounts");
+        MainActivityFeature navigationDrawerFeature3 = new MainActivityFeature();
+        navigationDrawerFeature3.setActivity(NavigationDrawerWithFullHeightActivity.class);
+        navigationDrawerFeature3.setTitle("With Full Height");
+        navigationDrawerFeature3.setDescription("A NavigationDrawer that overlays the ActionBar");
+        MainActivityFeature navigationDrawerFeature4 = new MainActivityFeature();
+        navigationDrawerFeature4.setActivity(NavigationDrawerWithAccountsAndFullHeightActivity.class);
+        navigationDrawerFeature4.setTitle("With Accounts & Full Height");
+        navigationDrawerFeature4.setDescription("A NavigationDrawer with accounts that overlays the ActionBar");
 
         MainActivityFeature listViewHeader = new MainActivityFeature();
         listViewHeader.setHeader(true);
@@ -109,15 +121,11 @@ public class MainActivity extends com.blunderer.materialdesignlibrary.activities
         MainActivityFeature listViewFeature2 = new MainActivityFeature();
         listViewFeature2.setActivity(ListViewWithCustomLayoutActivity.class);
         listViewFeature2.setTitle("With Custom Layout");
-        listViewFeature2.setDescription("A ListView with a custom Layout");
+        listViewFeature2.setDescription("A ListView with a custom layout");
         MainActivityFeature listViewFeature3 = new MainActivityFeature();
         listViewFeature3.setActivity(ListViewWithRefreshActivity.class);
         listViewFeature3.setTitle("With Pull To Refresh");
         listViewFeature3.setDescription("A ListView with a pull to refresh");
-        MainActivityFeature listViewFeature4 = new MainActivityFeature();
-        listViewFeature4.setActivity(ListViewWithRefreshAndCustomLayoutActivity.class);
-        listViewFeature4.setTitle("With Custom Layout & Pull To Refresh");
-        listViewFeature4.setDescription("A ListView with a custom layout & a pull to refresh");
 
         MainActivityFeature viewPagerHeader = new MainActivityFeature();
         viewPagerHeader.setHeader(true);
@@ -129,11 +137,27 @@ public class MainActivity extends com.blunderer.materialdesignlibrary.activities
         MainActivityFeature viewPagerFeature2 = new MainActivityFeature();
         viewPagerFeature2.setActivity(ViewPagerWithIndicatorActivity.class);
         viewPagerFeature2.setTitle("With Indicator");
-        viewPagerFeature2.setDescription("A ViewPager with an Indicator");
+        viewPagerFeature2.setDescription("A ViewPager with an indicator");
         MainActivityFeature viewPagerFeature3 = new MainActivityFeature();
         viewPagerFeature3.setActivity(ViewPagerWithTabsActivity.class);
         viewPagerFeature3.setTitle("With Tabs");
-        viewPagerFeature3.setDescription("A ViewPager with Tabs");
+        viewPagerFeature3.setDescription("A ViewPager with tabs");
+        MainActivityFeature viewPagerFeature4 = new MainActivityFeature();
+        viewPagerFeature4.setActivity(ViewPagerWithTabsExpandedActivity.class);
+        viewPagerFeature4.setTitle("With Expanded Tabs");
+        viewPagerFeature4.setDescription("A ViewPager with expanded tabs");
+
+        MainActivityFeature scrollViewHeader = new MainActivityFeature();
+        scrollViewHeader.setHeader(true);
+        scrollViewHeader.setTitle("ScrollView");
+        MainActivityFeature scrollViewFeature1 = new MainActivityFeature();
+        scrollViewFeature1.setActivity(ScrollViewActivity.class);
+        scrollViewFeature1.setTitle("Normal");
+        scrollViewFeature1.setDescription("A basic ScrollView");
+        MainActivityFeature scrollViewFeature2 = new MainActivityFeature();
+        scrollViewFeature2.setActivity(ScrollViewWithRefreshActivity.class);
+        scrollViewFeature2.setTitle("With Pull To Refresh");
+        scrollViewFeature2.setDescription("A ListView with a pull to refresh");
 
         MainActivityFeature cardviewHeader = new MainActivityFeature();
         cardviewHeader.setHeader(true);
@@ -145,25 +169,30 @@ public class MainActivity extends com.blunderer.materialdesignlibrary.activities
         MainActivityFeature cardviewFeature2 = new MainActivityFeature();
         cardviewFeature2.setActivity(CardViewWithLeftImageActivity.class);
         cardviewFeature2.setTitle("Left Image");
-        cardviewFeature2.setDescription("A CardView with an Image on the left");
+        cardviewFeature2.setDescription("A CardView with an image on the left");
         MainActivityFeature cardviewFeature3 = new MainActivityFeature();
         cardviewFeature3.setActivity(CardViewWithTopImageActivity.class);
         cardviewFeature3.setTitle("Top Image");
-        cardviewFeature3.setDescription("A CardView with an Image on the top");
+        cardviewFeature3.setDescription("A CardView with an image on the top");
 
         List<MainActivityFeature> objects = new ArrayList<>();
         objects.add(navigationDrawerHeader);
         objects.add(navigationDrawerFeature1);
         objects.add(navigationDrawerFeature2);
+        objects.add(navigationDrawerFeature3);
+        objects.add(navigationDrawerFeature4);
         objects.add(listViewHeader);
         objects.add(listViewFeature1);
         objects.add(listViewFeature2);
         objects.add(listViewFeature3);
-        objects.add(listViewFeature4);
         objects.add(viewPagerHeader);
         objects.add(viewPagerFeature1);
         objects.add(viewPagerFeature2);
         objects.add(viewPagerFeature3);
+        objects.add(viewPagerFeature4);
+        objects.add(scrollViewHeader);
+        objects.add(scrollViewFeature1);
+        objects.add(scrollViewFeature2);
         objects.add(cardviewHeader);
         objects.add(cardviewFeature1);
         objects.add(cardviewFeature2);

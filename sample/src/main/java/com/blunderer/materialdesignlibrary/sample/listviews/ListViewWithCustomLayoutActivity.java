@@ -10,11 +10,11 @@ import com.blunderer.materialdesignlibrary.sample.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ListViewWithCustomLayoutActivity extends
-        com.blunderer.materialdesignlibrary.activities.ListViewActivity {
+public class ListViewWithCustomLayoutActivity
+        extends com.blunderer.materialdesignlibrary.activities.ListViewActivity {
 
     @Override
-    protected ListAdapter getListAdapter() {
+    public ListAdapter getListAdapter() {
         return new ArrayAdapter<>(
                 this,
                 R.layout.listview_row,
@@ -27,35 +27,35 @@ public class ListViewWithCustomLayoutActivity extends
     }
 
     @Override
-    protected boolean useCustomContentView() {
+    public boolean useCustomContentView() {
         return true;
     }
 
     @Override
-    protected int getCustomContentView() {
+    public int getCustomContentView() {
         return R.layout.activity_listview_with_custom_layout;
     }
 
     @Override
-    protected boolean pullToRefreshEnabled() {
+    public boolean pullToRefreshEnabled() {
         return false;
     }
 
     @Override
-    protected int[] getPullToRefreshColorResources() {
+    public int[] getPullToRefreshColorResources() {
         return new int[0];
     }
 
     @Override
-    protected void onRefresh() {
+    public void onRefresh() {
     }
 
     @Override
-    protected void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
     }
 
     @Override
-    protected boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
         return true;
     }
 

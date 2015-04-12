@@ -14,11 +14,11 @@ import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerActivity;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerFragment;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerWithTabsFragment;
 
-public class NavigationDrawerWithAccountsActivity extends
-        com.blunderer.materialdesignlibrary.activities.NavigationDrawerActivity {
+public class NavigationDrawerWithAccountsActivity
+        extends com.blunderer.materialdesignlibrary.activities.NavigationDrawerActivity {
 
     @Override
-    protected NavigationDrawerAccountsHandler getNavigationDrawerAccountsHandler() {
+    public NavigationDrawerAccountsHandler getNavigationDrawerAccountsHandler() {
         return new NavigationDrawerAccountsHandler()
                 .addAccount("Blunderer", "blundererandroid@gmail.com",
                         R.drawable.profile1, R.drawable.profile1_background)
@@ -31,7 +31,7 @@ public class NavigationDrawerWithAccountsActivity extends
     }
 
     @Override
-    protected NavigationDrawerAccountsMenuHandler getNavigationDrawerAccountsMenuHandler() {
+    public NavigationDrawerAccountsMenuHandler getNavigationDrawerAccountsMenuHandler() {
         return new NavigationDrawerAccountsMenuHandler(this)
                 .addAddAccount(new View.OnClickListener() {
 
@@ -50,11 +50,11 @@ public class NavigationDrawerWithAccountsActivity extends
     }
 
     @Override
-    protected void onNavigationDrawerAccountChange(Account account) {
+    public void onNavigationDrawerAccountChange(Account account) {
     }
 
     @Override
-    protected NavigationDrawerTopHandler getNavigationDrawerTopHandler() {
+    public NavigationDrawerTopHandler getNavigationDrawerTopHandler() {
         return new NavigationDrawerTopHandler(this)
                 .addSection(R.string.fragment)
                 .addItem(R.string.fragment_listview, new ListViewFragment())
@@ -66,19 +66,24 @@ public class NavigationDrawerWithAccountsActivity extends
     }
 
     @Override
-    protected NavigationDrawerBottomHandler getNavigationDrawerBottomHandler() {
+    public NavigationDrawerBottomHandler getNavigationDrawerBottomHandler() {
         return new NavigationDrawerBottomHandler(this)
                 .addSettings(null)
                 .addHelpAndFeedback(null);
     }
 
     @Override
-    protected boolean replaceActionBarTitleByNavigationDrawerItemTitle() {
+    public boolean overlayActionBar() {
+        return false;
+    }
+
+    @Override
+    public boolean replaceActionBarTitleByNavigationDrawerItemTitle() {
         return true;
     }
 
     @Override
-    protected int defaultNavigationDrawerItemSelectedPosition() {
+    public int defaultNavigationDrawerItemSelectedPosition() {
         return 1;
     }
 

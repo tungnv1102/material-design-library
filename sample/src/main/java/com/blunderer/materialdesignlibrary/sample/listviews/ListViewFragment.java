@@ -12,13 +12,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ListViewFragment extends com.blunderer.materialdesignlibrary.fragments.ListViewFragment {
+public class ListViewFragment
+        extends com.blunderer.materialdesignlibrary.fragments.ListViewFragment {
 
     private List<String> mObjects;
     private ArrayAdapter<String> mAdapter;
 
     @Override
-    protected ListAdapter getListAdapter() {
+    public ListAdapter getListAdapter() {
         mObjects = new ArrayList<>(Arrays.asList(
                 getString(R.string.title_item1),
                 getString(R.string.title_item2),
@@ -28,27 +29,27 @@ public class ListViewFragment extends com.blunderer.materialdesignlibrary.fragme
     }
 
     @Override
-    protected boolean useCustomContentView() {
+    public boolean useCustomContentView() {
         return false;
     }
 
     @Override
-    protected int getCustomContentView() {
+    public int getCustomContentView() {
         return 0;
     }
 
     @Override
-    protected boolean pullToRefreshEnabled() {
+    public boolean pullToRefreshEnabled() {
         return true;
     }
 
     @Override
-    protected int[] getPullToRefreshColorResources() {
+    public int[] getPullToRefreshColorResources() {
         return new int[]{R.color.color_primary};
     }
 
     @Override
-    protected void onRefresh() {
+    public void onRefresh() {
         new Handler().postDelayed(new Runnable() {
 
             @Override
@@ -62,11 +63,11 @@ public class ListViewFragment extends com.blunderer.materialdesignlibrary.fragme
     }
 
     @Override
-    protected void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
     }
 
     @Override
-    protected boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
         return false;
     }
 
