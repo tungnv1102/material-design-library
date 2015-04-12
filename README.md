@@ -3,8 +3,8 @@ Material Design Library
 
 
 ### Description
-A library that helps developers creating their Android Application with Material Design.  
-It offers a lot of Material Design classes easily to use like a CardView or a NavigationDrawerActivity that creates an Activity with a Material Design NavigationDrawer.
+This library helps developers creating their Android Application with Material Design.  
+It offers a lot of Material Design classes easy to use like a CardView or a NavigationDrawerActivity that creates an Activity with a Material Design NavigationDrawer.
 
 ### Demo
 [![Material Design Library on Google Play Store](http://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.blunderer.materialdesignlibrary.sample)
@@ -13,7 +13,7 @@ It offers a lot of Material Design classes easily to use like a CardView or a Na
 ![ListView with Pull To Refresh](images/screen02.png) ![ViewPager with Tabs](images/screen08.png)
 
 ### Wiki
-View wiki here: [Material Design Library Wiki](https://github.com/DenisMondon/material-design-library/wiki)  
+Read wiki here: [Material Design Library Wiki](https://github.com/DenisMondon/material-design-library/wiki)  
 
 ### Usage
 
@@ -21,7 +21,7 @@ View wiki here: [Material Design Library Wiki](https://github.com/DenisMondon/ma
 
 ```groovy
 dependencies {
-    compile 'com.blunderer:materialdesignlibrary:1.1.7'
+    compile 'com.blunderer:materialdesignlibrary:1.2.0'
 }
 ```
 
@@ -50,7 +50,10 @@ Or if you want the Light Theme:
     Your Activity will be a basic Activity with Material Design.
 
   * **ListViewActivity**  
-  Your Activity will contain a ListView (with or not the Material Design Pull To Refresh).
+  Your Activity will contain a ListView (with or not the Pull To Refresh).
+
+  * **ScrollViewActivity**  
+  Your Activity will contain a ScrollView (with or not the Pull To Refresh).
 
   * **NavigationDrawerActivity**  
   Your Activity will contain a NavigationDrawer (with or not Accounts).
@@ -59,7 +62,7 @@ Or if you want the Light Theme:
   Your Activity will contain a ViewPager (with or not the indicator).
 
   * **ViewPagerWithTabsActivity**  
-  Your Activity will contain a ViewPager with tabs.
+  Your Activity will contain a ViewPager with tabs (expanded or not).
 
 ##### Example:  
 ```java
