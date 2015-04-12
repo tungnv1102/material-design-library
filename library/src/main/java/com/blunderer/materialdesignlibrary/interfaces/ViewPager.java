@@ -4,8 +4,8 @@ import com.blunderer.materialdesignlibrary.handlers.ViewPagerHandler;
 
 public interface ViewPager {
 
-    public abstract ViewPagerHandler getViewPagerHandler();
+    ViewPagerHandler getViewPagerHandler();
 
-    public abstract int defaultViewPagerPageSelectedPosition();
+    int defaultViewPagerPageSelectedPosition();
 
 }

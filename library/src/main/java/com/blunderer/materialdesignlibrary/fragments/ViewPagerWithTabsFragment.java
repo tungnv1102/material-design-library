@@ -38,7 +38,7 @@ public abstract class ViewPagerWithTabsFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_view_pager_with_tabs, container, false);
+        View view = inflater.inflate(R.layout.mdl_fragment_view_pager_with_tabs, container, false);
 
         if (mViewPagerItems != null && mViewPagerItems.size() > 0) {
             mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
@@ -58,10 +58,13 @@ public abstract class ViewPagerWithTabsFragment extends Fragment
     private void showTabs(ViewPager pager, View view) {
         mViewPagerTabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         mViewPagerTabs.setTextColor(getResources().getColor(android.R.color.white));
+        mViewPagerTabs.setShouldExpand(expandTabs());
         mViewPagerTabs.setViewPager(pager);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             mViewPagerTabs.setTabBackground(android.R.attr.selectableItemBackground);
         }
     }
+
+    protected abstract boolean expandTabs();
 
 }

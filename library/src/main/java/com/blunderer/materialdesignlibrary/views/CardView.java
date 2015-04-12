@@ -65,7 +65,7 @@ public class CardView extends android.support.v7.widget.CardView {
         setRadius((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2,
                 getResources().getDisplayMetrics()));
         setPreventCornerOverlap(false);
-        setCardBackgroundColor(context.getResources().getColor(R.color.cardview_background));
+        setCardBackgroundColor(context.getResources().getColor(R.color.mdl_cardview_background));
 
         inflate();
     }
@@ -138,12 +138,24 @@ public class CardView extends android.support.v7.widget.CardView {
         refresh();
     }
 
+    public void setNormalButtonTextResource(int normalButtonTextResource) {
+        mNormalButtonText = mContext.getString(normalButtonTextResource);
+
+        refresh();
+    }
+
     public Button getHighlightButton() {
         return mHighlightButton;
     }
 
     public void setHighlightButtonText(String highlightButtonText) {
         mHighlightButtonText = highlightButtonText;
+
+        refresh();
+    }
+
+    public void setHighlightButtonTextResource(int highlightButtonTextResource) {
+        mHighlightButtonText = mContext.getString(highlightButtonTextResource);
 
         refresh();
     }
@@ -204,21 +216,21 @@ public class CardView extends android.support.v7.widget.CardView {
 
     private void inflateCardViewNormal(LayoutInflater inflater) {
         removeAllViews();
-        inflater.inflate(R.layout.cardview_normal, this, true);
+        inflater.inflate(R.layout.mdl_cardview_normal, this, true);
 
         refresh();
     }
 
     private void inflateCardViewImageLeft(LayoutInflater inflater) {
         removeAllViews();
-        inflater.inflate(R.layout.cardview_image_left, this, true);
+        inflater.inflate(R.layout.mdl_cardview_image_left, this, true);
 
         refresh();
     }
 
     private void inflateCardViewImageTop(LayoutInflater inflater) {
         removeAllViews();
-        inflater.inflate(R.layout.cardview_image_top, this, true);
+        inflater.inflate(R.layout.mdl_cardview_image_top, this, true);
 
         refresh();
     }

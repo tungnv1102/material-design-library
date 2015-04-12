@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import com.blunderer.materialdesignlibrary.R;
 import com.blunderer.materialdesignlibrary.adapters.NavigationDrawerAdapter;
 import com.blunderer.materialdesignlibrary.adapters.NavigationDrawerBottomAdapter;
+import com.blunderer.materialdesignlibrary.fragments.ViewPagerFragment;
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerAccountsHandler;
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerBottomHandler;
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerTopHandler;
@@ -49,6 +51,7 @@ public abstract class NavigationDrawerActivity extends AActivity
     private List<ListItem> mNavigationDrawerItemsTop;
     private List<NavigationDrawerListItemBottom> mNavigationDrawerItemsBottom;
     private NavigationDrawerAccountsHandler mNavigationDrawerAccountsHandler;
+    private int[] mAccountsPositions;
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -73,7 +76,7 @@ public abstract class NavigationDrawerActivity extends AActivity
             NavigationDrawerTopHandler navigationDrawerTopHandler,
             int defaultNavigationDrawerItemSelectedPosition) {
         replaceTopItems(navigationDrawerTopHandler);
-        selectDefaultItemPosition(defaultNavigationDrawerItemSelectedPosition, false, true);
+        selectDefaultItemPosition(defaultNavigationDrawerItemSelectedPosition, false);
     }
 
     /**
@@ -112,7 +115,9 @@ public abstract class NavigationDrawerActivity extends AActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, overlayActionBar() ?
-                R.layout.activity_navigation_drawer_full : R.layout.activity_navigation_drawer);
+                R.layout.mdl_activity_navigation_drawer_full : R.layout.mdl_activity_navigation_drawer);
+
+        if (savedInstanceState != null) mAccountsPositions = savedInstanceState.getIntArray("cc");
 
         defineDrawerLayout();
         defineListTop();
@@ -125,7 +130,9 @@ public abstract class NavigationDrawerActivity extends AActivity
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt("current_fragment_position", mTopListView.getCheckedItemPosition());
+        outState.putInt("current_fragment_position", mTopListView.getCheckedItemPosition()
+                - (isNavigationDrawerAccountHandlerEmpty() ? 0 : 1));
+        if (mAccountsLayout != null) outState.putIntArray("cc", mAccountsLayout.mAccountsPositions);
     }
 
     @Override
@@ -138,7 +145,7 @@ public abstract class NavigationDrawerActivity extends AActivity
     private void defineListTop() {
         mNavigationDrawerItemsTop = new ArrayList<>();
         mListTopAdapter = new NavigationDrawerAdapter(this,
-                R.layout.navigation_drawer_row, mNavigationDrawerItemsTop);
+                R.layout.mdl_navigation_drawer_row, mNavigationDrawerItemsTop);
         mTopListView = (ListView) findViewById(R.id.left_drawer_listview);
         mTopListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -155,7 +162,7 @@ public abstract class NavigationDrawerActivity extends AActivity
         mNavigationDrawerItemsBottom = new ArrayList<>();
         mListBottomAdapter = new NavigationDrawerBottomAdapter(
                 this,
-                R.layout.navigation_drawer_row,
+                R.layout.mdl_navigation_drawer_row,
                 mNavigationDrawerItemsBottom);
         mBottomListView = (ListView)
                 findViewById(R.id.left_drawer_bottom_listview);
@@ -180,14 +187,14 @@ public abstract class NavigationDrawerActivity extends AActivity
                 this,
                 mDrawerLayout,
                 mToolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close) {
+                R.string.mdl_navigation_drawer_open,
+                R.string.mdl_navigation_drawer_close) {
 
             @Override
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
 
-                if (mCurrentItem != null) replaceTitle(mCurrentItem.getTitle());
+                if (mCurrentItem != null) replaceTitle(mCurrentItem);
             }
 
             @Override
@@ -211,7 +218,7 @@ public abstract class NavigationDrawerActivity extends AActivity
 
         replaceTopItems(getNavigationDrawerTopHandler());
         replaceBottomItems(getNavigationDrawerBottomHandler());
-        selectDefaultItemPosition(fragmentPosition, isSavedInstanceState, false);
+        selectDefaultItemPosition(fragmentPosition, isSavedInstanceState);
     }
 
     private void replaceTopItems(NavigationDrawerTopHandler navigationDrawerTopHandler) {
@@ -245,8 +252,7 @@ public abstract class NavigationDrawerActivity extends AActivity
     }
 
     private void selectDefaultItemPosition(int fragmentPosition,
-                                           boolean isSavedInstanceState,
-                                           boolean isUpdatingTopHandler) {
+                                           boolean isSavedInstanceState) {
         if (mNavigationDrawerItemsTop.size() <= 0) return;
 
         if (fragmentPosition < 0 || fragmentPosition >= mNavigationDrawerItemsTop.size()) {
@@ -254,52 +260,47 @@ public abstract class NavigationDrawerActivity extends AActivity
         }
 
         ListItem item = mNavigationDrawerItemsTop.get(fragmentPosition);
+        Log.e("testtest", "fragmentPosition=" + item.getTitle());
         if (item instanceof NavigationDrawerListItemTopFragment) {
+            NavigationDrawerListItemTopFragment itemFragment =
+                    (NavigationDrawerListItemTopFragment) item;
             if (!isSavedInstanceState) {
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragment_container,
-                                ((NavigationDrawerListItemTopFragment) item).getFragment())
+                        .add(R.id.fragment_container, itemFragment.getFragment())
                         .commit();
-                mCurrentItem = (NavigationDrawerListItemTopFragment) item;
-                mCurrentItemPosition = (isNavigationDrawerAccountHandlerEmpty() ? 0 : 1) +
-                        fragmentPosition;
-            } else if (isUpdatingTopHandler) {
+            } else {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container,
-                                ((NavigationDrawerListItemTopFragment) item).getFragment())
+                        .replace(R.id.fragment_container, itemFragment.getFragment())
                         .commit();
-                mCurrentItem = (NavigationDrawerListItemTopFragment) item;
-                mCurrentItemPosition = (isNavigationDrawerAccountHandlerEmpty() ? 0 : 1) +
-                        fragmentPosition;
             }
+            mCurrentItem = itemFragment;
+            mCurrentItemPosition = (isNavigationDrawerAccountHandlerEmpty() ? 0 : 1) +
+                    fragmentPosition;
 
             mTopListView.setItemChecked(mCurrentItemPosition, true);
-            replaceTitle(item.getTitle());
+            replaceTitle(mCurrentItem);
         } else {
             for (int i = 0; i < mNavigationDrawerItemsTop.size(); ++i) {
                 if (mNavigationDrawerItemsTop.get(i) instanceof
                         NavigationDrawerListItemTopFragment) {
-                    NavigationDrawerListItemTopFragment fragment =
+                    NavigationDrawerListItemTopFragment itemFragment =
                             (NavigationDrawerListItemTopFragment) mNavigationDrawerItemsTop.get(i);
 
                     if (!isSavedInstanceState) {
                         getSupportFragmentManager().beginTransaction()
-                                .add(R.id.fragment_container, fragment.getFragment())
+                                .add(R.id.fragment_container, itemFragment.getFragment())
                                 .commit();
-                        mCurrentItem = fragment;
-                        mCurrentItemPosition = (isNavigationDrawerAccountHandlerEmpty() ?
-                                0 : 1) + i;
-                    } else if (isUpdatingTopHandler) {
+                    } else {
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, fragment.getFragment())
+                                .replace(R.id.fragment_container, itemFragment.getFragment())
                                 .commit();
-                        mCurrentItem = fragment;
-                        mCurrentItemPosition = (isNavigationDrawerAccountHandlerEmpty() ?
-                                0 : 1) + i;
                     }
+                    mCurrentItem = itemFragment;
+                    mCurrentItemPosition = (isNavigationDrawerAccountHandlerEmpty() ?
+                            0 : 1) + i;
 
                     mTopListView.setItemChecked(mCurrentItemPosition, true);
-                    replaceTitle(fragment.getTitle());
+                    replaceTitle(mCurrentItem);
                     break;
                 }
             }
@@ -314,15 +315,17 @@ public abstract class NavigationDrawerActivity extends AActivity
         ListItem item = (ListItem) adapterView.getAdapter().getItem(i);
 
         if (item instanceof NavigationDrawerListItemTopFragment) {
-            Fragment fragment = ((NavigationDrawerListItemTopFragment) item).getFragment();
+            NavigationDrawerListItemTopFragment itemFragment =
+                    (NavigationDrawerListItemTopFragment) item;
+            Fragment fragment = itemFragment.getFragment();
             if (mCurrentItem == null || mCurrentItem.getFragment() != fragment) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, fragment).commit();
-                mCurrentItem = (NavigationDrawerListItemTopFragment) item;
+                mCurrentItem = itemFragment;
                 mCurrentItemPosition = i;
             }
-            replaceTitle(item.getTitle());
             mTopListView.setItemChecked(mCurrentItemPosition, true);
+            replaceTitle(mCurrentItem);
             closeNavigationDrawer();
         } else if (item instanceof NavigationDrawerListItemTopIntent) {
             mTopListView.setItemChecked(mCurrentItemPosition, true);
@@ -352,8 +355,11 @@ public abstract class NavigationDrawerActivity extends AActivity
     private void showAccountsLayout() {
         mNavigationDrawerAccountsHandler = getNavigationDrawerAccountsHandler();
         if (!isNavigationDrawerAccountHandlerEmpty()) {
-            mAccountsLayout = new NavigationDrawerAccountsLayout(
-                    getApplicationContext());
+            mAccountsLayout = new NavigationDrawerAccountsLayout(getApplicationContext());
+            if (mAccountsPositions != null) {
+                mAccountsLayout.mAccountsPositions = mAccountsPositions;
+                mAccountsLayout.isRestored = true;
+            }
             mAccountsLayout.setListView(mTopListView);
             mAccountsLayout.setListViewAdapter(mListTopAdapter);
             mAccountsLayout.setAccounts(mNavigationDrawerAccountsHandler
@@ -370,7 +376,21 @@ public abstract class NavigationDrawerActivity extends AActivity
         mTopListView.setAdapter(mListTopAdapter);
     }
 
-    private void replaceTitle(String title) {
+    private void replaceTitle(NavigationDrawerListItemTopFragment itemFragment) {
+        if (itemFragment.getFragment() instanceof ViewPagerFragment) {
+            ViewPagerFragment viewPagerFragment = (ViewPagerFragment) itemFragment.getFragment();
+            if (viewPagerFragment.replaceActionBarTitleByViewPagerPageTitle()) {
+                CharSequence title = viewPagerFragment.getTitle();
+                if (title != null) {
+                    replaceTitle(title);
+                    return;
+                }
+            }
+        }
+        replaceTitle(itemFragment.getTitle());
+    }
+
+    private void replaceTitle(CharSequence title) {
         if (replaceActionBarTitleByNavigationDrawerItemTitle()) {
             getSupportActionBar().setTitle(title);
         }

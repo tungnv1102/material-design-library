@@ -1,5 +1,6 @@
 package com.blunderer.materialdesignlibrary.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -22,6 +23,7 @@ public abstract class ViewPagerFragment extends Fragment
     protected ViewPager mViewPager;
     protected CirclePageIndicator mViewPagerIndicator;
     private List<ViewPagerItem> mViewPagerItems;
+    private int mCurrentPagePosition = 0;
     private final ViewPager.OnPageChangeListener mOnPageChangeListener = new ViewPager
             .OnPageChangeListener() {
 
@@ -31,7 +33,8 @@ public abstract class ViewPagerFragment extends Fragment
 
         @Override
         public void onPageSelected(int position) {
-            replaceTitle(mViewPagerItems.get(position).getTitle());
+            mCurrentPagePosition = position;
+            replaceTitle(getTitle());
         }
 
         @Override
@@ -44,8 +47,8 @@ public abstract class ViewPagerFragment extends Fragment
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
 
         ViewPagerHandler viewPagerHandler = getViewPagerHandler();
         if (viewPagerHandler == null) viewPagerHandler = new ViewPagerHandler(getActivity());
@@ -55,7 +58,7 @@ public abstract class ViewPagerFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
+        View view = inflater.inflate(R.layout.mdl_fragment_view_pager, container, false);
 
         if (mViewPagerItems != null && mViewPagerItems.size() > 0) {
             mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
@@ -73,6 +76,14 @@ public abstract class ViewPagerFragment extends Fragment
                     .get(defaultViewPagerItemSelectedPosition).getTitle());
         }
         return view;
+    }
+
+    public String getTitle() {
+        if (mViewPagerItems == null || mCurrentPagePosition < 0
+                || mCurrentPagePosition >= mViewPagerItems.size()) {
+            return null;
+        }
+        return mViewPagerItems.get(mCurrentPagePosition).getTitle();
     }
 
     private void showIndicator(View view, ViewPager pager) {
@@ -93,8 +104,8 @@ public abstract class ViewPagerFragment extends Fragment
         }
     }
 
-    protected abstract boolean showViewPagerIndicator();
+    public abstract boolean showViewPagerIndicator();
 
-    protected abstract boolean replaceActionBarTitleByViewPagerPageTitle();
+    public abstract boolean replaceActionBarTitleByViewPagerPageTitle();
 
 }

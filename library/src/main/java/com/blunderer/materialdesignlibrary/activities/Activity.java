@@ -12,7 +12,7 @@ public abstract class Activity extends AActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.activity);
+        super.onCreate(savedInstanceState, R.layout.mdl_mdl_activity);
 
         ViewStub stub = (ViewStub) findViewById(R.id.view_stub);
         stub.setLayoutResource(getContentView());

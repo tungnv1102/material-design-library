@@ -3,17 +3,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="140dp">
+        android:layout_height="@dimen/mdl_navigationdrawer_accounts_height">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:contentDescription="@null" />
+            android:contentDescription="@null"/>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:orientation="vertical">
@@ -21,33 +21,35 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="4dp">
 
                 <com.blunderer.materialdesignlibrary.views.RoundedImageView
                     android:id="@+id/navigation_drawer_accounts_picture"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp" />
+                    android:layout_width="@dimen/mdl_navigationdrawer_accounts_current_account_size"
+                    android:layout_height="@dimen/mdl_navigationdrawer_accounts_current_account_size"/>
 
                 <com.blunderer.materialdesignlibrary.views.RoundedImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="56dp"
-                    android:layout_marginEnd="56dp"
+                    android:layout_width="@dimen/mdl_navigationdrawer_accounts_other_account_size"
+                    android:layout_height="@dimen/mdl_navigationdrawer_accounts_other_account_size"
+                    android:layout_marginRight="@dimen/mdl_navigationdrawer_accounts_second_account_padding_right"
+                    android:layout_marginEnd="@dimen/mdl_navigationdrawer_accounts_second_account_padding_right"
                     android:layout_gravity="end"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"/>
 
                 <com.blunderer.materialdesignlibrary.views.RoundedImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/mdl_navigationdrawer_accounts_other_account_size"
+                    android:layout_height="@dimen/mdl_navigationdrawer_accounts_other_account_size"
                     android:layout_gravity="end"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"/>
 
             </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="@dimen/mdl_navigationdrawer_accounts_data_height"
+                android:layout_gravity="bottom"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
@@ -61,7 +63,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/mdl_navigationdrawer_accounts_title_size"
                         android:textStyle="bold"
                         android:textColor="@android:color/white"
                         android:ellipsize="end"
@@ -70,12 +72,12 @@
                         android:shadowColor="#000"
                         android:shadowDx="0.5"
                         android:shadowDy="0"
-                        android:shadowRadius="2" />
+                        android:shadowRadius="2"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/mdl_navigationdrawer_accounts_description_size"
                         android:textColor="@android:color/white"
                         android:ellipsize="end"
                         android:lines="1"
@@ -83,25 +85,25 @@
                         android:shadowColor="#000"
                         android:shadowDx="0.5"
                         android:shadowDy="0"
-                        android:shadowRadius="2" />
+                        android:shadowRadius="2"/>
 
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@string/manage_accounts"
-                    android:visibility="gone" />
+                    android:layout_width="@dimen/mdl_navigationdrawer_accounts_arrow_size"
+                    android:layout_height="@dimen/mdl_navigationdrawer_accounts_arrow_size"
+                    android:contentDescription="@string/mdl_manage_accounts"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </FrameLayout>
 
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/navigation_drawer_accounts_separator_color" />
+        android:background="@color/mdl_navigation_drawer_accounts_separator_color"/>
 
 </merge>

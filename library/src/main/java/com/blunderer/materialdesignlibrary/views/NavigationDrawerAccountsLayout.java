@@ -42,12 +42,12 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
     private List<NavigationDrawerAccountsListItem> mAccountsMenuItems;
     private ViewGroup mMainLayout;
     private int mOriginalListViewSelectedItemPosition;
-    private int mCurrentAccountPosition;
-    private int mSecondAccountPosition;
-    private int mThirdAccountPosition;
     private boolean mIsAccountsMenuEnabled;
     private boolean mShowAccountMenu = false;
     private OnAccountChangeListener mOnAccountChangeListener;
+
+    public int[] mAccountsPositions;
+    public boolean isRestored = false;
 
     public NavigationDrawerAccountsLayout(Context context) {
         this(context, null);
@@ -58,7 +58,7 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.navigation_drawer_accounts, this, true);
+        inflater.inflate(R.layout.mdl_navigation_drawer_accounts, this, true);
 
         mMainLayout = (ViewGroup) getChildAt(0);
 
@@ -123,6 +123,8 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
         }
 
         mAccounts = accounts;
+        if (isRestored) isRestored = false;
+        else resetAccountsPositions(accounts.size());
         initAccounts();
     }
 
@@ -139,7 +141,7 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
             initAccountsMenuSwitch();
             mAccountsMenuAdapter = new NavigationDrawerAccountsMenuAdapter(
                     getContext(),
-                    R.layout.navigation_drawer_row,
+                    R.layout.mdl_navigation_drawer_row,
                     mAccountsMenuItems);
         }
     }
@@ -158,7 +160,7 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
     }
 
     private void changeAccount() {
-        Account currentAccount = getCurrentAccount();
+        Account currentAccount = getAccount(0);
         if (currentAccount == null) return;
 
         if (currentAccount.useBackgroundResource()) {
@@ -175,44 +177,31 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
             mDescription.setText(currentAccount.getDescription());
         } else mDescription.setVisibility(View.GONE);
 
-        Account secondAccount = getSecondAccount();
+        Account secondAccount = getAccount(1);
         if (secondAccount == null) return;
         mSecondPicture.setImageResource(secondAccount.getPictureResource());
 
-        Account thirdAccount = getThirdAccount();
+        Account thirdAccount = getAccount(2);
         if (thirdAccount == null) return;
         mThirdPicture.setImageResource(thirdAccount.getPictureResource());
     }
 
-    private Account getCurrentAccount() {
-        if (mCurrentAccountPosition < 0 || mCurrentAccountPosition >= mAccounts.size()) {
-            if (mAccounts.size() > 0) mCurrentAccountPosition = 0;
-            else return null;
-        }
-        return mAccounts.get(mCurrentAccountPosition);
+    private void resetAccountsPositions(int size) {
+        mAccountsPositions = new int[size];
+        for (int i = 0; i < size; ++i) mAccountsPositions[i] = i;
     }
 
-    private Account getSecondAccount() {
-        if (mSecondAccountPosition < 0 || mSecondAccountPosition >= mAccounts.size()) {
-            if (mAccounts.size() > 1) mSecondAccountPosition = 1;
-            else return null;
-        }
-        return mAccounts.get(mSecondAccountPosition);
-    }
+    private Account getAccount(int position) {
+        if (mAccountsPositions == null || position >= mAccountsPositions.length) return null;
 
-    private Account getThirdAccount() {
-        if (mThirdAccountPosition < 0 || mThirdAccountPosition >= mAccounts.size()) {
-            if (mAccounts.size() > 2) mThirdAccountPosition = 2;
+        if (mAccountsPositions[position] < 0 || mAccountsPositions[position] >= mAccounts.size()) {
+            if (mAccounts.size() > position) mAccountsPositions[position] = position;
             else return null;
         }
-        return mAccounts.get(mThirdAccountPosition);
+        return mAccounts.get(mAccountsPositions[position]);
     }
 
     private void initAccounts() {
-        mCurrentAccountPosition = 0;
-        mSecondAccountPosition = 1;
-        mThirdAccountPosition = 2;
-
         ViewGroup dataLayout = (ViewGroup) mMainLayout.getChildAt(1);
         ViewGroup dataPicturesLayout = (ViewGroup) dataLayout.getChildAt(0);
         ViewGroup dataTextViewsLayout = (ViewGroup) ((ViewGroup) dataLayout.getChildAt(1))
@@ -222,44 +211,44 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
         mTitle = (TextView) dataTextViewsLayout.getChildAt(0);
         mDescription = (TextView) dataTextViewsLayout.getChildAt(1);
 
-        if (getSecondAccount() != null) {
+        if (getAccount(1) != null) {
             mSecondPicture = (RoundedImageView) dataPicturesLayout.getChildAt(2);
             mSecondPicture.setVisibility(VISIBLE);
             mSecondPicture.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    int tmpPosition = mCurrentAccountPosition;
-                    mCurrentAccountPosition = mSecondAccountPosition;
-                    if (getThirdAccount() == null) mSecondAccountPosition = tmpPosition;
+                    int tmpPosition = mAccountsPositions[0];
+                    mAccountsPositions[0] = mAccountsPositions[1];
+                    if (getAccount(2) == null) mAccountsPositions[1] = tmpPosition;
                     else {
-                        mSecondAccountPosition = mThirdAccountPosition;
-                        mThirdAccountPosition = tmpPosition;
+                        mAccountsPositions[1] = mAccountsPositions[2];
+                        mAccountsPositions[2] = tmpPosition;
                     }
                     changeAccount();
                     if (mOnAccountChangeListener != null) {
                         mOnAccountChangeListener
-                                .onAccountChange(mAccounts.get(mCurrentAccountPosition));
+                                .onAccountChange(mAccounts.get(mAccountsPositions[0]));
                     }
                 }
 
             });
         }
 
-        if (getThirdAccount() != null) {
+        if (getAccount(2) != null) {
             mThirdPicture = (RoundedImageView) dataPicturesLayout.getChildAt(1);
             mThirdPicture.setVisibility(VISIBLE);
             mThirdPicture.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    int tmpPosition = mCurrentAccountPosition;
-                    mCurrentAccountPosition = mThirdAccountPosition;
-                    mThirdAccountPosition = tmpPosition;
+                    int tmpPosition = mAccountsPositions[0];
+                    mAccountsPositions[0] = mAccountsPositions[2];
+                    mAccountsPositions[2] = tmpPosition;
                     changeAccount();
                     if (mOnAccountChangeListener != null) {
                         mOnAccountChangeListener
-                                .onAccountChange(mAccounts.get(mCurrentAccountPosition));
+                                .onAccountChange(mAccounts.get(mAccountsPositions[0]));
                     }
                 }
 
@@ -328,15 +317,15 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
 
             @Override
             public void onMoreAccountClick(View v, int i) {
-                int tmpPosition = mCurrentAccountPosition;
-                mCurrentAccountPosition = position;
+                int tmpPosition = mAccountsPositions[0];
+                mAccountsPositions[0] = position;
 
-                Account account = mAccounts.get(mSecondAccountPosition);
+                Account account = mAccounts.get(mAccountsPositions[1]);
                 NavigationDrawerAccountsListItemAccount moreAccount =
                         new NavigationDrawerAccountsListItemAccount(getContext());
                 moreAccount.setTitle(account.getTitle());
                 moreAccount.setOnClickListener(
-                        generateAccountClickListener(mSecondAccountPosition));
+                        generateAccountClickListener(mAccountsPositions[1]));
                 if (account.getPictureResource() != -1) {
                     moreAccount.setIcon(getContext(), account.getPictureResource());
                 }
@@ -344,12 +333,12 @@ public class NavigationDrawerAccountsLayout extends LinearLayout {
                 mAccountsMenuItems.add(0, moreAccount);
                 mAccountsMenuAdapter.notifyDataSetChanged();
 
-                mSecondAccountPosition = mThirdAccountPosition;
-                mThirdAccountPosition = tmpPosition;
+                mAccountsPositions[1] = mAccountsPositions[2];
+                mAccountsPositions[2] = tmpPosition;
                 changeAccount();
                 if (mOnAccountChangeListener != null) {
                     mOnAccountChangeListener
-                            .onAccountChange(mAccounts.get(mCurrentAccountPosition));
+                            .onAccountChange(mAccounts.get(mAccountsPositions[0]));
                 }
             }
 

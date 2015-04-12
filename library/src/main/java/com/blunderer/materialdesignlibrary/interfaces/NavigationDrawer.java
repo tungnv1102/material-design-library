@@ -8,33 +8,33 @@ import com.blunderer.materialdesignlibrary.models.Account;
 
 public interface NavigationDrawer {
 
-    public void updateNavigationDrawerTopHandler(
+    void updateNavigationDrawerTopHandler(
             NavigationDrawerTopHandler navigationDrawerTopHandler,
             int defaultNavigationDrawerItemSelectedPosition);
 
-    public void updateNavigationDrawerBottomHandler(
+    void updateNavigationDrawerBottomHandler(
             NavigationDrawerBottomHandler navigationDrawerBottomHandler);
 
-    public void closeNavigationDrawer();
+    void closeNavigationDrawer();
 
-    public void openNavigationDrawer();
+    void openNavigationDrawer();
 
-    public void performNavigationDrawerItemClick(int position);
+    void performNavigationDrawerItemClick(int position);
 
-    public NavigationDrawerAccountsHandler getNavigationDrawerAccountsHandler();
+    NavigationDrawerAccountsHandler getNavigationDrawerAccountsHandler();
 
-    public NavigationDrawerAccountsMenuHandler getNavigationDrawerAccountsMenuHandler();
+    NavigationDrawerAccountsMenuHandler getNavigationDrawerAccountsMenuHandler();
 
-    public void onNavigationDrawerAccountChange(Account account);
+    void onNavigationDrawerAccountChange(Account account);
 
-    public NavigationDrawerTopHandler getNavigationDrawerTopHandler();
+    NavigationDrawerTopHandler getNavigationDrawerTopHandler();
 
-    public NavigationDrawerBottomHandler getNavigationDrawerBottomHandler();
+    NavigationDrawerBottomHandler getNavigationDrawerBottomHandler();
 
-    public boolean overlayActionBar();
+    boolean overlayActionBar();
 
-    public boolean replaceActionBarTitleByNavigationDrawerItemTitle();
+    boolean replaceActionBarTitleByNavigationDrawerItemTitle();
 
-    public int defaultNavigationDrawerItemSelectedPosition();
+    int defaultNavigationDrawerItemSelectedPosition();
 
 }

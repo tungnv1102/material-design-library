@@ -38,7 +38,7 @@ public abstract class ViewPagerActivity extends AActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.activity_view_pager);
+        super.onCreate(savedInstanceState, R.layout.mdl_activity_view_pager);
 
         ViewPagerHandler handler = getViewPagerHandler();
         if (handler != null && handler.getViewPagerItems() != null) {
@@ -47,7 +47,8 @@ public abstract class ViewPagerActivity extends AActivity
 
         if (mViewPagerItems != null && mViewPagerItems.size() > 0) {
             mViewPager = (ViewPager) findViewById(R.id.viewpager);
-            mViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), mViewPagerItems));
+            mViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),
+                    mViewPagerItems));
 
             int defaultViewPagerItemSelectedPosition = defaultViewPagerPageSelectedPosition();
             if (defaultViewPagerItemSelectedPosition >= 0 &&
@@ -78,8 +79,8 @@ public abstract class ViewPagerActivity extends AActivity
         if (replaceActionBarTitleByViewPagerPageTitle()) getSupportActionBar().setTitle(title);
     }
 
-    protected abstract boolean showViewPagerIndicator();
+    public abstract boolean showViewPagerIndicator();
 
-    protected abstract boolean replaceActionBarTitleByViewPagerPageTitle();
+    public abstract boolean replaceActionBarTitleByViewPagerPageTitle();
 
 }

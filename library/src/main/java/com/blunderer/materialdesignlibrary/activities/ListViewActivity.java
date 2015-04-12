@@ -24,7 +24,7 @@ public abstract class ListViewActivity extends AActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.activity_listview);
+        super.onCreate(savedInstanceState, R.layout.mdl_activity_listview);
 
         mActivity = this;
 
@@ -32,7 +32,7 @@ public abstract class ListViewActivity extends AActivity
         View inflatedView;
         try {
             stub.setLayoutResource(useCustomContentView()
-                    ? getCustomContentView() : R.layout.listview);
+                    ? getCustomContentView() : R.layout.mdl_listview);
             inflatedView = stub.inflate();
 
             if (inflatedView instanceof ListView) mListView = (ListView) inflatedView;
@@ -42,8 +42,7 @@ public abstract class ListViewActivity extends AActivity
                     "CustomContentView must have a valid layoutResource");
         }
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout)
-                findViewById(R.id.activity_listview_with_refresh_refresh);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_listview_refresh);
         if (pullToRefreshEnabled()) {
             mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 

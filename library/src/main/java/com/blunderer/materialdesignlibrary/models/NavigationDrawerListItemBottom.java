@@ -16,11 +16,11 @@ public class NavigationDrawerListItemBottom extends ListItem {
     public NavigationDrawerListItemBottom(Context context, int definedItem) {
         switch (definedItem) {
             case SETTINGS:
-                setTitle(context, R.string.settings);
+                setTitle(context, R.string.mdl_settings);
                 setIcon(context, R.drawable.ic_settings);
                 break;
             case HELP_AND_FEEDBACK:
-                setTitle(context, R.string.help_and_feedback);
+                setTitle(context, R.string.mdl_help_and_feedback);
                 setIcon(context, R.drawable.ic_help);
                 break;
             default:

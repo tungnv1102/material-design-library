@@ -4,24 +4,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 
-public interface ListView {
+public interface ScrollView {
 
     void setRefreshing(boolean refreshing);
 
-    ListAdapter getListAdapter();
-
-    boolean useCustomContentView();
-
-    int getCustomContentView();
+    int getContentView();
 
     boolean pullToRefreshEnabled();
 
     int[] getPullToRefreshColorResources();
 
     void onRefresh();
-
-    void onItemClick(AdapterView<?> adapterView, View view, int position, long l);
-
-    boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l);
 
 }

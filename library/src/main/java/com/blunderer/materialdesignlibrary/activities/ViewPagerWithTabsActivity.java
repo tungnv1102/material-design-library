@@ -20,7 +20,7 @@ public abstract class ViewPagerWithTabsActivity extends AActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.activity_view_pager_with_tabs);
+        super.onCreate(savedInstanceState, R.layout.mdl_activity_view_pager_with_tabs);
 
         List<ViewPagerItem> viewPagerItems = null;
         ViewPagerHandler handler = getViewPagerHandler();
@@ -45,10 +45,14 @@ public abstract class ViewPagerWithTabsActivity extends AActivity
     private void showTabs(ViewPager pager) {
         mViewPagerTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         mViewPagerTabs.setTextColor(getResources().getColor(android.R.color.white));
+        mViewPagerTabs.setShouldExpand(expandTabs());
         mViewPagerTabs.setViewPager(pager);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             mViewPagerTabs.setTabBackground(android.R.attr.selectableItemBackground);
         }
     }
+
+    protected abstract boolean expandTabs();
 
 }
