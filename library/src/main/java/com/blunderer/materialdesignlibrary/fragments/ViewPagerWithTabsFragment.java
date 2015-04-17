@@ -1,5 +1,6 @@
 package com.blunderer.materialdesignlibrary.fragments;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -53,6 +54,17 @@ public abstract class ViewPagerWithTabsFragment extends Fragment
             showTabs(mViewPager, view);
         }
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (mViewPagerItems != null && mViewPagerItems.size() > 0 && mViewPager != null) {
+            int tabPosition = mViewPager.getCurrentItem();
+            if (tabPosition >= 0 && tabPosition < mViewPagerItems.size()) {
+                mViewPagerItems.get(tabPosition).getFragment()
+                        .onActivityResult(requestCode, resultCode, data);
+            }
+        }
     }
 
     private void showTabs(ViewPager pager, View view) {

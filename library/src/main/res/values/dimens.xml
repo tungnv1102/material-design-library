@@ -16,6 +16,8 @@
     <dimen name="mdl_navigationdrawer_accounts_current_account_size">64dp</dimen>
     <dimen name="mdl_navigationdrawer_accounts_other_account_size">40dp</dimen>
     <dimen name="mdl_navigationdrawer_accounts_second_account_padding_right">56dp</dimen>
+    <dimen name="mdl_navigationdrawer_accounts_small_height">68dp</dimen>
+    <dimen name="mdl_navigationdrawer_accounts_small_account_size">36dp</dimen>
 
     <!-- ViewPager With Tabs -->
     <dimen name="mdl_viewpager_with_tabs_height">48dip</dimen>

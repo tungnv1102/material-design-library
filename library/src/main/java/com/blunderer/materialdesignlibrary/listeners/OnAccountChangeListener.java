@@ -4,6 +4,6 @@ import com.blunderer.materialdesignlibrary.models.Account;
 
 public interface OnAccountChangeListener {
 
-    public void onAccountChange(Account account);
+    void onAccountChange(Account account);
 
 }

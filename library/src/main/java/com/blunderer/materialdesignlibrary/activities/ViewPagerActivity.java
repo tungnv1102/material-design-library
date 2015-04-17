@@ -1,5 +1,6 @@
 package com.blunderer.materialdesignlibrary.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -8,6 +9,7 @@ import com.blunderer.materialdesignlibrary.R;
 import com.blunderer.materialdesignlibrary.adapters.ViewPagerAdapter;
 import com.blunderer.materialdesignlibrary.handlers.ViewPagerHandler;
 import com.blunderer.materialdesignlibrary.models.ViewPagerItem;
+import com.blunderer.materialdesignlibrary.views.ToolbarSearch;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.List;
@@ -35,6 +37,19 @@ public abstract class ViewPagerActivity extends AActivity
         }
 
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ToolbarSearch.SEARCH_REQUEST_CODE) {
+            super.onActivityResult(requestCode, resultCode, data);
+        } else if (mViewPagerItems != null && mViewPagerItems.size() > 0 && mViewPager != null) {
+            int tabPosition = mViewPager.getCurrentItem();
+            if (tabPosition >= 0 && tabPosition < mViewPagerItems.size()) {
+                mViewPagerItems.get(tabPosition).getFragment()
+                        .onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

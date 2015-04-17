@@ -1,5 +1,6 @@
 package com.blunderer.materialdesignlibrary.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.blunderer.materialdesignlibrary.R;
+import com.blunderer.materialdesignlibrary.views.ToolbarSearch;
 
 public abstract class ListViewActivity extends AActivity
         implements com.blunderer.materialdesignlibrary.interfaces.ListView {
@@ -78,6 +80,13 @@ public abstract class ListViewActivity extends AActivity
 
                 });
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ToolbarSearch.SEARCH_REQUEST_CODE) {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 

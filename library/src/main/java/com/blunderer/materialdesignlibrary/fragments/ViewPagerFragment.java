@@ -1,6 +1,7 @@
 package com.blunderer.materialdesignlibrary.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -78,6 +79,17 @@ public abstract class ViewPagerFragment extends Fragment
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (mViewPagerItems != null && mViewPagerItems.size() > 0 && mViewPager != null) {
+            int tabPosition = mViewPager.getCurrentItem();
+            if (tabPosition >= 0 && tabPosition < mViewPagerItems.size()) {
+                mViewPagerItems.get(tabPosition).getFragment()
+                        .onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
+
     public String getTitle() {
         if (mViewPagerItems == null || mCurrentPagePosition < 0
                 || mCurrentPagePosition >= mViewPagerItems.size()) {
@@ -87,11 +99,9 @@ public abstract class ViewPagerFragment extends Fragment
     }
 
     private void showIndicator(View view, ViewPager pager) {
-        if (!showViewPagerIndicator()) {
-            pager.setOnPageChangeListener(mOnPageChangeListener);
-        } else {
-            mViewPagerIndicator = (CirclePageIndicator)
-                    view.findViewById(R.id.viewpagerindicator);
+        if (!showViewPagerIndicator()) pager.setOnPageChangeListener(mOnPageChangeListener);
+        else {
+            mViewPagerIndicator = (CirclePageIndicator) view.findViewById(R.id.viewpagerindicator);
             mViewPagerIndicator.setViewPager(pager);
             mViewPagerIndicator.setVisibility(View.VISIBLE);
             mViewPagerIndicator.setOnPageChangeListener(mOnPageChangeListener);

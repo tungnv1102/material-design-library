@@ -20,13 +20,12 @@ import carbon.widget.Button;
 
 public class CardView extends android.support.v7.widget.CardView {
 
-    // Positions
+    // Image Positions
     public final static int POSITION_NONE = 0;
     public final static int POSITION_LEFT = 1;
     public final static int POSITION_TOP = 2;
 
     // Variables
-    private Context mContext;
     private int mImagePosition;
     private Drawable mImage;
     private String mTitleText;
@@ -47,7 +46,6 @@ public class CardView extends android.support.v7.widget.CardView {
     public CardView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mContext = context;
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs,
                 R.styleable.MDLCardView, 0, 0);
 
@@ -91,7 +89,7 @@ public class CardView extends android.support.v7.widget.CardView {
     }
 
     public void setImageResource(int imageResource) {
-        mImage = mContext.getResources().getDrawable(imageResource);
+        mImage = getContext().getResources().getDrawable(imageResource);
 
         refresh();
     }
@@ -107,7 +105,7 @@ public class CardView extends android.support.v7.widget.CardView {
     }
 
     public void setTitleResource(int titleResource) {
-        mTitleText = mContext.getString(titleResource);
+        mTitleText = getContext().getString(titleResource);
 
         refresh();
     }
@@ -123,7 +121,7 @@ public class CardView extends android.support.v7.widget.CardView {
     }
 
     public void setDescriptionResource(int descriptionResource) {
-        mDescriptionText = mContext.getString(descriptionResource);
+        mDescriptionText = getContext().getString(descriptionResource);
 
         refresh();
     }
@@ -139,7 +137,7 @@ public class CardView extends android.support.v7.widget.CardView {
     }
 
     public void setNormalButtonTextResource(int normalButtonTextResource) {
-        mNormalButtonText = mContext.getString(normalButtonTextResource);
+        mNormalButtonText = getContext().getString(normalButtonTextResource);
 
         refresh();
     }
@@ -155,7 +153,7 @@ public class CardView extends android.support.v7.widget.CardView {
     }
 
     public void setHighlightButtonTextResource(int highlightButtonTextResource) {
-        mHighlightButtonText = mContext.getString(highlightButtonTextResource);
+        mHighlightButtonText = getContext().getString(highlightButtonTextResource);
 
         refresh();
     }
@@ -177,7 +175,7 @@ public class CardView extends android.support.v7.widget.CardView {
     }
 
     private void inflate() {
-        LayoutInflater inflater = (LayoutInflater) mContext
+        LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (mImagePosition == POSITION_LEFT) inflateCardViewImageLeft(inflater);

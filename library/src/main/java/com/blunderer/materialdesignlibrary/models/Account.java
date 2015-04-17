@@ -1,13 +1,18 @@
 package com.blunderer.materialdesignlibrary.models;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+
 public class Account {
 
     private String mTitle;
     private String mDescription;
-    private int mPictureResource = -1;
+    private Drawable mPicture;
     private int mBackgroundResource;
+    private Drawable mBackgroundDrawable;
 
-    private boolean mUseBackground = false;
+    private boolean mUseBackgroundDrawable;
 
     public String getTitle() {
         return mTitle;
@@ -25,25 +30,40 @@ public class Account {
         this.mDescription = email;
     }
 
-    public int getPictureResource() {
-        return mPictureResource;
+    public Drawable getPicture() {
+        return mPicture;
     }
 
-    public void setPictureResource(int pictureResource) {
-        this.mPictureResource = pictureResource;
+    public void setPicture(Context context, int pictureResource) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mPicture = context.getDrawable(pictureResource);
+        } else mPicture = context.getResources().getDrawable(pictureResource);
+    }
+
+    public void setPicture(Drawable picture) {
+        mPicture = picture;
     }
 
     public int getBackgroundResource() {
         return mBackgroundResource;
     }
 
-    public void setBackgroundResource(int backgroundImageResource) {
-        this.mBackgroundResource = backgroundImageResource;
-        mUseBackground = true;
+    public Drawable getBackgroundDrawable() {
+        return mBackgroundDrawable;
     }
 
-    public boolean useBackgroundResource() {
-        return mUseBackground;
+    public void setBackground(int backgroundResource) {
+        mUseBackgroundDrawable = false;
+        mBackgroundResource = backgroundResource;
+    }
+
+    public void setBackground(Drawable background) {
+        mUseBackgroundDrawable = true;
+        mBackgroundDrawable = background;
+    }
+
+    public boolean useBackgroundDrawable() {
+        return mUseBackgroundDrawable;
     }
 
 }

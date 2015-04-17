@@ -35,7 +35,7 @@ public abstract class ListViewFragment extends Fragment
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mdl_fragment_listview, container, false);
 
-        ViewStub stub = (ViewStub) view.findViewById(R.id.activity_listview_view);
+        ViewStub stub = (ViewStub) view.findViewById(R.id.fragment_listview_view);
         try {
             stub.setLayoutResource(useCustomContentView()
                     ? getCustomContentView() : R.layout.mdl_listview);
@@ -50,7 +50,7 @@ public abstract class ListViewFragment extends Fragment
         }
 
         mSwipeRefreshLayout = (SwipeRefreshLayout)
-                view.findViewById(R.id.activity_listview_with_refresh_refresh);
+                view.findViewById(R.id.fragment_listview_refresh);
         if (pullToRefreshEnabled()) {
             mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 

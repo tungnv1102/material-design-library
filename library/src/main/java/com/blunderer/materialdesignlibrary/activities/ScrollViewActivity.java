@@ -1,15 +1,19 @@
 package com.blunderer.materialdesignlibrary.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.ViewStub;
+import android.widget.ScrollView;
 
 import com.blunderer.materialdesignlibrary.R;
-import com.blunderer.materialdesignlibrary.interfaces.ScrollView;
+import com.blunderer.materialdesignlibrary.views.ToolbarSearch;
 
-public abstract class ScrollViewActivity extends AActivity implements ScrollView {
+public abstract class ScrollViewActivity extends AActivity
+        implements com.blunderer.materialdesignlibrary.interfaces.ScrollView {
 
     protected SwipeRefreshLayout mSwipeRefreshLayout;
+    protected ScrollView mScrollView;
     private ScrollViewActivity mActivity;
 
     @Override
@@ -22,6 +26,8 @@ public abstract class ScrollViewActivity extends AActivity implements ScrollView
         super.onCreate(savedInstanceState, R.layout.mdl_activity_scrollview);
 
         mActivity = this;
+
+        mScrollView = (ScrollView) findViewById(R.id.activity_scrollview);
 
         ViewStub stub = (ViewStub) findViewById(R.id.activity_scrollview_view);
         try {
@@ -43,6 +49,13 @@ public abstract class ScrollViewActivity extends AActivity implements ScrollView
             });
             mSwipeRefreshLayout.setColorSchemeResources(getPullToRefreshColorResources());
         } else mSwipeRefreshLayout.setEnabled(false);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ToolbarSearch.SEARCH_REQUEST_CODE) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 }

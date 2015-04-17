@@ -1,12 +1,12 @@
 package com.blunderer.materialdesignlibrary.activities;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -30,7 +30,10 @@ import com.blunderer.materialdesignlibrary.models.NavigationDrawerListItemBottom
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerListItemHeader;
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerListItemTopFragment;
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerListItemTopIntent;
+import com.blunderer.materialdesignlibrary.views.ANavigationDrawerAccountsLayout;
 import com.blunderer.materialdesignlibrary.views.NavigationDrawerAccountsLayout;
+import com.blunderer.materialdesignlibrary.views.NavigationDrawerAccountsLayoutSmall;
+import com.blunderer.materialdesignlibrary.views.ToolbarSearch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +43,7 @@ public abstract class NavigationDrawerActivity extends AActivity
 
     protected DrawerLayout mDrawerLayout;
     protected ActionBarDrawerToggle mDrawerToggle;
-    protected NavigationDrawerAccountsLayout mAccountsLayout;
+    protected ANavigationDrawerAccountsLayout mAccountsLayout;
     protected ListView mTopListView;
     protected ListView mBottomListView;
     protected NavigationDrawerAdapter mListTopAdapter;
@@ -115,7 +118,8 @@ public abstract class NavigationDrawerActivity extends AActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, overlayActionBar() ?
-                R.layout.mdl_activity_navigation_drawer_full : R.layout.mdl_activity_navigation_drawer);
+                R.layout.mdl_activity_navigation_drawer_full
+                : R.layout.mdl_activity_navigation_drawer);
 
         if (savedInstanceState != null) mAccountsPositions = savedInstanceState.getIntArray("cc");
 
@@ -140,6 +144,15 @@ public abstract class NavigationDrawerActivity extends AActivity
         super.onPostCreate(savedInstanceState);
 
         mDrawerToggle.syncState();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ToolbarSearch.SEARCH_REQUEST_CODE) {
+            super.onActivityResult(requestCode, resultCode, data);
+        } else if (mCurrentItem != null && mCurrentItem.getFragment() != null) {
+            mCurrentItem.getFragment().onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     private void defineListTop() {
@@ -186,7 +199,7 @@ public abstract class NavigationDrawerActivity extends AActivity
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,
                 mDrawerLayout,
-                mToolbar,
+                getMaterialDesignActionBar(),
                 R.string.mdl_navigation_drawer_open,
                 R.string.mdl_navigation_drawer_close) {
 
@@ -260,7 +273,6 @@ public abstract class NavigationDrawerActivity extends AActivity
         }
 
         ListItem item = mNavigationDrawerItemsTop.get(fragmentPosition);
-        Log.e("testtest", "fragmentPosition=" + item.getTitle());
         if (item instanceof NavigationDrawerListItemTopFragment) {
             NavigationDrawerListItemTopFragment itemFragment =
                     (NavigationDrawerListItemTopFragment) item;
@@ -355,7 +367,12 @@ public abstract class NavigationDrawerActivity extends AActivity
     private void showAccountsLayout() {
         mNavigationDrawerAccountsHandler = getNavigationDrawerAccountsHandler();
         if (!isNavigationDrawerAccountHandlerEmpty()) {
-            mAccountsLayout = new NavigationDrawerAccountsLayout(getApplicationContext());
+            if (mNavigationDrawerAccountsHandler.useSmallAccountsLayout()) {
+                mAccountsLayout = new NavigationDrawerAccountsLayoutSmall(getApplicationContext());
+            } else {
+                mAccountsLayout = new NavigationDrawerAccountsLayout(getApplicationContext());
+            }
+
             if (mAccountsPositions != null) {
                 mAccountsLayout.mAccountsPositions = mAccountsPositions;
                 mAccountsLayout.isRestored = true;

@@ -8,5 +8,7 @@
     <string name="mdl_icon">Icon</string>
     <string name="mdl_manage_accounts">Manage accounts</string>
     <string name="mdl_add_account">Add an account</string>
+    <string name="mdl_search">Search</string>
+    <string name="mdl_back">Back</string>
 
 </resources>

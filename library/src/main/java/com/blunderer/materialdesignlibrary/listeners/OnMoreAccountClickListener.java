@@ -4,6 +4,6 @@ import android.view.View;
 
 public interface OnMoreAccountClickListener {
 
-    public void onMoreAccountClick(View view, int i);
+    void onMoreAccountClick(View view, int i);
 
 }
