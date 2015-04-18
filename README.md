@@ -9,7 +9,8 @@ It offers a lot of Material Design classes easy to use like a CardView or a Navi
 ### Demo
 [![Material Design Library on Google Play Store](http://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.blunderer.materialdesignlibrary.sample)
 
-![NavigationDrawer with Accounts](images/screen06.png) ![CardView with Image on the Top](images/screen07.png)
+![NavigationDrawer with Accounts](images/screen06.png) ![NavigationDrawer with Small Accounts Layout](images/screen11.png)
+![CardView with Image on the Top](images/screen07.png) ![SearchBar with Auto Completion](images/screen13.png)
 ![ListView with Pull To Refresh](images/screen02.png) ![ViewPager with Tabs](images/screen08.png)
 
 ### Wiki
@@ -21,7 +22,7 @@ Read wiki here: [Material Design Library Wiki](https://github.com/DenisMondon/ma
 
 ```groovy
 dependencies {
-    compile 'com.blunderer:materialdesignlibrary:1.2.0'
+    compile 'com.blunderer:materialdesignlibrary:2.0.0'
 }
 ```
 
@@ -137,6 +138,11 @@ public class MyActivity extends NavigationDrawerActivity {
     @Override
     public int defaultNavigationDrawerItemSelectedPosition() {
         return 0;
+    }
+
+    @Override
+    protected ActionBarHandler getActionBarHandler() {
+        return new ActionBarDefaultHandler(this);
     }
 
 }
