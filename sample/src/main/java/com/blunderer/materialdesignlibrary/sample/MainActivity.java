@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 
+import com.blunderer.materialdesignlibrary.handlers.ActionBarDefaultHandler;
+import com.blunderer.materialdesignlibrary.handlers.ActionBarHandler;
 import com.blunderer.materialdesignlibrary.sample.cardviews.CardViewNormalActivity;
 import com.blunderer.materialdesignlibrary.sample.cardviews.CardViewWithLeftImageActivity;
 import com.blunderer.materialdesignlibrary.sample.cardviews.CardViewWithTopImageActivity;
@@ -20,6 +22,8 @@ import com.blunderer.materialdesignlibrary.sample.navigationdrawers.NavigationDr
 import com.blunderer.materialdesignlibrary.sample.navigationdrawers.NavigationDrawerWithFullHeightActivity;
 import com.blunderer.materialdesignlibrary.sample.scrollviews.ScrollViewActivity;
 import com.blunderer.materialdesignlibrary.sample.scrollviews.ScrollViewWithRefreshActivity;
+import com.blunderer.materialdesignlibrary.sample.searchbar.SearchBarActivity;
+import com.blunderer.materialdesignlibrary.sample.searchbar.SearchBarAutoCompletionActivity;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerActivity;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerWithIndicatorActivity;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerWithTabsActivity;
@@ -74,7 +78,7 @@ public class MainActivity extends com.blunderer.materialdesignlibrary.activities
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -88,6 +92,11 @@ public class MainActivity extends com.blunderer.materialdesignlibrary.activities
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected ActionBarHandler getActionBarHandler() {
+        return new ActionBarDefaultHandler(this);
     }
 
     private List<MainActivityFeature> getFeatures() {
@@ -175,7 +184,22 @@ public class MainActivity extends com.blunderer.materialdesignlibrary.activities
         cardviewFeature3.setTitle("Top Image");
         cardviewFeature3.setDescription("A CardView with an image on the top");
 
+        MainActivityFeature searchBarHeader = new MainActivityFeature();
+        searchBarHeader.setHeader(true);
+        searchBarHeader.setTitle("SearchBar");
+        MainActivityFeature searchBarFeature1 = new MainActivityFeature();
+        searchBarFeature1.setActivity(SearchBarActivity.class);
+        searchBarFeature1.setTitle("Normal");
+        searchBarFeature1.setDescription("A basic SearchBar");
+        MainActivityFeature searchBarFeature2 = new MainActivityFeature();
+        searchBarFeature2.setActivity(SearchBarAutoCompletionActivity.class);
+        searchBarFeature2.setTitle("With Auto Completion");
+        searchBarFeature2.setDescription("A SearchBar with auto completion");
+
         List<MainActivityFeature> objects = new ArrayList<>();
+        objects.add(searchBarHeader);
+        objects.add(searchBarFeature1);
+        objects.add(searchBarFeature2);
         objects.add(navigationDrawerHeader);
         objects.add(navigationDrawerFeature1);
         objects.add(navigationDrawerFeature2);

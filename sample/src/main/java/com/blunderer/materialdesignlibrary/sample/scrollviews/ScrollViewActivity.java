@@ -1,5 +1,7 @@
 package com.blunderer.materialdesignlibrary.sample.scrollviews;
 
+import com.blunderer.materialdesignlibrary.handlers.ActionBarDefaultHandler;
+import com.blunderer.materialdesignlibrary.handlers.ActionBarHandler;
 import com.blunderer.materialdesignlibrary.sample.R;
 
 public class ScrollViewActivity
@@ -22,6 +24,11 @@ public class ScrollViewActivity
 
     @Override
     public void onRefresh() {
+    }
+
+    @Override
+    protected ActionBarHandler getActionBarHandler() {
+        return new ActionBarDefaultHandler(this);
     }
 
 }

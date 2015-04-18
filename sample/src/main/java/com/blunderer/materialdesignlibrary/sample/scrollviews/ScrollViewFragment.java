@@ -2,16 +2,14 @@ package com.blunderer.materialdesignlibrary.sample.scrollviews;
 
 import android.os.Handler;
 
-import com.blunderer.materialdesignlibrary.handlers.ActionBarDefaultHandler;
-import com.blunderer.materialdesignlibrary.handlers.ActionBarHandler;
 import com.blunderer.materialdesignlibrary.sample.R;
 
-public class ScrollViewWithRefreshActivity
-        extends com.blunderer.materialdesignlibrary.activities.ScrollViewActivity {
+public class ScrollViewFragment
+        extends com.blunderer.materialdesignlibrary.fragments.ScrollViewFragment {
 
     @Override
     public int getContentView() {
-        return R.layout.activity_scrollview;
+        return R.layout.fragment_scrollview;
     }
 
     @Override
@@ -34,11 +32,6 @@ public class ScrollViewWithRefreshActivity
             }
 
         }, 2000);
-    }
-
-    @Override
-    protected ActionBarHandler getActionBarHandler() {
-        return new ActionBarDefaultHandler(this);
     }
 
 }

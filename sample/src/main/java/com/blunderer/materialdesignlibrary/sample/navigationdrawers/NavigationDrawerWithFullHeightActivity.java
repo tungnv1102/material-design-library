@@ -2,6 +2,8 @@ package com.blunderer.materialdesignlibrary.sample.navigationdrawers;
 
 import android.content.Intent;
 
+import com.blunderer.materialdesignlibrary.handlers.ActionBarDefaultHandler;
+import com.blunderer.materialdesignlibrary.handlers.ActionBarHandler;
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerAccountsHandler;
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerAccountsMenuHandler;
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerBottomHandler;
@@ -9,6 +11,7 @@ import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerTopHandler;
 import com.blunderer.materialdesignlibrary.models.Account;
 import com.blunderer.materialdesignlibrary.sample.R;
 import com.blunderer.materialdesignlibrary.sample.listviews.ListViewFragment;
+import com.blunderer.materialdesignlibrary.sample.scrollviews.ScrollViewFragment;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerActivity;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerFragment;
 import com.blunderer.materialdesignlibrary.sample.viewpagers.ViewPagerWithTabsFragment;
@@ -35,7 +38,8 @@ public class NavigationDrawerWithFullHeightActivity
         return new NavigationDrawerTopHandler(this)
                 .addSection(R.string.fragment)
                 .addItem(R.string.fragment_listview, new ListViewFragment())
-                .addItem(R.string.fragment_viewpager, R.drawable.ic_add, new ViewPagerFragment())
+                .addItem(R.string.fragment_scrollview, new ScrollViewFragment())
+                .addItem(R.string.fragment_viewpager, new ViewPagerFragment())
                 .addItem(R.string.fragment_viewpager_with_tabs, new ViewPagerWithTabsFragment())
                 .addSection(R.string.activity)
                 .addItem(R.string.start_activity,
@@ -62,6 +66,11 @@ public class NavigationDrawerWithFullHeightActivity
     @Override
     public int defaultNavigationDrawerItemSelectedPosition() {
         return 1;
+    }
+
+    @Override
+    protected ActionBarHandler getActionBarHandler() {
+        return new ActionBarDefaultHandler(this);
     }
 
 }

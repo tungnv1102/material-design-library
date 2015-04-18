@@ -1,5 +1,7 @@
 package com.blunderer.materialdesignlibrary.sample.viewpagers;
 
+import com.blunderer.materialdesignlibrary.handlers.ActionBarDefaultHandler;
+import com.blunderer.materialdesignlibrary.handlers.ActionBarHandler;
 import com.blunderer.materialdesignlibrary.handlers.ViewPagerHandler;
 import com.blunderer.materialdesignlibrary.sample.MainFragment;
 import com.blunderer.materialdesignlibrary.sample.R;
@@ -24,6 +26,11 @@ public class ViewPagerWithTabsActivity
     @Override
     public int defaultViewPagerPageSelectedPosition() {
         return 0;
+    }
+
+    @Override
+    protected ActionBarHandler getActionBarHandler() {
+        return new ActionBarDefaultHandler(this);
     }
 
 }

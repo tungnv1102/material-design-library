@@ -6,6 +6,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
+import com.blunderer.materialdesignlibrary.handlers.ActionBarDefaultHandler;
+import com.blunderer.materialdesignlibrary.handlers.ActionBarHandler;
 import com.blunderer.materialdesignlibrary.sample.R;
 
 import java.util.ArrayList;
@@ -69,6 +71,11 @@ public class ListViewWithRefreshActivity
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
         return true;
+    }
+
+    @Override
+    protected ActionBarHandler getActionBarHandler() {
+        return new ActionBarDefaultHandler(this);
     }
 
 }

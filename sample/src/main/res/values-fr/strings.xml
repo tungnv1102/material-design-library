@@ -10,10 +10,13 @@
     <string name="title_item4">Item 4</string>
     <string name="github">GitHub</string>
 
+    <string name="click_search_button">Cliquez sur le Bouton de Recherche !</string>
+
     <string name="custom_layout_with_listview">Voici un Layout personnalisé qui contient une ListView dont l\'id est : android:id=\"@android:id/list\"</string>
     <string name="fragment">Fragment</string>
     <string name="activity">Activity</string>
     <string name="fragment_listview">Fragment ListView</string>
+    <string name="fragment_scrollview">Fragment ScrollView</string>
     <string name="fragment_viewpager">Fragment ViewPager</string>
     <string name="fragment_viewpager_with_tabs">Fragment ViewPager with Tabs</string>
     <string name="start_activity">Start Activity</string>
