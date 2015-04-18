@@ -37,10 +37,10 @@ public class NavigationDrawerActivity
     public NavigationDrawerTopHandler getNavigationDrawerTopHandler() {
         return new NavigationDrawerTopHandler(this)
                 .addSection(R.string.fragment)
-                .addItem(R.string.fragment_listview, R.mipmap.ic_github, new ListViewFragment())
-                .addItem(R.string.fragment_scrollview, R.mipmap.ic_github, new ScrollViewFragment())
-                .addItem(R.string.fragment_viewpager, R.mipmap.ic_github, new ViewPagerFragment())
-                .addItem(R.string.fragment_viewpager_with_tabs, R.mipmap.ic_github, new ViewPagerWithTabsFragment())
+                .addItem(R.string.fragment_listview, new ListViewFragment())
+                .addItem(R.string.fragment_scrollview, new ScrollViewFragment())
+                .addItem(R.string.fragment_viewpager, new ViewPagerFragment())
+                .addItem(R.string.fragment_viewpager_with_tabs, new ViewPagerWithTabsFragment())
                 .addSection(R.string.activity)
                 .addItem(R.string.start_activity, R.mipmap.ic_github,
                         new Intent(getApplicationContext(), ViewPagerActivity.class));
