@@ -6,6 +6,11 @@ Material Design Library
 This library helps developers creating their Android Application with Material Design.  
 It offers a lot of Material Design classes easy to use like a CardView or a NavigationDrawerActivity that creates an Activity with a Material Design NavigationDrawer.
 
+### What's new
+* **SearchBar** in the ActionBar (can be used with any Activity)
+* SearchBar **Auto Completion**
+* NavigationDrawer **Small Accounts Layout** (to show only the current account)
+
 ### Demo
 [![Material Design Library on Google Play Store](http://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.blunderer.materialdesignlibrary.sample)
 
@@ -18,7 +23,7 @@ Read wiki here: [Material Design Library Wiki](https://github.com/DenisMondon/ma
 
 ### Usage
 
-**1.** Add the dependency in your build.gradle.
+**1.** Add the dependency in your **build.gradle**.
 
 ```groovy
 dependencies {
@@ -26,7 +31,7 @@ dependencies {
 }
 ```
 
-**2.** In your *values/styles.xml* file, change the parent style and add your own colorPrimary/colorPrimaryDark colors:
+**2.** In your **values/styles.xml** file, change the parent style and add your own **colorPrimary/colorPrimaryDark** colors:
 
 ```xml
 <style name="AppTheme" parent="@style/MaterialDesignLibraryTheme">
@@ -45,7 +50,7 @@ Or if you want the Light Theme:
 ```
 
 **3.** Then you can:  
-**-** *Extend your activity* by one of mine (*each activity will be in Material Design*):  
+**-** **Extend your activity** by one of mine (*each activity will be in Material Design*):  
 
   * **Activity**  
     Your Activity will be a basic Activity with Material Design.
@@ -148,7 +153,7 @@ public class MyActivity extends NavigationDrawerActivity {
 }
 ```
 
-**-** Or use my CardView:
+**-** Or use my **CardView**:
 
   * **Normal CardView**  
   Your CardView will be a basic CardView.
