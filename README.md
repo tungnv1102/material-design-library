@@ -27,7 +27,7 @@ Read wiki here: [Material Design Library Wiki](https://github.com/DenisMondon/ma
 
 ```groovy
 dependencies {
-    compile 'com.blunderer:materialdesignlibrary:2.0.0'
+    compile 'com.blunderer:materialdesignlibrary:2.0.1'
 }
 ```
 
@@ -75,6 +75,11 @@ Or if you want the Light Theme:
 import com.blunderer.materialdesignlibrary.activities.NavigationDrawerActivity;
 
 public class MyActivity extends NavigationDrawerActivity {
+
+	@Override
+    public NavigationDrawerStyleHandler getNavigationDrawerStyleHandler() {
+        return new NavigationDrawerStyleHandler();
+    }
 
     @Override
     public NavigationDrawerAccountsHandler getNavigationDrawerAccountsHandler() {
@@ -143,6 +148,11 @@ public class MyActivity extends NavigationDrawerActivity {
     @Override
     public int defaultNavigationDrawerItemSelectedPosition() {
         return 0;
+    }
+
+    @Override
+    protected boolean enableActionBarShadow() {
+        return true;
     }
 
     @Override
