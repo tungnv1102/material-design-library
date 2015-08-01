@@ -56,7 +56,7 @@ public class NavigationDrawerAccountsMenuAdapter
             convertView.setTag(holder);
         } else holder = (ViewHolder) convertView.getTag();
 
-        if (item.useTitleResource()) {
+        if (item.useTitle()) {
             try {
                 holder.title.setText(item.getTitle());
                 holder.titleHeader.setText(item.getTitle());
@@ -71,9 +71,10 @@ public class NavigationDrawerAccountsMenuAdapter
                     (NavigationDrawerAccountsListItemIntent) item;
             holder.title.setVisibility(View.VISIBLE);
             holder.titleHeader.setVisibility(View.GONE);
-            if (itemNormal.useIconResource()) {
+            if (itemNormal.useIconResource() || itemNormal.useIconUrl()) {
                 try {
-                    holder.icon.setImageDrawable(itemNormal.getIcon());
+                    if (itemNormal.useIconUrl()) itemNormal.getIconUrl().into(holder.icon);
+                    else holder.icon.setImageDrawable(itemNormal.getIconDrawable());
                     holder.icon.setVisibility(View.VISIBLE);
                 } catch (Resources.NotFoundException e) {
                     holder.icon.setVisibility(View.GONE);
@@ -84,9 +85,10 @@ public class NavigationDrawerAccountsMenuAdapter
                     (NavigationDrawerAccountsListItemOnClick) item;
             holder.title.setVisibility(View.VISIBLE);
             holder.titleHeader.setVisibility(View.GONE);
-            if (itemAccount.useIconResource()) {
+            if (itemAccount.useIconResource() || itemAccount.useIconUrl()) {
                 try {
-                    holder.icon.setImageDrawable(itemAccount.getIcon());
+                    if (itemAccount.useIconUrl()) itemAccount.getIconUrl().into(holder.icon);
+                    else holder.icon.setImageDrawable(itemAccount.getIconDrawable());
                     holder.icon.setVisibility(View.VISIBLE);
                 } catch (Resources.NotFoundException e) {
                     holder.icon.setVisibility(View.GONE);
@@ -97,9 +99,10 @@ public class NavigationDrawerAccountsMenuAdapter
                     (NavigationDrawerAccountsListItemAccount) item;
             holder.title.setVisibility(View.VISIBLE);
             holder.titleHeader.setVisibility(View.GONE);
-            if (itemAccount.useIconResource()) {
+            if (itemAccount.useIconResource() || itemAccount.useIconUrl()) {
                 try {
-                    holder.icon.setImageDrawable(itemAccount.getIcon());
+                    if (itemAccount.useIconUrl()) itemAccount.getIconUrl().into(holder.icon);
+                    else holder.icon.setImageDrawable(itemAccount.getIconDrawable());
                     holder.icon.setVisibility(View.VISIBLE);
                 } catch (Resources.NotFoundException e) {
                     holder.icon.setVisibility(View.GONE);

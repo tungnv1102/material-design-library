@@ -5,6 +5,7 @@
         <attr name="mdl_title" format="string"/>
         <attr name="mdl_description" format="string"/>
         <attr name="mdl_image" format="reference"/>
+        <attr name="mdl_imageUrl" format="string"/>
         <attr name="mdl_imagePosition" format="enum">
             <enum name="none" value="0"/>
             <enum name="left" value="1"/>

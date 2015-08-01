@@ -1,6 +1,7 @@
 package com.blunderer.materialdesignlibrary.handlers;
 
 import android.content.Context;
+import android.view.View;
 
 import com.blunderer.materialdesignlibrary.listeners.OnSearchDynamicListener;
 import com.blunderer.materialdesignlibrary.listeners.OnSearchListener;
@@ -15,9 +16,13 @@ public class ActionBarSearchHandler extends ActionBarHandler {
     private OnSearchDynamicListener mOnSearchDynamicListener;
     private boolean mAutoCompletionEnabled;
     private boolean mAutoCompletionDynamic;
-    private List<String> mAutoCompletionItems;
+    private List<String> mAutoCompletionSuggestions;
     private int mThreshold;
     private ToolbarSearch.AutoCompletionMode mAutoCompletionMode;
+    private int mCustomSearchButtonId;
+    private View mCustomSearchButton;
+//    private int mInputTextStyle;
+//    private int mInputBackgroundResource;
 
     public ActionBarSearchHandler(Context context, OnSearchListener onSearchListener) {
         super(context);
@@ -26,6 +31,10 @@ public class ActionBarSearchHandler extends ActionBarHandler {
         mAutoCompletionEnabled = false;
         mAutoCompletionDynamic = false;
         mThreshold = 1;
+        mAutoCompletionMode = ToolbarSearch.AutoCompletionMode.STARTS_WITH;
+        mCustomSearchButtonId = 0;
+//        mInputTextStyle = 0;
+//        mInputBackgroundResource = 0;
     }
 
     /**
@@ -36,8 +45,9 @@ public class ActionBarSearchHandler extends ActionBarHandler {
     @Override
     public Toolbar build() {
         ToolbarSearch toolbar = new ToolbarSearch(mContext);
-        toolbar.setData(mAutoCompletionEnabled, mAutoCompletionDynamic, mAutoCompletionItems,
+        toolbar.setData(mAutoCompletionEnabled, mAutoCompletionDynamic, mAutoCompletionSuggestions,
                 mAutoCompletionMode, mThreshold, mOnSearchListener, mOnSearchDynamicListener);
+//                mInputTextStyle, mInputBackgroundResource);
 
         return toolbar;
     }
@@ -83,13 +93,13 @@ public class ActionBarSearchHandler extends ActionBarHandler {
     }
 
     /**
-     * If Auto Completion is enabled but Dynamic Auto Completion is not, this method sets the items to search into.
+     * If Auto Completion is enabled but Dynamic Auto Completion is not, this method sets the suggestions to search into.
      *
-     * @param items The items to search into.
+     * @param suggestions The suggestions to search into.
      * @return The ActionBarSearchHandler.
      */
-    public ActionBarSearchHandler setAutoCompletionItems(List<String> items) {
-        mAutoCompletionItems = items;
+    public ActionBarSearchHandler setAutoCompletionSuggestions(List<String> suggestions) {
+        mAutoCompletionSuggestions = suggestions;
 
         return this;
     }
@@ -108,6 +118,33 @@ public class ActionBarSearchHandler extends ActionBarHandler {
         mAutoCompletionMode = autoCompletionMode;
 
         return this;
+    }
+
+    public ActionBarSearchHandler setCustomSearchButton(int customSearchButtonId) {
+        mCustomSearchButtonId = customSearchButtonId;
+
+        return this;
+    }
+
+    public ActionBarSearchHandler setCustomSearchButton(View customSearchButton) {
+        mCustomSearchButton = customSearchButton;
+
+        return this;
+    }
+
+//    public ActionBarSearchHandler setInputStyle(int inputTextStyle,
+//                                                int inputBackgroundResource) {
+//        mInputTextStyle = inputTextStyle;
+//        mInputBackgroundResource = inputBackgroundResource;
+//        return this;
+//    }
+
+    public int getCustomSearchButtonId() {
+        return mCustomSearchButtonId;
+    }
+
+    public View getCustomSearchButton() {
+        return mCustomSearchButton;
     }
 
 }

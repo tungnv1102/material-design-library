@@ -1,7 +1,6 @@
 package com.blunderer.materialdesignlibrary.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,7 @@ import android.widget.ListView;
 
 import com.blunderer.materialdesignlibrary.R;
 
-public abstract class ListViewFragment extends Fragment
+public abstract class ListViewFragment extends AFragment
         implements com.blunderer.materialdesignlibrary.interfaces.ListView {
 
     protected SwipeRefreshLayout mSwipeRefreshLayout;
@@ -66,6 +65,10 @@ public abstract class ListViewFragment extends Fragment
         if (mListView != null) {
             ListAdapter adapter = getListAdapter();
             if (adapter != null) {
+                View headerView = getListViewHeaderView();
+                View footerView = getListViewFooterView();
+                if (headerView != null) mListView.addHeaderView(headerView);
+                if (footerView != null) mListView.addFooterView(footerView);
                 mListView.setAdapter(adapter);
                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -94,6 +97,16 @@ public abstract class ListViewFragment extends Fragment
     @Override
     public void setRefreshing(boolean refreshing) {
         if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setRefreshing(refreshing);
+    }
+
+    @Override
+    public View getListViewHeaderView() {
+        return null;
+    }
+
+    @Override
+    public View getListViewFooterView() {
+        return null;
     }
 
 }

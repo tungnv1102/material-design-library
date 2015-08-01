@@ -14,6 +14,10 @@ public interface ListView {
 
     int getCustomContentView();
 
+    View getListViewHeaderView();
+
+    View getListViewFooterView();
+
     boolean pullToRefreshEnabled();
 
     int[] getPullToRefreshColorResources();

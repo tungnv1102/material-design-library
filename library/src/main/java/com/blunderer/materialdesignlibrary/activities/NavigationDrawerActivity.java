@@ -2,7 +2,6 @@ package com.blunderer.materialdesignlibrary.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -12,11 +11,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.blunderer.materialdesignlibrary.R;
-import com.blunderer.materialdesignlibrary.adapters.NavigationDrawerAdapter;
 import com.blunderer.materialdesignlibrary.adapters.NavigationDrawerBottomAdapter;
+import com.blunderer.materialdesignlibrary.adapters.NavigationDrawerTopAdapter;
 import com.blunderer.materialdesignlibrary.fragments.ViewPagerFragment;
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerAccountsHandler;
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerBottomHandler;
+import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerStyleHandler;
 import com.blunderer.materialdesignlibrary.handlers.NavigationDrawerTopHandler;
 import com.blunderer.materialdesignlibrary.interfaces.NavigationDrawer;
 import com.blunderer.materialdesignlibrary.listeners.OnAccountChangeListener;
@@ -46,7 +46,7 @@ public abstract class NavigationDrawerActivity extends AActivity
     protected ANavigationDrawerAccountsLayout mAccountsLayout;
     protected ListView mTopListView;
     protected ListView mBottomListView;
-    protected NavigationDrawerAdapter mListTopAdapter;
+    protected NavigationDrawerTopAdapter mListTopAdapter;
     protected NavigationDrawerBottomAdapter mListBottomAdapter;
     private View mDrawerLeft;
     private NavigationDrawerListItemTopFragment mCurrentItem;
@@ -61,6 +61,12 @@ public abstract class NavigationDrawerActivity extends AActivity
         super.onConfigurationChanged(newConfig);
 
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isNavigationDrawerOpen()) closeNavigationDrawer();
+        else super.onBackPressed();
     }
 
     @Override
@@ -104,13 +110,19 @@ public abstract class NavigationDrawerActivity extends AActivity
     }
 
     @Override
+    public boolean isNavigationDrawerOpen() {
+        return mDrawerLayout != null && mDrawerLeft != null &&
+                mDrawerLayout.isDrawerOpen(mDrawerLeft);
+    }
+
+    @Override
     public void performNavigationDrawerItemClick(int position) {
         if (mNavigationDrawerItemsTop == null || mNavigationDrawerItemsTop.size() <= position ||
                 mNavigationDrawerItemsTop.get(position) instanceof NavigationDrawerListItemHeader) {
             return;
         }
 
-        int realPosition = isNavigationDrawerAccountHandlerEmpty() ? position : position + 1;
+        int realPosition = isNavigationDrawerAccountsHandlerEmpty() ? position : position + 1;
         mTopListView.performItemClick(mTopListView.getChildAt(realPosition),
                 realPosition, mTopListView.getItemIdAtPosition(realPosition));
     }
@@ -135,7 +147,7 @@ public abstract class NavigationDrawerActivity extends AActivity
         super.onSaveInstanceState(outState);
 
         outState.putInt("current_fragment_position", mTopListView.getCheckedItemPosition()
-                - (isNavigationDrawerAccountHandlerEmpty() ? 0 : 1));
+                - (isNavigationDrawerAccountsHandlerEmpty() ? 0 : 1));
         if (mAccountsLayout != null) outState.putIntArray("cc", mAccountsLayout.mAccountsPositions);
     }
 
@@ -157,8 +169,8 @@ public abstract class NavigationDrawerActivity extends AActivity
 
     private void defineListTop() {
         mNavigationDrawerItemsTop = new ArrayList<>();
-        mListTopAdapter = new NavigationDrawerAdapter(this,
-                R.layout.mdl_navigation_drawer_row, mNavigationDrawerItemsTop);
+        mListTopAdapter = new NavigationDrawerTopAdapter(this, R.layout.mdl_navigation_drawer_row,
+                mNavigationDrawerItemsTop);
         mTopListView = (ListView) findViewById(R.id.left_drawer_listview);
         mTopListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -173,10 +185,8 @@ public abstract class NavigationDrawerActivity extends AActivity
 
     private void defineListBottom() {
         mNavigationDrawerItemsBottom = new ArrayList<>();
-        mListBottomAdapter = new NavigationDrawerBottomAdapter(
-                this,
-                R.layout.mdl_navigation_drawer_row,
-                mNavigationDrawerItemsBottom);
+        mListBottomAdapter = new NavigationDrawerBottomAdapter(this,
+                R.layout.mdl_navigation_drawer_row, mNavigationDrawerItemsBottom);
         mBottomListView = (ListView)
                 findViewById(R.id.left_drawer_bottom_listview);
         mBottomListView.setAdapter(mListBottomAdapter);
@@ -188,13 +198,17 @@ public abstract class NavigationDrawerActivity extends AActivity
             }
 
         });
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            mBottomListView.setBackgroundResource(R.drawable.navigation_drawer_bottom_shadow);
-        }
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+//            mBottomListView.setBackgroundResource(R.drawable.navigation_drawer_bottom_shadow);
+//        }
     }
 
     private void defineDrawerLayout() {
+        NavigationDrawerStyleHandler style = getNavigationDrawerStyleHandler();
         mDrawerLeft = findViewById(R.id.left_drawer);
+        if (style != null && style.getBackgroundResource() != 0) {
+            mDrawerLeft.setBackgroundResource(style.getBackgroundResource());
+        }
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,
@@ -247,6 +261,7 @@ public abstract class NavigationDrawerActivity extends AActivity
             getSupportFragmentManager().beginTransaction()
                     .remove(mCurrentItem.getFragment()).commit();
             mTopListView.setItemChecked(mCurrentItemPosition, false);
+            mListTopAdapter.setNavigationDrawerSelectedItemPosition(-1);
         }
 
         mListTopAdapter.notifyDataSetChanged();
@@ -274,53 +289,43 @@ public abstract class NavigationDrawerActivity extends AActivity
 
         ListItem item = mNavigationDrawerItemsTop.get(fragmentPosition);
         if (item instanceof NavigationDrawerListItemTopFragment) {
-            NavigationDrawerListItemTopFragment itemFragment =
-                    (NavigationDrawerListItemTopFragment) item;
-            if (!isSavedInstanceState) {
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragment_container, itemFragment.getFragment())
-                        .commit();
-            } else {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, itemFragment.getFragment())
-                        .commit();
-            }
-            mCurrentItem = itemFragment;
-            mCurrentItemPosition = (isNavigationDrawerAccountHandlerEmpty() ? 0 : 1) +
-                    fragmentPosition;
-
-            mTopListView.setItemChecked(mCurrentItemPosition, true);
-            replaceTitle(mCurrentItem);
+            selectTopItem(fragmentPosition, isSavedInstanceState,
+                    (NavigationDrawerListItemTopFragment) item);
         } else {
             for (int i = 0; i < mNavigationDrawerItemsTop.size(); ++i) {
                 if (mNavigationDrawerItemsTop.get(i) instanceof
                         NavigationDrawerListItemTopFragment) {
-                    NavigationDrawerListItemTopFragment itemFragment =
-                            (NavigationDrawerListItemTopFragment) mNavigationDrawerItemsTop.get(i);
-
-                    if (!isSavedInstanceState) {
-                        getSupportFragmentManager().beginTransaction()
-                                .add(R.id.fragment_container, itemFragment.getFragment())
-                                .commit();
-                    } else {
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, itemFragment.getFragment())
-                                .commit();
-                    }
-                    mCurrentItem = itemFragment;
-                    mCurrentItemPosition = (isNavigationDrawerAccountHandlerEmpty() ?
-                            0 : 1) + i;
-
-                    mTopListView.setItemChecked(mCurrentItemPosition, true);
-                    replaceTitle(mCurrentItem);
+                    selectTopItem(i, isSavedInstanceState,
+                            (NavigationDrawerListItemTopFragment) mNavigationDrawerItemsTop.get(i));
                     break;
                 }
             }
         }
 
-        if (!isNavigationDrawerAccountHandlerEmpty()) {
+        if (!isNavigationDrawerAccountsHandlerEmpty()) {
             mAccountsLayout.notifyListTopItemSelectedChanged();
         }
+    }
+
+    private void selectTopItem(int fragmentPosition,
+                               boolean isSavedInstanceState,
+                               NavigationDrawerListItemTopFragment itemFragment) {
+        if (!isSavedInstanceState) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, itemFragment.getFragment())
+                    .commit();
+        } else {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, itemFragment.getFragment())
+                    .commit();
+        }
+        mCurrentItem = itemFragment;
+        mCurrentItemPosition = (isNavigationDrawerAccountsHandlerEmpty() ? 0 : 1) +
+                fragmentPosition;
+
+        mTopListView.setItemChecked(mCurrentItemPosition, true);
+        mListTopAdapter.setNavigationDrawerSelectedItemPosition(fragmentPosition);
+        replaceTitle(mCurrentItem);
     }
 
     private void onListItemTopClick(AdapterView<?> adapterView, View view, int i) {
@@ -337,10 +342,14 @@ public abstract class NavigationDrawerActivity extends AActivity
                 mCurrentItemPosition = i;
             }
             mTopListView.setItemChecked(mCurrentItemPosition, true);
+            mListTopAdapter.setNavigationDrawerSelectedItemPosition(mCurrentItemPosition -
+                    (isNavigationDrawerAccountsHandlerEmpty() ? 0 : 1));
             replaceTitle(mCurrentItem);
             closeNavigationDrawer();
         } else if (item instanceof NavigationDrawerListItemTopIntent) {
             mTopListView.setItemChecked(mCurrentItemPosition, true);
+            mListTopAdapter.setNavigationDrawerSelectedItemPosition(mCurrentItemPosition -
+                    (isNavigationDrawerAccountsHandlerEmpty() ? 0 : 1));
             startActivity(((NavigationDrawerListItemTopIntent) item).getIntent());
         } else if (item instanceof NavigationDrawerAccountsListItemIntent) {
             startActivity(((NavigationDrawerAccountsListItemIntent) item).getIntent());
@@ -366,7 +375,7 @@ public abstract class NavigationDrawerActivity extends AActivity
 
     private void showAccountsLayout() {
         mNavigationDrawerAccountsHandler = getNavigationDrawerAccountsHandler();
-        if (!isNavigationDrawerAccountHandlerEmpty()) {
+        if (!isNavigationDrawerAccountsHandlerEmpty()) {
             if (mNavigationDrawerAccountsHandler.useSmallAccountsLayout()) {
                 mAccountsLayout = new NavigationDrawerAccountsLayoutSmall(getApplicationContext());
             } else {
@@ -408,12 +417,12 @@ public abstract class NavigationDrawerActivity extends AActivity
     }
 
     private void replaceTitle(CharSequence title) {
-        if (replaceActionBarTitleByNavigationDrawerItemTitle()) {
+        if (getSupportActionBar() != null && replaceActionBarTitleByNavigationDrawerItemTitle()) {
             getSupportActionBar().setTitle(title);
         }
     }
 
-    private boolean isNavigationDrawerAccountHandlerEmpty() {
+    private boolean isNavigationDrawerAccountsHandlerEmpty() {
         return mNavigationDrawerAccountsHandler == null ||
                 mNavigationDrawerAccountsHandler.getNavigationDrawerAccounts().size() <= 0;
     }

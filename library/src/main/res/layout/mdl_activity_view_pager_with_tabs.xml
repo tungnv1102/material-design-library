@@ -4,30 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:orientation="vertical">
+        android:layout_marginTop="?attr/actionBarSize">
 
         <com.astuetz.PagerSlidingTabStrip
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/tabs"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="@dimen/mdl_viewpager_with_tabs_height"
             android:background="?attr/colorPrimary"
-            app:pstsUnderlineHeight="0dp"
-            app:pstsUnderlineColor="@android:color/transparent"
+            app:pstsDividerColor="?attr/colorPrimaryDark"
             app:pstsIndicatorColor="@android:color/white"
             app:pstsIndicatorHeight="5dp"
-            app:pstsDividerColor="?attr/colorPrimaryDark"/>
+            app:pstsUnderlineColor="@android:color/transparent"
+            app:pstsUnderlineHeight="0dp"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/mdl_viewpager_with_tabs_height"/>
 
-    </LinearLayout>
+        <include layout="@layout/mdl_toolbar_shadow"/>
+
+    </FrameLayout>
 
 </FrameLayout>

@@ -12,6 +12,7 @@ import com.blunderer.materialdesignlibrary.handlers.ViewPagerHandler;
 import com.blunderer.materialdesignlibrary.models.ViewPagerItem;
 import com.blunderer.materialdesignlibrary.views.ToolbarSearch;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ViewPagerWithTabsActivity extends AActivity
@@ -20,6 +21,35 @@ public abstract class ViewPagerWithTabsActivity extends AActivity
     protected ViewPager mViewPager;
     protected PagerSlidingTabStrip mViewPagerTabs;
     private List<ViewPagerItem> mViewPagerItems;
+    private ViewPager.OnPageChangeListener mUserOnPageChangeListener;
+    private ViewPagerAdapter mViewPagerAdapter;
+
+    public ViewPagerWithTabsActivity() {
+        mViewPagerItems = new ArrayList<>();
+    }
+
+    @Override
+    public void selectPage(int position) {
+        mViewPager.setCurrentItem(position);
+    }
+
+    @Override
+    public void setOnPageChangeListener(ViewPager.OnPageChangeListener userOnPageChangeListener) {
+        mUserOnPageChangeListener = userOnPageChangeListener;
+    }
+
+    @Override
+    public void updateNavigationDrawerTopHandler(ViewPagerHandler viewPagerHandler,
+                                                 int defaultViewPagerPageSelectedPosition) {
+        if (viewPagerHandler == null) viewPagerHandler = new ViewPagerHandler(this);
+        mViewPagerItems.clear();
+        mViewPagerItems.addAll(viewPagerHandler.getViewPagerItems());
+        mViewPagerAdapter.notifyDataSetChanged();
+
+        selectPage(defaultViewPagerPageSelectedPosition);
+
+        if (!mViewPagerItems.isEmpty()) showTabs(mViewPager);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,19 +60,18 @@ public abstract class ViewPagerWithTabsActivity extends AActivity
             mViewPagerItems = handler.getViewPagerItems();
         }
 
-        if (mViewPagerItems != null && mViewPagerItems.size() > 0) {
-            mViewPager = (ViewPager) findViewById(R.id.viewpager);
-            mViewPager
-                    .setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), mViewPagerItems));
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), mViewPagerItems);
+        mViewPager.setAdapter(mViewPagerAdapter);
 
-            int defaultViewPagerPageSelectedPosition = defaultViewPagerPageSelectedPosition();
-            if (defaultViewPagerPageSelectedPosition >= 0 &&
-                    defaultViewPagerPageSelectedPosition < mViewPagerItems.size()) {
-                mViewPager.setCurrentItem(defaultViewPagerPageSelectedPosition);
-            }
-
-            showTabs(mViewPager);
+        int defaultViewPagerPageSelectedPosition = defaultViewPagerPageSelectedPosition();
+        if (defaultViewPagerPageSelectedPosition >= 0 &&
+                defaultViewPagerPageSelectedPosition < mViewPagerItems.size()) {
+            selectPage(defaultViewPagerPageSelectedPosition);
         }
+
+        mViewPagerTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        if (!mViewPagerItems.isEmpty()) showTabs(mViewPager);
     }
 
     @Override
@@ -59,11 +88,10 @@ public abstract class ViewPagerWithTabsActivity extends AActivity
     }
 
     private void showTabs(ViewPager pager) {
-        mViewPagerTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         mViewPagerTabs.setTextColor(getResources().getColor(android.R.color.white));
         mViewPagerTabs.setShouldExpand(expandTabs());
+        mViewPagerTabs.setOnPageChangeListener(mUserOnPageChangeListener);
         mViewPagerTabs.setViewPager(pager);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             mViewPagerTabs.setTabBackground(android.R.attr.selectableItemBackground);
         }

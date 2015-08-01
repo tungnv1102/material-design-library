@@ -53,7 +53,8 @@ public class NavigationDrawerAccountsLayoutSmall extends ANavigationDrawerAccoun
                 Account account = mAccounts.get(i);
                 moreAccount = new NavigationDrawerAccountsListItemAccount(getContext());
                 moreAccount.setTitle(account.getTitle());
-                moreAccount.setIcon(account.getPicture());
+                if (account.usePictureUrl()) moreAccount.setIcon(account.getPictureUrl());
+                else moreAccount.setIcon(account.getPictureResource());
                 moreAccount.setOnClickListener(generateAccountClickListener(i));
                 mAccountsMenuItems.add(0, moreAccount);
             }
@@ -78,7 +79,8 @@ public class NavigationDrawerAccountsLayoutSmall extends ANavigationDrawerAccoun
                 NavigationDrawerAccountsListItemAccount moreAccount =
                         new NavigationDrawerAccountsListItemAccount(getContext());
                 moreAccount.setTitle(firstAccount.getTitle());
-                moreAccount.setIcon(firstAccount.getPicture());
+                if (firstAccount.usePictureUrl()) moreAccount.setIcon(firstAccount.getPictureUrl());
+                else moreAccount.setIcon(firstAccount.getPictureResource());
                 moreAccount.setOnClickListener(generateAccountClickListener(
                         mAccountsPositions[1]));
 

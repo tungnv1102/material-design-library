@@ -1,7 +1,6 @@
 package com.blunderer.materialdesignlibrary.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.ScrollView;
 
 import com.blunderer.materialdesignlibrary.R;
 
-public abstract class ScrollViewFragment extends Fragment
+public abstract class ScrollViewFragment extends AFragment
         implements com.blunderer.materialdesignlibrary.interfaces.ScrollView {
 
     protected SwipeRefreshLayout mSwipeRefreshLayout;

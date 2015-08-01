@@ -4,13 +4,16 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ListView;
 
+import com.blunderer.materialdesignlibrary.listeners.OnKeyboardListener;
 import com.blunderer.materialdesignlibrary.listeners.OnSearchDynamicListener;
 import com.blunderer.materialdesignlibrary.listeners.OnSearchingListener;
 
@@ -25,6 +28,7 @@ public class AutoCompleteTextView extends EditText
     private boolean mAutoCompletionEnabled;
     private boolean mAutoCompletionDynamic;
     private OnSearchDynamicListener mOnSearchDynamicListener;
+    private OnKeyboardListener mOnKeyboardListener;
 
     public AutoCompleteTextView(Context context) {
         this(context, null);
@@ -38,6 +42,16 @@ public class AutoCompleteTextView extends EditText
         super(context, attrs, defStyleAttr);
 
         mThreshold = 1;
+    }
+
+    @Override
+    public boolean onKeyPreIme(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP
+                && mOnKeyboardListener != null) {
+            mOnKeyboardListener.onKeyboardClosed();
+            return false;
+        }
+        return super.dispatchKeyEvent(event);
     }
 
     @SuppressWarnings("unchecked")
@@ -139,6 +153,10 @@ public class AutoCompleteTextView extends EditText
 
     public void setOnSearchDynamicListener(OnSearchDynamicListener onSearchDynamicListener) {
         mOnSearchDynamicListener = onSearchDynamicListener;
+    }
+
+    public void setOnKeyboardListener(OnKeyboardListener onKeyboardListener) {
+        mOnKeyboardListener = onKeyboardListener;
     }
 
     public void clear() {

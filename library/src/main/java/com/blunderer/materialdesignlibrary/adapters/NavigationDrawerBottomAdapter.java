@@ -34,29 +34,38 @@ public class NavigationDrawerBottomAdapter extends ArrayAdapter<NavigationDrawer
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+
+        NavigationDrawerListItemBottom tool = getItem(position);
+
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext())
                     .inflate(mLayoutResourceId, parent, false);
+
             holder = new ViewHolder();
             holder.title = (TextView) convertView.findViewById(R.id.navigation_drawer_row_title);
             holder.icon = (ImageView) convertView.findViewById(R.id.navigation_drawer_row_icon);
             convertView.setTag(holder);
         } else holder = (ViewHolder) convertView.getTag();
 
-        NavigationDrawerListItemBottom tool = getItem(position);
+        if (tool.useBackgroundStyle()) convertView.setBackgroundResource(tool.getBackgroundStyle());
+        else convertView.setBackgroundResource(android.R.color.transparent);
 
-        if (tool.useTitleResource()) {
+        if (tool.useTitle()) {
             holder.title.setVisibility(View.VISIBLE);
             try {
                 holder.title.setText(tool.getTitle());
             } catch (Resources.NotFoundException e) {
                 holder.title.setText("");
             }
+            holder.title.setTextAppearance(getContext(), tool.useTitleStyle() ?
+                    tool.getTitleStyle() :
+                    R.style.MaterialDesignLibraryTheme_NavigationDrawer_ItemsTextStyle);
         }
 
-        if (tool.useIconResource()) {
+        if (tool.useIconResource() || tool.useIconUrl()) {
             try {
-                holder.icon.setImageDrawable(tool.getIcon());
+                if (tool.useIconUrl()) tool.getIconUrl().into(holder.icon);
+                else holder.icon.setImageDrawable(tool.getIconDrawable());
                 holder.icon.setVisibility(View.VISIBLE);
             } catch (Resources.NotFoundException e) {
                 holder.icon.setVisibility(View.GONE);

@@ -164,9 +164,13 @@ public abstract class ANavigationDrawerAccountsLayout extends LinearLayout {
 
         if (currentAccount.useBackgroundDrawable()) {
             mBackground.setImageDrawable(currentAccount.getBackgroundDrawable());
+        } else if (currentAccount.useBackgroundUrl()) {
+            currentAccount.getBackgroundUrl().into(mBackground);
         } else mBackground.setImageResource(currentAccount.getBackgroundResource());
 
-        mPicture.setImageDrawable(currentAccount.getPicture());
+        if (currentAccount.usePictureUrl()) {
+            currentAccount.getPictureUrl().into(mPicture);
+        } else mPicture.setImageDrawable(currentAccount.getPictureResource());
 
         if (!TextUtils.isEmpty(currentAccount.getTitle())) {
             mTitle.setText(currentAccount.getTitle());
@@ -175,6 +179,8 @@ public abstract class ANavigationDrawerAccountsLayout extends LinearLayout {
         if (!TextUtils.isEmpty(currentAccount.getDescription())) {
             mDescription.setText(currentAccount.getDescription());
         } else mDescription.setVisibility(View.GONE);
+
+        switchAccountsMenu();
     }
 
     protected Account getAccount(int position) {
@@ -185,6 +191,26 @@ public abstract class ANavigationDrawerAccountsLayout extends LinearLayout {
             else return null;
         }
         return mAccounts.get(mAccountsPositions[position]);
+    }
+
+    private void switchAccountsMenu() {
+        if (!mShowAccountMenu) return;
+
+        if (mIsAccountsMenuEnabled) {
+            mOriginalListView.setAdapter(mOriginalAdapter);
+            if (mOriginalListViewSelectedItemPosition != ListView.INVALID_POSITION) {
+                mOriginalListView.setItemChecked(
+                        mOriginalListViewSelectedItemPosition, true);
+            }
+            mAccountsMenuSwitch.setImageResource(R.drawable.ic_arrow_drop_down);
+        } else {
+            mOriginalListViewSelectedItemPosition = mOriginalListView
+                    .getCheckedItemPosition();
+            mOriginalListView.setAdapter(mAccountsMenuAdapter);
+            mAccountsMenuSwitch.setImageResource(R.drawable.ic_arrow_drop_up);
+        }
+
+        mIsAccountsMenuEnabled = !mIsAccountsMenuEnabled;
     }
 
     private void resetAccountsPositions(int size) {
@@ -199,23 +225,7 @@ public abstract class ANavigationDrawerAccountsLayout extends LinearLayout {
 
             @Override
             public void onClick(View v) {
-                if (!mShowAccountMenu) return;
-
-                if (mIsAccountsMenuEnabled) {
-                    mOriginalListView.setAdapter(mOriginalAdapter);
-                    if (mOriginalListViewSelectedItemPosition != ListView.INVALID_POSITION) {
-                        mOriginalListView.setItemChecked(
-                                mOriginalListViewSelectedItemPosition, true);
-                    }
-                    mAccountsMenuSwitch.setImageResource(R.drawable.ic_arrow_drop_down);
-                } else {
-                    mOriginalListViewSelectedItemPosition = mOriginalListView
-                            .getCheckedItemPosition();
-                    mOriginalListView.setAdapter(mAccountsMenuAdapter);
-                    mAccountsMenuSwitch.setImageResource(R.drawable.ic_arrow_drop_up);
-                }
-
-                mIsAccountsMenuEnabled = !mIsAccountsMenuEnabled;
+                switchAccountsMenu();
             }
 
         });

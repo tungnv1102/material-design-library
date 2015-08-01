@@ -11,23 +11,25 @@ import android.widget.TextView;
 
 import com.blunderer.materialdesignlibrary.R;
 import com.blunderer.materialdesignlibrary.models.ListItem;
-import com.blunderer.materialdesignlibrary.models.NavigationDrawerListItemBottom;
+import com.blunderer.materialdesignlibrary.models.NavigationDrawerListItemDivider;
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerListItemHeader;
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerListItemTopFragment;
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerListItemTopIntent;
 
 import java.util.List;
 
-public class NavigationDrawerAdapter extends ArrayAdapter<ListItem> {
+public class NavigationDrawerTopAdapter extends ArrayAdapter<ListItem> {
 
-    private int mLayoutResourceId;
+    private final int mLayoutResourceId;
+    private int mNavigationDrawerSelectedItemPosition;
 
-    public NavigationDrawerAdapter(Context context,
-                                   int layoutResourceId,
-                                   List<ListItem> objects) {
+    public NavigationDrawerTopAdapter(Context context,
+                                      int layoutResourceId,
+                                      List<ListItem> objects) {
         super(context, layoutResourceId, objects);
 
         mLayoutResourceId = layoutResourceId;
+        mNavigationDrawerSelectedItemPosition = -1;
     }
 
     @Override
@@ -53,15 +55,9 @@ public class NavigationDrawerAdapter extends ArrayAdapter<ListItem> {
         ListItem item = getItem(position);
 
         if (convertView == null) {
-            convertView = LayoutInflater
-                    .from(getContext())
+            convertView = LayoutInflater.from(getContext())
                     .inflate(mLayoutResourceId, parent, false);
 
-            if (item instanceof NavigationDrawerListItemTopFragment ||
-                    item instanceof NavigationDrawerListItemTopIntent ||
-                    item instanceof NavigationDrawerListItemBottom) {
-                convertView.setBackgroundResource(R.drawable.navigation_drawer_selector);
-            }
             holder = new ViewHolder();
             holder.title = (TextView) convertView.findViewById(R.id.navigation_drawer_row_title);
             holder.titleHeader = (TextView) convertView
@@ -73,7 +69,10 @@ public class NavigationDrawerAdapter extends ArrayAdapter<ListItem> {
             convertView.setTag(holder);
         } else holder = (ViewHolder) convertView.getTag();
 
-        if (item.useTitleResource()) {
+        convertView.setBackgroundResource(item.useBackgroundStyle() ?
+                item.getBackgroundStyle() : R.drawable.navigation_drawer_selector);
+
+        if (item.useTitle()) {
             try {
                 holder.title.setText(item.getTitle());
                 holder.titleHeader.setText(item.getTitle());
@@ -81,6 +80,12 @@ public class NavigationDrawerAdapter extends ArrayAdapter<ListItem> {
                 holder.title.setText("");
                 holder.titleHeader.setText("");
             }
+            holder.title.setTextAppearance(getContext(), item.useTitleStyle() ?
+                    item.getTitleStyle() :
+                    R.style.MaterialDesignLibraryTheme_NavigationDrawer_ItemsTextStyle);
+            holder.titleHeader.setTextAppearance(getContext(), item.useTitleStyle() ?
+                    item.getTitleStyle() :
+                    R.style.MaterialDesignLibraryTheme_NavigationDrawer_SectionsTextStyle);
         }
 
         if (item instanceof NavigationDrawerListItemTopFragment) {
@@ -89,9 +94,20 @@ public class NavigationDrawerAdapter extends ArrayAdapter<ListItem> {
             holder.title.setVisibility(View.VISIBLE);
             holder.titleHeader.setVisibility(View.GONE);
             holder.headerSeparator.setVisibility(View.GONE);
-            if (itemNormal.useIconResource()) {
+            if (mNavigationDrawerSelectedItemPosition == position &&
+                    (itemNormal.useSelectedIconResource() || itemNormal.useSelectedIconUrl())) {
                 try {
-                    holder.icon.setImageDrawable(itemNormal.getIcon());
+                    if (itemNormal.useSelectedIconUrl()) {
+                        itemNormal.getSelectedIconUrl().into(holder.icon);
+                    } else holder.icon.setImageDrawable(itemNormal.getSelectedIconDrawable());
+                    holder.icon.setVisibility(View.VISIBLE);
+                } catch (Resources.NotFoundException e) {
+                    holder.icon.setVisibility(View.GONE);
+                }
+            } else if (itemNormal.useIconResource() || itemNormal.useIconUrl()) {
+                try {
+                    if (itemNormal.useIconUrl()) itemNormal.getIconUrl().into(holder.icon);
+                    else holder.icon.setImageDrawable(itemNormal.getIconDrawable());
                     holder.icon.setVisibility(View.VISIBLE);
                 } catch (Resources.NotFoundException e) {
                     holder.icon.setVisibility(View.GONE);
@@ -103,9 +119,10 @@ public class NavigationDrawerAdapter extends ArrayAdapter<ListItem> {
             holder.title.setVisibility(View.VISIBLE);
             holder.titleHeader.setVisibility(View.GONE);
             holder.headerSeparator.setVisibility(View.GONE);
-            if (itemNormal.useIconResource()) {
+            if (itemNormal.useIconResource() || itemNormal.useIconUrl()) {
                 try {
-                    holder.icon.setImageDrawable(itemNormal.getIcon());
+                    if (itemNormal.useIconUrl()) itemNormal.getIconUrl().into(holder.icon);
+                    else holder.icon.setImageDrawable(itemNormal.getIconDrawable());
                     holder.icon.setVisibility(View.VISIBLE);
                 } catch (Resources.NotFoundException e) {
                     holder.icon.setVisibility(View.GONE);
@@ -116,9 +133,18 @@ public class NavigationDrawerAdapter extends ArrayAdapter<ListItem> {
             holder.titleHeader.setVisibility(View.VISIBLE);
             holder.icon.setVisibility(View.GONE);
             holder.headerSeparator.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
+        } else if (item instanceof NavigationDrawerListItemDivider) {
+            holder.title.setVisibility(View.GONE);
+            holder.titleHeader.setVisibility(View.GONE);
+            holder.icon.setVisibility(View.GONE);
+            holder.headerSeparator.setVisibility(View.GONE);
         }
 
         return convertView;
+    }
+
+    public void setNavigationDrawerSelectedItemPosition(int navigationDrawerSelectedItemPosition) {
+        mNavigationDrawerSelectedItemPosition = navigationDrawerSelectedItemPosition;
     }
 
     private class ViewHolder {

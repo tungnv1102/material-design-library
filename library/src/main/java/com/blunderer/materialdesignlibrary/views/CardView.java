@@ -14,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blunderer.materialdesignlibrary.R;
+import com.bumptech.glide.DrawableTypeRequest;
+import com.bumptech.glide.Glide;
 import com.joooonho.SelectableRoundedImageView;
 
 import carbon.widget.Button;
@@ -28,6 +30,7 @@ public class CardView extends android.support.v7.widget.CardView {
     // Variables
     private int mImagePosition;
     private Drawable mImage;
+    private DrawableTypeRequest<String> mImageUrl;
     private String mTitleText;
     private String mDescriptionText;
     private String mNormalButtonText;
@@ -49,15 +52,21 @@ public class CardView extends android.support.v7.widget.CardView {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs,
                 R.styleable.MDLCardView, 0, 0);
 
+        String imageUrl;
         try {
             mImagePosition = a.getInt(R.styleable.MDLCardView_mdl_imagePosition, 0);
             mImage = a.getDrawable(R.styleable.MDLCardView_mdl_image);
+            imageUrl = a.getString(R.styleable.MDLCardView_mdl_imageUrl);
             mTitleText = a.getString(R.styleable.MDLCardView_mdl_title);
             mDescriptionText = a.getString(R.styleable.MDLCardView_mdl_description);
             mNormalButtonText = a.getString(R.styleable.MDLCardView_mdl_normalButton);
             mHighlightButtonText = a.getString(R.styleable.MDLCardView_mdl_highlightButton);
         } finally {
             a.recycle();
+        }
+
+        if (mImage == null && imageUrl != null) {
+            mImageUrl = Glide.with(context).load(imageUrl);
         }
 
         setRadius((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2,
@@ -90,6 +99,12 @@ public class CardView extends android.support.v7.widget.CardView {
 
     public void setImageResource(int imageResource) {
         mImage = getContext().getResources().getDrawable(imageResource);
+
+        refresh();
+    }
+
+    public void setImageUrl(String imageUrl) {
+        mImageUrl = Glide.with(getContext()).load(imageUrl);
 
         refresh();
     }
@@ -235,7 +250,11 @@ public class CardView extends android.support.v7.widget.CardView {
 
     private void handleImage(ViewGroup layout, int position) {
         SelectableRoundedImageView image = (SelectableRoundedImageView) layout.getChildAt(position);
-        image.setImageDrawable(mImage);
+        if (mImage != null) {
+            image.setImageDrawable(mImage);
+        } else if (mImageUrl != null) {
+            mImageUrl.into(image);
+        }
         if (TextUtils.isEmpty(mDescriptionText) && TextUtils.isEmpty(mNormalButtonText) &&
                 TextUtils.isEmpty(mHighlightButtonText)) {
             image.setCornerRadiiDP(2, 2, 2, 2);

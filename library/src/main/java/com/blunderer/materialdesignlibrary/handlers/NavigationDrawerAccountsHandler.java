@@ -59,6 +59,71 @@ public class NavigationDrawerAccountsHandler {
         return this;
     }
 
+    public NavigationDrawerAccountsHandler addAccount(String title,
+                                                      String description,
+                                                      String pictureUrl,
+                                                      int backgroundResource) {
+        Account item = new Account();
+        item.setTitle(title);
+        item.setDescription(description);
+        item.setPicture(mContext, pictureUrl);
+        item.setBackground(backgroundResource);
+        mItems.add(item);
+        return this;
+    }
+
+    public NavigationDrawerAccountsHandler addAccount(String title,
+                                                      String description,
+                                                      String pictureUrl,
+                                                      Drawable background) {
+        Account item = new Account();
+        item.setTitle(title);
+        item.setDescription(description);
+        item.setPicture(mContext, pictureUrl);
+        item.setBackground(background);
+        mItems.add(item);
+        return this;
+    }
+
+    public NavigationDrawerAccountsHandler addAccount(String title,
+                                                      String description,
+                                                      int pictureResource,
+                                                      String backgroundUrl) {
+        Account item = new Account();
+        item.setTitle(title);
+        item.setDescription(description);
+        item.setPicture(mContext, pictureResource);
+        item.setBackground(mContext, backgroundUrl);
+        mItems.add(item);
+        return this;
+    }
+
+    public NavigationDrawerAccountsHandler addAccount(String title,
+                                                      String description,
+                                                      Drawable picture,
+                                                      String backgroundUrl) {
+        Account item = new Account();
+        item.setTitle(title);
+        item.setDescription(description);
+        item.setPicture(picture);
+        item.setBackground(mContext, backgroundUrl);
+        mItems.add(item);
+        return this;
+    }
+
+    public NavigationDrawerAccountsHandler addAccount(String title,
+                                                      String description,
+                                                      String pictureUrl,
+                                                      String backgroundUrl) {
+        Account item = new Account();
+        item.setTitle(title);
+        item.setDescription(description);
+        item.setPicture(mContext, pictureUrl);
+        item.setBackground(mContext, backgroundUrl);
+        mItems.add(item);
+        return this;
+    }
+
     public List<Account> getNavigationDrawerAccounts() {
         return mItems;
     }

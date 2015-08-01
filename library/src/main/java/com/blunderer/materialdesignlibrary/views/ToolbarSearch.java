@@ -1,14 +1,19 @@
 package com.blunderer.materialdesignlibrary.views;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.speech.RecognizerIntent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -24,13 +29,15 @@ import android.widget.TextView;
 import com.blunderer.materialdesignlibrary.R;
 import com.blunderer.materialdesignlibrary.activities.AActivity;
 import com.blunderer.materialdesignlibrary.adapters.SearchAutoCompletionAdapter;
+import com.blunderer.materialdesignlibrary.listeners.OnKeyboardListener;
 import com.blunderer.materialdesignlibrary.listeners.OnSearchDynamicListener;
 import com.blunderer.materialdesignlibrary.listeners.OnSearchListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Toolbar {
+public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Toolbar
+        implements OnKeyboardListener {
 
     public static final int SEARCH_REQUEST_CODE = 123;
 
@@ -43,7 +50,8 @@ public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Too
     private Intent mSpeechIntent;
     private AActivity mActivity;
     private OnSearchListener mOnSearchListener;
-    private ArrayList<String> mItems;
+    private ArrayList<String> mSuggestions;
+    private boolean mIsSearchAudioEnabled;
 
     public ToolbarSearch(Context context) {
         this(context, null);
@@ -60,11 +68,18 @@ public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Too
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.mdl_toolbar_search, this, true);
 
-        mItems = new ArrayList<>();
+        mSuggestions = new ArrayList<>();
         mToolbar = (Toolbar) getChildAt(0);
+        mIsSearchAudioEnabled = false;
 
         initOpacityView();
         initSearchBar();
+    }
+
+    @Override
+    public void onKeyboardClosed() {
+        hideSearchBar();
+        mActivity.showActionBarShadow();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -84,6 +99,7 @@ public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Too
     public void showSearchBar() {
         mSearchBar.setVisibility(VISIBLE);
         mOpacityView.setVisibility(VISIBLE);
+        if (mIsSearchAudioEnabled) mSearchBarActionButton.setVisibility(VISIBLE);
         mToolbar.setVisibility(INVISIBLE);
         showSoftKeyboard(mSearchBarEditText);
     }
@@ -109,23 +125,25 @@ public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Too
 
     public void setData(boolean autoCompletionEnabled,
                         boolean autoCompletionDynamic,
-                        List<String> autoCompletionItems,
+                        List<String> autoCompletionSuggestions,
                         AutoCompletionMode autoCompletionMode,
                         int threshold,
                         OnSearchListener onSearchListener,
                         OnSearchDynamicListener onSearchDynamicListener) {
+//                        int inputTextStyle,
+//                        int inputBackgroundResource) {
         mOnSearchListener = onSearchListener;
 
         if (!autoCompletionEnabled) return;
-        if (autoCompletionItems == null) autoCompletionItems = new ArrayList<>();
+        if (autoCompletionSuggestions == null) autoCompletionSuggestions = new ArrayList<>();
         if (autoCompletionMode == null) autoCompletionMode = AutoCompletionMode.STARTS_WITH;
 
-        mItems.clear();
-        mItems.addAll(autoCompletionItems);
+        mSuggestions.clear();
+        mSuggestions.addAll(autoCompletionSuggestions);
         final ArrayList<String> itemsFound = new ArrayList<>();
 
         SearchAutoCompletionAdapter adapter = new SearchAutoCompletionAdapter(getContext(),
-                R.layout.mdl_toolbar_search_autocompletion_row, mItems, itemsFound,
+                R.layout.mdl_toolbar_search_autocompletion_row, mSuggestions, itemsFound,
                 autoCompletionDynamic, autoCompletionMode);
 
         initSearchListView(itemsFound);
@@ -136,6 +154,12 @@ public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Too
         mSearchBarEditText.setAdapter(adapter);
         mSearchBarEditText.setThreshold(threshold);
         mSearchBarEditText.setOnSearchDynamicListener(onSearchDynamicListener);
+//        if (inputTextStyle != 0) {
+//            mSearchBarEditText.setTextAppearance(getContext(), inputTextStyle);
+//        }
+//        if (inputBackgroundResource != 0) {
+//            mSearchBarEditText.setBackgroundResource(inputBackgroundResource);
+//        }
     }
 
     private void initSearchListView(final ArrayList<String> itemsFound) {
@@ -146,6 +170,7 @@ public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Too
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mSearchBarEditText.clear();
                 hideSearchBar();
+                mActivity.showActionBarShadow();
                 if (mOnSearchListener != null) {
                     mOnSearchListener.onSearched(itemsFound.get(position));
                 }
@@ -165,6 +190,13 @@ public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Too
 
     private void initSearchBar() {
         mSearchBar = (android.support.v7.widget.CardView) getChildAt(2);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5,
+                    getResources().getDisplayMetrics());
+            CardView.LayoutParams lp = (LayoutParams) mSearchBar.getLayoutParams();
+            lp.setMargins(margin, margin, margin, margin);
+            mSearchBar.setLayoutParams(lp);
+        }
 
         ViewGroup searchBarLinearLayout = (ViewGroup) ((ViewGroup) mSearchBar.getChildAt(0))
                 .getChildAt(0);
@@ -180,6 +212,7 @@ public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Too
             @Override
             public void onClick(View v) {
                 hideSearchBar();
+                mActivity.showActionBarShadow();
             }
 
         });
@@ -187,6 +220,7 @@ public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Too
 
     private void initSearchEditText(ViewGroup layout) {
         mSearchBarEditText = (AutoCompleteTextView) layout.getChildAt(1);
+        mSearchBarEditText.setOnKeyboardListener(this);
         mSearchBarEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
@@ -194,7 +228,6 @@ public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Too
                 if (actionId == EditorInfo.IME_ACTION_SEARCH
                         && !TextUtils.isEmpty(mSearchBarEditText.getText())) {
                     search();
-                    return true;
                 }
                 return true;
             }
@@ -213,16 +246,18 @@ public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Too
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(mSearchBarEditText.getText())) {
+                    mSearchBarActionButton.setVisibility(VISIBLE);
                     mSearchBarActionButton.setImageResource(R.drawable.ic_action_cancel);
-                } else {
-                    mSearchBarActionButton.setImageResource(R.drawable.ic_action_mic);
-                }
+                } else if (!mIsSearchAudioEnabled) mSearchBarActionButton.setVisibility(INVISIBLE);
+                else mSearchBarActionButton.setImageResource(R.drawable.ic_action_mic);
             }
 
         });
     }
 
     private void initActionButtons(ViewGroup layout) {
+        checkAudioSearch();
+
         mSearchBarActionButton = (ImageView) layout.getChildAt(2);
 
         mSpeechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -236,7 +271,8 @@ public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Too
                     startVoiceSearch();
                 } else {
                     mSearchBarEditText.clear();
-                    mSearchBarActionButton.setImageResource(R.drawable.ic_action_mic);
+                    if (!mIsSearchAudioEnabled) mSearchBarActionButton.setVisibility(INVISIBLE);
+                    else mSearchBarActionButton.setImageResource(R.drawable.ic_action_mic);
                 }
             }
 
@@ -250,6 +286,7 @@ public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Too
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 hideSearchBar();
+                mActivity.showActionBarShadow();
                 return true;
             }
 
@@ -263,14 +300,25 @@ public class ToolbarSearch extends com.blunderer.materialdesignlibrary.views.Too
 
         mSearchBarEditText.clear();
         hideSearchBar();
+        mActivity.showActionBarShadow();
 
         if (mOnSearchListener != null) {
             mOnSearchListener.onSearched(text);
         }
     }
 
+    private void checkAudioSearch() {
+        List activities = getContext().getPackageManager().queryIntentActivities(
+                new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+        if (activities.size() != 0) mIsSearchAudioEnabled = true;
+    }
+
     private void startVoiceSearch() {
-        mActivity.startActivityForResult(mSpeechIntent, SEARCH_REQUEST_CODE);
+        try {
+            mActivity.startActivityForResult(mSpeechIntent, SEARCH_REQUEST_CODE);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showSoftKeyboard(View view) {

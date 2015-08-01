@@ -25,7 +25,6 @@ public class SearchAutoCompletionAdapter extends ArrayAdapter<String> {
     private CharSequence mConstraint;
     private Filter mFilter;
 
-    @SuppressWarnings("unchecked")
     public SearchAutoCompletionAdapter(Context context,
                                        int layoutResource,
                                        ArrayList<String> items,

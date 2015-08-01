@@ -25,6 +25,16 @@ public abstract class ListViewActivity extends AActivity
     }
 
     @Override
+    public View getListViewHeaderView() {
+        return null;
+    }
+
+    @Override
+    public View getListViewFooterView() {
+        return null;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.mdl_activity_listview);
 
@@ -45,7 +55,7 @@ public abstract class ListViewActivity extends AActivity
         }
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_listview_refresh);
-        if (pullToRefreshEnabled()) {
+        if (pullToRefreshEnabled() && !useCustomContentView()) {
             mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
                 @Override
@@ -55,11 +65,18 @@ public abstract class ListViewActivity extends AActivity
 
             });
             mSwipeRefreshLayout.setColorSchemeResources(getPullToRefreshColorResources());
+        } else if (pullToRefreshEnabled() && useCustomContentView()) {
+            throw new RuntimeException(
+                    "Forbidden to enable Pull to Refresh with a custom Content View");
         } else mSwipeRefreshLayout.setEnabled(false);
 
         if (mListView != null) {
             ListAdapter adapter = getListAdapter();
             if (adapter != null) {
+                View headerView = getListViewHeaderView();
+                View footerView = getListViewFooterView();
+                if (headerView != null) mListView.addHeaderView(headerView);
+                if (footerView != null) mListView.addFooterView(footerView);
                 mListView.setAdapter(adapter);
                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

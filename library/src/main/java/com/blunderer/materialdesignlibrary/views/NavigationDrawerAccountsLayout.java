@@ -33,11 +33,15 @@ public class NavigationDrawerAccountsLayout extends ANavigationDrawerAccountsLay
 
         Account secondAccount = getAccount(1);
         if (secondAccount == null) return;
-        mSecondPicture.setImageDrawable(secondAccount.getPicture());
+        if (secondAccount.usePictureUrl()) {
+            secondAccount.getPictureUrl().into(mSecondPicture);
+        } else mSecondPicture.setImageDrawable(secondAccount.getPictureResource());
 
         Account thirdAccount = getAccount(2);
         if (thirdAccount == null) return;
-        mThirdPicture.setImageDrawable(thirdAccount.getPicture());
+        if (thirdAccount.usePictureUrl()) {
+            thirdAccount.getPictureUrl().into(mThirdPicture);
+        } else mThirdPicture.setImageDrawable(thirdAccount.getPictureResource());
     }
 
     @Override
@@ -115,7 +119,8 @@ public class NavigationDrawerAccountsLayout extends ANavigationDrawerAccountsLay
                 Account account = mAccounts.get(i);
                 moreAccount = new NavigationDrawerAccountsListItemAccount(getContext());
                 moreAccount.setTitle(account.getTitle());
-                moreAccount.setIcon(account.getPicture());
+                if (account.usePictureUrl()) moreAccount.setIcon(account.getPictureUrl());
+                else moreAccount.setIcon(account.getPictureResource());
                 moreAccount.setOnClickListener(generateAccountClickListener(i));
                 mAccountsMenuItems.add(0, moreAccount);
             }
@@ -136,7 +141,8 @@ public class NavigationDrawerAccountsLayout extends ANavigationDrawerAccountsLay
                 NavigationDrawerAccountsListItemAccount moreAccount =
                         new NavigationDrawerAccountsListItemAccount(getContext());
                 moreAccount.setTitle(account.getTitle());
-                moreAccount.setIcon(account.getPicture());
+                if (account.usePictureUrl()) moreAccount.setIcon(account.getPictureUrl());
+                else moreAccount.setIcon(account.getPictureResource());
                 moreAccount.setOnClickListener(
                         generateAccountClickListener(mAccountsPositions[1]));
                 mAccountsMenuItems.remove(i - 1);
