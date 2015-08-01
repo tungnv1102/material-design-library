@@ -27,7 +27,7 @@ Read wiki here: [Material Design Library Wiki](https://github.com/DenisMondon/ma
 
 ```groovy
 dependencies {
-    compile 'com.blunderer:materialdesignlibrary:2.0.1'
+    compile 'com.blunderer:materialdesignlibrary:2.0.2'
 }
 ```
 
