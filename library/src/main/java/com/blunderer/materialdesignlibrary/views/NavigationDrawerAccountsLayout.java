@@ -5,17 +5,23 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blunderer.materialdesignlibrary.R;
 import com.blunderer.materialdesignlibrary.listeners.OnMoreAccountClickListener;
 import com.blunderer.materialdesignlibrary.models.Account;
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerAccountsListItemAccount;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 public class NavigationDrawerAccountsLayout extends ANavigationDrawerAccountsLayout {
 
     private RoundedImageView mSecondPicture;
     private RoundedImageView mThirdPicture;
+    private ProgressBar mSecondPictureProgressBar;
+    private ProgressBar mThirdPictureProgressBar;
 
     public NavigationDrawerAccountsLayout(Context context) {
         this(context, null);
@@ -34,13 +40,29 @@ public class NavigationDrawerAccountsLayout extends ANavigationDrawerAccountsLay
         Account secondAccount = getAccount(1);
         if (secondAccount == null) return;
         if (secondAccount.usePictureUrl()) {
-            secondAccount.getPictureUrl().into(mSecondPicture);
+            secondAccount.getPictureUrl().into(new SimpleTarget<GlideDrawable>() {
+
+                @Override
+                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                    mSecondPicture.setImageDrawable(resource);
+                    mSecondPictureProgressBar.setVisibility(INVISIBLE);
+                }
+
+            });
         } else mSecondPicture.setImageDrawable(secondAccount.getPictureResource());
 
         Account thirdAccount = getAccount(2);
         if (thirdAccount == null) return;
         if (thirdAccount.usePictureUrl()) {
-            thirdAccount.getPictureUrl().into(mThirdPicture);
+            thirdAccount.getPictureUrl().into(new SimpleTarget<GlideDrawable>() {
+
+                @Override
+                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                    mThirdPicture.setImageDrawable(resource);
+                    mThirdPictureProgressBar.setVisibility(INVISIBLE);
+                }
+
+            });
         } else mThirdPicture.setImageDrawable(thirdAccount.getPictureResource());
     }
 
@@ -51,12 +73,13 @@ public class NavigationDrawerAccountsLayout extends ANavigationDrawerAccountsLay
         ViewGroup dataTextViewsLayout = (ViewGroup) ((ViewGroup) dataLayout.getChildAt(1))
                 .getChildAt(0);
         mBackground = (ImageView) mMainLayout.getChildAt(0);
-        mPicture = (RoundedImageView) dataPicturesLayout.getChildAt(0);
+        mPicture = (RoundedImageView) dataPicturesLayout.getChildAt(3);
+        mPictureProgressBar = (ProgressBar) dataPicturesLayout.getChildAt(0);
         mTitle = (TextView) dataTextViewsLayout.getChildAt(0);
         mDescription = (TextView) dataTextViewsLayout.getChildAt(1);
 
         if (getAccount(1) != null) {
-            mSecondPicture = (RoundedImageView) dataPicturesLayout.getChildAt(2);
+            mSecondPicture = (RoundedImageView) dataPicturesLayout.getChildAt(5);
             mSecondPicture.setVisibility(VISIBLE);
             mSecondPicture.setOnClickListener(new OnClickListener() {
 
@@ -77,10 +100,12 @@ public class NavigationDrawerAccountsLayout extends ANavigationDrawerAccountsLay
                 }
 
             });
+            mSecondPictureProgressBar = (ProgressBar) dataPicturesLayout.getChildAt(2);
+            mSecondPictureProgressBar.setVisibility(VISIBLE);
         }
 
         if (getAccount(2) != null) {
-            mThirdPicture = (RoundedImageView) dataPicturesLayout.getChildAt(1);
+            mThirdPicture = (RoundedImageView) dataPicturesLayout.getChildAt(4);
             mThirdPicture.setVisibility(VISIBLE);
             mThirdPicture.setOnClickListener(new OnClickListener() {
 
@@ -97,6 +122,8 @@ public class NavigationDrawerAccountsLayout extends ANavigationDrawerAccountsLay
                 }
 
             });
+            mThirdPictureProgressBar = (ProgressBar) dataPicturesLayout.getChildAt(1);
+            mThirdPictureProgressBar.setVisibility(VISIBLE);
         }
 
         changeAccount();

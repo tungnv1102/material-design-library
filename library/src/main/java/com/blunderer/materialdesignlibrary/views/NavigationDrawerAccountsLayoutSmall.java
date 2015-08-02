@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blunderer.materialdesignlibrary.R;
@@ -29,7 +30,8 @@ public class NavigationDrawerAccountsLayoutSmall extends ANavigationDrawerAccoun
         ViewGroup dataLayout = (ViewGroup) mMainLayout.getChildAt(1);
         ViewGroup dataTextViewsLayout = (ViewGroup) dataLayout.getChildAt(1);
         mBackground = (ImageView) mMainLayout.getChildAt(0);
-        mPicture = (RoundedImageView) dataLayout.getChildAt(0);
+        mPicture = (RoundedImageView) ((ViewGroup) dataLayout.getChildAt(0)).getChildAt(1);
+        mPictureProgressBar = (ProgressBar) ((ViewGroup) dataLayout.getChildAt(0)).getChildAt(0);
         mTitle = (TextView) dataTextViewsLayout.getChildAt(0);
         mDescription = (TextView) dataTextViewsLayout.getChildAt(1);
 

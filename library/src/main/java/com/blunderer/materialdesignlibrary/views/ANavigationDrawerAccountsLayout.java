@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blunderer.materialdesignlibrary.R;
@@ -22,6 +23,9 @@ import com.blunderer.materialdesignlibrary.listeners.OnAccountChangeListener;
 import com.blunderer.materialdesignlibrary.listeners.OnMoreAccountClickListener;
 import com.blunderer.materialdesignlibrary.models.Account;
 import com.blunderer.materialdesignlibrary.models.NavigationDrawerAccountsListItem;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.util.List;
 
@@ -33,6 +37,7 @@ public abstract class ANavigationDrawerAccountsLayout extends LinearLayout {
     protected TextView mTitle;
     protected TextView mDescription;
     protected RoundedImageView mPicture;
+    protected ProgressBar mPictureProgressBar;
     protected NavigationDrawerAccountsMenuAdapter mAccountsMenuAdapter;
     protected ListView mOriginalListView;
     protected ListAdapter mOriginalAdapter;
@@ -169,7 +174,15 @@ public abstract class ANavigationDrawerAccountsLayout extends LinearLayout {
         } else mBackground.setImageResource(currentAccount.getBackgroundResource());
 
         if (currentAccount.usePictureUrl()) {
-            currentAccount.getPictureUrl().into(mPicture);
+            currentAccount.getPictureUrl().into(new SimpleTarget<GlideDrawable>() {
+
+                @Override
+                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                    mPicture.setImageDrawable(resource);
+                    mPictureProgressBar.setVisibility(INVISIBLE);
+                }
+
+            });
         } else mPicture.setImageDrawable(currentAccount.getPictureResource());
 
         if (!TextUtils.isEmpty(currentAccount.getTitle())) {
