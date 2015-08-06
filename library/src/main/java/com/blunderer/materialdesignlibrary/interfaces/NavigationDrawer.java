@@ -9,6 +9,9 @@ import com.blunderer.materialdesignlibrary.models.Account;
 
 public interface NavigationDrawer {
 
+    void updateNavigationDrawerStyleHandler(
+            NavigationDrawerStyleHandler navigationDrawerStyleHandler);
+
     void updateNavigationDrawerTopHandler(
             NavigationDrawerTopHandler navigationDrawerTopHandler,
             int defaultNavigationDrawerItemSelectedPosition);

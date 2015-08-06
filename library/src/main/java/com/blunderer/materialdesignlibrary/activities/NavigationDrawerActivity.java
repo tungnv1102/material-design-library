@@ -2,6 +2,7 @@ package com.blunderer.materialdesignlibrary.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -72,6 +73,21 @@ public abstract class NavigationDrawerActivity extends AActivity
     @Override
     public void onAccountChange(Account account) {
         onNavigationDrawerAccountChange(account);
+    }
+
+    /**
+     * Will update the NavigationDrawer style.
+     *
+     * @param navigationDrawerStyleHandler The handler that contains the new style.
+     */
+    @Override
+    public void updateNavigationDrawerStyleHandler(
+            NavigationDrawerStyleHandler navigationDrawerStyleHandler) {
+        if (navigationDrawerStyleHandler != null) {
+            int backgroundResource = navigationDrawerStyleHandler.getBackgroundResource();
+            if (backgroundResource != 0) mDrawerLeft.setBackgroundResource(backgroundResource);
+            else mDrawerLeft.setBackgroundColor(Color.WHITE);
+        }
     }
 
     /**
