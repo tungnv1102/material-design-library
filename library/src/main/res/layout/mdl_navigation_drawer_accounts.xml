@@ -52,12 +52,12 @@
                     android:padding="5dp"
                     android:visibility="invisible"/>
 
-                <com.blunderer.materialdesignlibrary.views.RoundedImageView
+                <vn.edu.benchmarking.views.RoundedImageView
                     android:id="@+id/navigation_drawer_accounts_picture"
                     android:layout_width="@dimen/mdl_navigationdrawer_accounts_current_account_size"
                     android:layout_height="@dimen/mdl_navigationdrawer_accounts_current_account_size"/>
 
-                <com.blunderer.materialdesignlibrary.views.RoundedImageView
+                <vn.edu.benchmarking.views.RoundedImageView
                     android:layout_width="@dimen/mdl_navigationdrawer_accounts_other_account_size"
                     android:layout_height="@dimen/mdl_navigationdrawer_accounts_other_account_size"
                     android:layout_gravity="end"
@@ -65,7 +65,7 @@
                     android:layout_marginRight="@dimen/mdl_navigationdrawer_accounts_second_account_padding_right"
                     android:visibility="invisible"/>
 
-                <com.blunderer.materialdesignlibrary.views.RoundedImageView
+                <vn.edu.benchmarking.views.RoundedImageView
                     android:layout_width="@dimen/mdl_navigationdrawer_accounts_other_account_size"
                     android:layout_height="@dimen/mdl_navigationdrawer_accounts_other_account_size"
                     android:layout_gravity="end"

@@ -50,7 +50,7 @@
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_action_arrow_left"/>
 
-                <com.blunderer.materialdesignlibrary.views.AutoCompleteTextView
+                <vn.edu.benchmarking.views.AutoCompleteTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

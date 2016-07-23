@@ -1,0 +1,37 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="vn.edu.benchmarking.app">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@style/AppTheme">
+        <activity android:name="vn.edu.benchmarking.app.navigationdrawers.NavigationDrawerWithAccountsAndFullHeightActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="vn.edu.benchmarking.app.cardviews.CardViewNormalActivity"/>
+        <activity android:name="vn.edu.benchmarking.app.cardviews.CardViewWithLeftImageActivity"/>
+        <activity android:name="vn.edu.benchmarking.app.cardviews.CardViewWithTopImageActivity"/>
+        <activity android:name="vn.edu.benchmarking.app.navigationdrawers.NavigationDrawerWithFullHeightActivity"/>
+        <activity android:name="vn.edu.benchmarking.app.viewpagers.ViewPagerActivity"/>
+        <activity android:name="vn.edu.benchmarking.app.viewpagers.ViewPagerWithIndicatorActivity"/>
+        <activity android:name="vn.edu.benchmarking.app.viewpagers.ViewPagerWithTabsActivity"/>
+        <activity android:name="vn.edu.benchmarking.app.viewpagers.ViewPagerWithTabsExpandedActivity"/>
+        <activity android:name="vn.edu.benchmarking.app.listviews.ListViewWithRefreshActivity"/>
+        <activity android:name="vn.edu.benchmarking.app.listviews.ListViewActivity"/>
+        <activity android:name="vn.edu.benchmarking.app.listviews.ListViewWithCustomLayoutActivity"/>
+        <activity android:name="vn.edu.benchmarking.app.scrollviews.ScrollViewActivity"/>
+        <activity android:name="vn.edu.benchmarking.app.scrollviews.ScrollViewWithRefreshActivity"/>
+        <activity android:name="vn.edu.benchmarking.app.searchbar.SearchBarActivity"/>
+        <activity android:name="vn.edu.benchmarking.app.searchbar.SearchBarAutoCompletionActivity"/>
+
+    </application>
+
+</manifest>

@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Material Design Library</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_item1">Item 1</string>
+    <string name="title_item2">Item 2</string>
+    <string name="title_item3">Item 3</string>
+    <string name="title_item4">Item 4</string>
+    <string name="github">GitHub</string>
+    <string name="click_search_button">Click on the Search Button!</string>
+    <string name="custom_layout_with_listview">This is a custom Layout containing a ListView with android:id=\"@android:id/list\"</string>
+    <string name="fragment">TUYỂN SINH</string>
+    <string name="activity">Activity</string>
+    <string name="fragment_advising">Tư vấn chọn trường</string>
+    <string name="fragment_diemchuan">Tra cứu điểm chuẩn</string>
+    <string name="start_activity">Start Activity</string>
+    <string-array name="KhoiThi">
+        <item>A</item>
+        <item>A</item>
+        <item>A1</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>D1</item>
+        <item>D2</item>
+        <item>D3</item>
+        <item>D4</item>
+        <item>D5</item>
+        <item>D6</item>
+        <item>A02</item>
+        <item>A03</item>
+        <item>A04</item>
+        <item>A05</item>
+        <item>A06</item>
+        <item>A07</item>
+        <item>B01</item>
+        <item>B02</item>
+        <item>B03</item>
+        <item>C01</item>
+        <item>C02</item>
+        <item>C03</item>
+        <item>C04</item>
+        <item>C05</item>
+        <item>C06</item>
+        <item>C07</item>
+        <item>C08</item>
+        <item>C09</item>
+        <item>C10</item>
+        <item>C11</item>
+        <item>C12</item>
+        <item>C13</item>
+        <item>D07</item>
+        <item>D08</item>
+        <item>D09</item>
+        <item>D10</item>
+        <item>D11</item>
+        <item>D12</item>
+        <item>D13</item>
+        <item>D14</item>
+        <item>D15</item>
+        <item>D16"</item>
+        <item>D17</item>
+        <item>D18"</item>
+        <item>D19</item>
+        <item>D20</item>
+        <item>D21</item>
+        <item>D22</item>
+        <item>D23</item>
+        <item>D24</item>
+        <item>D25</item>
+        <item>D26</item>
+        <item>D27</item>
+        <item>D28</item>
+        <item>D29</item>
+        <item>D30</item>
+        <item>D31</item>
+        <item>D32</item>
+        <item>D33</item>
+        <item>D34</item>
+        <item>D35</item>
+        <item>D36</item>
+        <item>D37</item>
+        <item>D38</item>
+        <item>D39</item>
+        <item>D40</item>
+        <item>D41</item>
+        <item>D42</item>
+        <item>D43</item>
+        <item>D44</item>
+        <item>D45</item>
+        <item>D46</item>
+        <item>D47</item>
+        <item>D48</item>
+        <item>D49</item>
+        <item>D50</item>
+        <item>D51</item>
+        <item>D52</item>
+        <item>D53</item>
+        <item>D54</item>
+        <item>D55</item>
+        <item>D56</item>
+        <item>D57</item>
+        <item>D58</item>
+        <item>D59</item>
+        <item>D60</item>
+        <item>D61</item>
+        <item>D62</item>
+        <item>D63</item>
+        <item>D64</item>
+        <item>D65</item>
+        <item>H</item>
+        <item>H01</item>
+        <item>N</item>
+        <item>M</item>
+        <item>T</item>
+        <item>V</item>
+        <item>V01</item>
+        <item>S</item>
+        <item>R</item>
+        <item>K</item>
+    </string-array>
+    <string-array name="TenKhoiThi">
+        <item>A - Toán, Vật lí, Hóa học</item>
+        <item>A1 - Toán, Vật lí, Tiếng Anh</item>
+        <item>B - Toán, Hóa học, Sinh học</item>
+        <item>C - Ngữ văn, Lịch sử, Địa lí</item>
+        <item>D - Ngữ văn, Toán, Ngoại ngữ</item>
+        <item>D1 - Ngữ văn, Toán, Tiếng Anh</item>
+        <item>D2 - Ngữ văn, Toán, Tiếng Nga</item>
+        <item>D3 - Ngữ văn, Toán, Tiếng Pháp</item>
+        <item>D4 - Ngữ văn, Toán, Tiếng Trung</item>
+        <item>D5 - Ngữ văn, Toán, Tiếng Đức</item>
+        <item>D6 - Ngữ văn, Toán, Tiếng Nhật</item>
+        <item>A02 - Toán, Vật lí, Sinh học</item>
+        <item>A03 - Toán, Vật lí, Lịch sử</item>
+        <item>A04 - Toán, Vật lí, Địa lí</item>
+        <item>A05 - Toán, Hóa học, Lịch sử</item>
+        <item>A06 - Toán, Hóa học, Địa lí</item>
+        <item>A07 - Toán, Lịch sử, Địa lí</item>
+        <item>B01 - Toán, Sinh học, Lịch sử</item>
+        <item>B02 - Toán, Sinh học, Địa lí</item>
+        <item>B03 - Toán, Sinh học, Ngữ văn</item>
+        <item>C01 - Ngữ văn, Toán, Vật lí</item>
+        <item>C02 - Ngữ văn, Toán, Hóa học</item>
+        <item>C03 - Ngữ văn, Toán, Lịch sử</item>
+        <item>C04 - Ngữ văn, Toán, Địa lí</item>
+        <item>C05 - Ngữ văn, Vật lí, Hóa học</item>
+        <item>C06 - Ngữ văn, Vật lí, Sinh học</item>
+        <item>C07 - Ngữ văn, Vật lí, Lịch sử</item>
+        <item>C08 - Ngữ văn, Hóa học, Sinh học</item>
+        <item>C09 - Ngữ văn, Vật lí, Địa lí</item>
+        <item>C10 - Ngữ văn, Hóa học, Lịch sử</item>
+        <item>C11 - Ngữ văn, Hóa học, Địa lí</item>
+        <item>C12 - Ngữ văn, Sinh học, Lịch sử</item>
+        <item>C13 - Ngữ văn, Sinh học, Địa lí</item>
+        <item>D07 - Toán, Hóa học, Tiếng Anh</item>
+        <item>D08 - Toán, Sinh học, Tiếng Anh</item>
+        <item>D09 - Toán, Lịch sử, Tiếng Anh</item>
+        <item>D10 - Toán, Địa lí, Tiếng Anh</item>
+        <item>D11 - Ngữ văn, Vật lí, Tiếng Anh</item>
+        <item>D12 - Ngữ văn, Hóa học, Tiếng Anh</item>
+        <item>D13 - Ngữ văn, Sinh học, Tiếng Anh</item>
+        <item>D14 - Ngữ văn, Lịch sử, Tiếng Anh</item>
+        <item>D15 - Ngữ văn, Địa lí, Tiếng Anh</item>
+        <item>D16 - Toán, Địa lí, Tiếng Đức</item>
+        <item>D17 - Toán, Địa lí, Tiếng Nga</item>
+        <item>D18 - Toán, Địa lí, Tiếng Nhật</item>
+        <item>D19 - Toán, Địa lí, Tiếng Pháp</item>
+        <item>D20 - Toán, Địa lí, Tiếng Trung</item>
+        <item>D21 - Toán, Hóa học, Tiếng Đức</item>
+        <item>D22 - Toán, Hóa học, Tiếng Nga</item>
+        <item>D23 - Toán, Hóa học, Tiếng Nhật</item>
+        <item>D24 - Toán, Hóa học, Tiếng Pháp</item>
+        <item>D25 - Toán, Hóa học, Tiếng Trung</item>
+        <item>D26 - Toán, Vật lí, Tiếng Đức</item>
+        <item>D27 - Toán, Vật lí, Tiếng Nga</item>
+        <item>D28 - Toán, Vật lí, Tiếng Nhật</item>
+        <item>D29 - Toán, Vật lí, Tiếng Pháp</item>
+        <item>D30 - Toán, Vật lí, Tiếng Trung</item>
+        <item>D31 - Toán, Sinh học, Tiếng Đức</item>
+        <item>D32 - Toán, Sinh học, Tiếng Nga</item>
+        <item>D33 - Toán, Sinh học, Tiếng Nhật</item>
+        <item>D34 - Toán, Sinh học, Tiếng Pháp</item>
+        <item>D35 - Toán, Sinh học, Tiếng Trung</item>
+        <item>D36 - Toán, Lịch sử, Tiếng Đức</item>
+        <item>D37 - Toán, Lịch sử, Tiếng Nga</item>
+        <item>D38 - Toán, Lịch sử, Tiếng Nhật</item>
+        <item>D39 - Toán, Lịch sử, Tiếng Pháp</item>
+        <item>D40 - Toán, Lịch sử, Tiếng Trung</item>
+        <item>D41 - Ngữ văn, Địa lí, Tiếng Đức</item>
+        <item>D42 - Ngữ văn, Địa lí, Tiếng Nga</item>
+        <item>D43 - Ngữ văn, Địa lí, Tiếng Nhật</item>
+        <item>D44 - Ngữ văn, Địa lí, Tiếng Pháp</item>
+        <item>D45 - Ngữ văn, Địa lí, Tiếng Trung</item>
+        <item>D46 - Ngữ văn, Hóa học, Tiếng Đức</item>
+        <item>D47 - Ngữ văn, Hóa học, Tiếng Nga</item>
+        <item>D48 - Ngữ văn, Hóa học, Tiếng Nhật</item>
+        <item>D49 - Ngữ văn, Hóa học, Tiếng Pháp</item>
+        <item>D50 - Ngữ văn, Hóa học, Tiếng Trung</item>
+        <item>D51 - Ngữ văn, Vật lí, Tiếng Đức</item>
+        <item>D52 - Ngữ văn, Vật lí, Tiếng Nga</item>
+        <item>D53 - Ngữ văn, Vật lí, Tiếng Nhật</item>
+        <item>D54 - Ngữ văn, Vật lí, Tiếng Pháp</item>
+        <item>D55 - Ngữ văn, Vật lí, Tiếng Trung</item>
+        <item>D56 - Ngữ văn, Sinh học, Tiếng Đức</item>
+        <item>D57 - Ngữ văn, Sinh học, Tiếng Nga</item>
+        <item>D58 - Ngữ văn, Sinh học, Tiếng Nhật</item>
+        <item>D59 - Ngữ văn, Sinh học, Tiếng Pháp</item>
+        <item>D60 - Ngữ văn, Sinh học, Tiếng Trung</item>
+        <item>D61 - Ngữ văn, Lịch sử, Tiếng Đức</item>
+        <item>D62 - Ngữ văn, Lịch sử, Tiếng Nga</item>
+        <item>D63 - Ngữ văn, Lịch sử, Tiếng Nhật</item>
+        <item>D64 - Ngữ văn, Lịch sử, Tiếng Pháp</item>
+        <item>D65 - Ngữ văn, Lịch sử, Tiếng Trung</item>
+        <item>H - Ngữ văn, Năng khiếu vẽ Nghệ thuật 1, Năng khiếu vẽ Nghệ thuật 2</item>
+        <item>H01 - Toán, Ngữ văn, Vẽ Mỹ thuật</item>
+        <item>N - Ngữ văn, Năng khiếu Âm nhạc 1, Năng khiếu Âm nhạc 2</item>
+        <item>M - Ngữ văn, Toán, Đọc diễn cảm, Hát</item>
+        <item>T - Toán, Sinh học, Năng khiếu TDTT</item>
+        <item>V - Toán, Vật lí, Vẽ Mỹ thuật</item>
+        <item>V01 - Toán, Ngữ văn, Vẽ Mỹ thuật</item>
+        <item>S - Ngữ văn, Năng khiếu SKĐA 1, Năng khiếu SKĐA 2</item>
+        <item>R - Ngữ văn, Lịch sử, Năng khiếu báo chí</item>
+        <item>K - Toán, Vật lí, Kĩ thuật nghề</item>
+    </string-array>
+    <string-array name="Tinh">
+        <item>0 - Chọn Tỉnh/TP</item>
+        <item>53 - An Giang</item>
+        <item>26 - Bắc Giang</item>
+        <item>61 - Bắc Kạn</item>
+        <item>52 - Bạc Liêu</item>
+        <item>59 - Bắc Ninh</item>
+        <item>44 - Bến Tre</item>
+        <item>50 - Bình Dương</item>
+        <item>65 - Bình Định</item>
+        <item>56 - Bình Phước</item>
+        <item>20 - Bình Thuận</item>
+        <item>30 - Cà Mau</item>
+        <item>12 - Cần Thơ</item>
+        <item>25 - Cao Bằng</item>
+        <item>239 - Cục Nhà trường - Bộ Quốc phòng</item>
+        <item>24 - Đà Nẵng</item>
+        <item>57 - Đăk Lăk</item>
+        <item>29 - Đăk Nông</item>
+        <item>51 - Điện Biên</item>
+        <item>48 - Đồng Nai</item>
+        <item>19 - Đồng Tháp</item>
+        <item>10 - Gia Lai</item>
+        <item>49 - Hà Giang</item>
+        <item>33 - Hà Nam</item>
+        <item>42 - Hà Nội</item>
+        <item>15 - Hà Tĩnh</item>
+        <item>34 - Hải Dương</item>
+        <item>28 - Hải Phòng</item>
+        <item>4 - Hậu Giang</item>
+        <item>23 - Hồ Chí Minh</item>
+        <item>8 - Hòa Bình</item>
+        <item>7 - Huế</item>
+        <item>5 - Hưng Yên</item>
+        <item>32 - Khánh Hòa</item>
+        <item>46 - Kiên Giang</item>
+        <item>58 - Kon Tum</item>
+        <item>1 - Lai Châu</item>
+        <item>6 - Lâm Đồng</item>
+        <item>63 - Lạng Sơn</item>
+        <item>9 - Lào Cai</item>
+        <item>54 - Long An</item>
+        <item>31 - Nam Định</item>
+        <item>18 - Nghệ An</item>
+        <item>16 - Ninh Bình</item>
+        <item>55 - Ninh Thuận</item>
+        <item>47 - Phú Thọ</item>
+        <item>3 - Phú Yên</item>
+        <item>37 - Quảng Bình</item>
+        <item>13 - Quảng Nam</item>
+        <item>40 - Quảng Ngãi</item>
+        <item>36 - Quảng Ninh</item>
+        <item>2 - Quảng Trị</item>
+        <item>45 - Sóc Trăng</item>
+        <item>21 - Sơn La</item>
+        <item>17 - Tây Ninh</item>
+        <item>14 - Thái Bình</item>
+        <item>11 - Thái Nguyên</item>
+        <item>38 - Thanh Hóa</item>
+        <item>41 - Tiền Giang</item>
+        <item>99 - Tỉnh Test</item>
+        <item>27 - Trà Vinh</item>
+        <item>62 - Tuyên Quang</item>
+        <item>39 - Vĩnh Long</item>
+        <item>60 - Vĩnh Phúc</item>
+        <item>43 - Vũng Tàu</item>
+        <item>22 - Yên Bái</item>
+    </string-array>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in justo consequat, porta ipsum vel, condimentum sapien. In fringilla malesuada vestibulum. Fusce suscipit eros non augue rhoncus placerat a a lorem. In est ipsum, blandit quis eros ut, lobortis porttitor nisi. Quisque purus quam, consectetur et semper eu, sodales vel augue. Suspendisse ultrices nunc nec sem interdum egestas. Aenean ut eros at quam scelerisque tempus. Ut condimentum ullamcorper augue non tempus. Quisque id ligula quam. Ut maximus risus dolor, a volutpat ipsum finibus vel. Aenean in porta lectus, vel aliquet felis. In hac habitasse platea dictumst. Duis interdum mauris ut arcu semper pulvinar.  Quisque quis leo sed elit elementum tincidunt. Aenean interdum augue nulla, vitae maximus tellus consequat sed. Pellentesque volutpat varius elit dignissim dictum. Nulla a vestibulum urna. Fusce a lacus quis nisi scelerisque efficitur vitae ac nibh. Donec luctus sed lectus quis ultrices. Curabitur sagittis, risus et tristique mollis, ipsum felis interdum sapien, non congue eros turpis sit amet leo. Suspendisse potenti. Integer nec urna fringilla, euismod dolor vitae, euismod velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur pharetra consectetur lobortis. Aenean sit amet metus a ligula ultricies laoreet in eu lacus. Donec congue, quam fringilla ultricies finibus, nulla erat ullamcorper tortor, vitae blandit ante massa in est. Quisque tempus porttitor erat id porttitor. Nam dictum non nulla a convallis. Integer sodales lorem lorem, quis vehicula quam luctus sed. Suspendisse et congue ipsum, non aliquet nisi. Vestibulum eu dignissim eros, eget pretium augue. Phasellus placerat nulla sed tempor dignissim. Ut egestas diam nec sem pulvinar gravida. Nulla facilisi. Maecenas tincidunt metus quis massa rhoncus cursus. Curabitur non sapien sed nunc posuere facilisis. Sed vulputate facilisis leo, sed mattis leo efficitur ac. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus sit amet felis sed turpis scelerisque tempus et vel lacus. Curabitur rutrum, dui ac interdum iaculis, neque mauris semper eros, a efficitur enim magna non neque. Duis venenatis turpis vehicula purus rhoncus, et dignissim neque posuere. Etiam pulvinar mauris purus, vel rutrum dolor luctus sit amet. Aliquam convallis nec nisl ut maximus. Suspendisse vitae dignissim mauris. Aenean mauris tortor, aliquam quis dui in, lobortis dictum nisl. Suspendisse quis odio hendrerit, vestibulum elit non, ultricies lorem. Integer bibendum nibh turpis. Nam purus tortor, pulvinar ac nisl ac, dictum ornare odio. Donec viverra dolor at mi tempus aliquet. Integer condimentum, sapien et semper feugiat, nunc nisl egestas lectus, quis mattis metus lacus quis velit. Pellentesque non urna porttitor, bibendum nisl non, ultricies massa. Proin quis mauris ac dui accumsan pharetra. Aliquam erat volutpat. Suspendisse fringilla dolor sed nulla euismod sollicitudin. Pellentesque et arcu feugiat magna facilisis tempor id at leo. Aliquam egestas rhoncus convallis. Quisque vitae dolor elit. Cras eleifend felis mauris, eu sodales lacus imperdiet eget. Donec vulputate tortor ut purus lobortis bibendum. Nulla lectus nunc, finibus sed nisi in, porttitor hendrerit lorem. Fusce vehicula ante enim. Pellentesque et consequat metus. In neque eros, euismod vitae lectus sed, ornare rutrum dolor. Nulla malesuada, ante at fringilla suscipit, sem leo sollicitudin orci, mattis iaculis velit metus sit amet dui. Cras malesuada luctus risus, vel egestas neque lacinia ut. Morbi non convallis ligula. Nunc orci diam, elementum eu tincidunt at, lacinia eget diam. Nunc volutpat ante non diam semper pulvinar. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse mollis ipsum non mi pulvinar ultricies. Cras tincidunt metus sit amet urna mollis, sit amet vulputate arcu placerat. In accumsan interdum purus eget tempus. Maecenas sit amet dolor lobortis, tincidunt elit nec, sagittis purus. Phasellus vestibulum interdum efficitur. Mauris id sem sollicitudin, ornare metus eget, semper arcu. Etiam vestibulum tincidunt ante nec fermentum. Mauris iaculis leo ac luctus tempus. Duis dapibus mollis neque. Sed efficitur ipsum ac metus sodales maximus. Ut feugiat tortor in egestas tincidunt. Nunc a fringilla enim. Aenean a odio ante. Suspendisse aliquet finibus lacinia. Mauris fringilla ornare odio. In eget blandit tortor. Cras id ultrices magna. Nunc feugiat ex sed sagittis accumsan. Aenean nec efficitur massa, et hendrerit magna. Aenean porta turpis varius, vestibulum libero nec, varius ipsum. Sed hendrerit nulla ut massa aliquet efficitur. Proin consectetur euismod efficitur. Sed in metus id leo blandit imperdiet. Curabitur cursus nisi et odio finibus placerat vel sed turpis. Fusce placerat ipsum eget purus egestas, vel euismod erat pharetra. Curabitur non nisl felis. Nam vestibulum purus ac metus pulvinar, in aliquam lectus sagittis. Phasellus a porttitor risus. Cras nec ante turpis. Sed convallis dui id quam venenatis, sit amet sodales nisi molestie. Phasellus vulputate eget lacus sed tempor. Curabitur id ornare nisi. Fusce a nisl quis purus tempus tempus in eget felis. Integer congue tellus condimentum justo pellentesque finibus. In rutrum leo nec cursus tempor. In vitae sagittis neque, eget lacinia nisi. Sed quis felis cursus, pretium augue at, gravida nulla. Phasellus at ante sollicitudin, tempor nulla eu, commodo orci. Nam scelerisque sit amet erat a molestie. Donec lacinia ligula vitae erat congue, nec volutpat ante pulvinar. Ut pretium diam eget dignissim pulvinar. Quisque eget efficitur est. Aenean faucibus bibendum tempus. Nullam non enim non sapien fermentum semper. Vivamus commodo velit quis erat hendrerit congue. Suspendisse tincidunt, arcu pharetra mattis pulvinar, tellus neque rhoncus justo, eget interdum arcu magna at urna. </string>
+    <string name="diem_thi">Điểm thi:</string>
+    <string name="khoi">Khối:</string>
+    <string name="tinh">Tỉnh:</string>
+    <string name="tim_kiem">TÌM KIẾM</string>
+</resources>

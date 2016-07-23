@@ -12,7 +12,7 @@ It offers a lot of Material Design classes easy to use like a CardView or a Navi
 * NavigationDrawer **Small Accounts Layout** (to show only the current account)
 
 ### Demo
-[![Material Design Library on Google Play Store](http://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.blunderer.materialdesignlibrary.sample)
+[![Material Design Library on Google Play Store](http://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=benchmarking.sample)
 
 ![NavigationDrawer with Accounts](images/screen06.png) ![NavigationDrawer with Small Accounts Layout](images/screen11.png)
 ![CardView with Image on the Top](images/screen07.png) ![SearchBar with Auto Completion](images/screen13.png)
@@ -27,7 +27,7 @@ Read wiki here: [Material Design Library Wiki](https://github.com/DenisMondon/ma
 
 ```groovy
 dependencies {
-    compile 'com.blunderer:materialdesignlibrary:2.0.4'
+    compile 'edu:materialdesignlibrary:2.0.4'
 }
 ```
 
@@ -72,7 +72,7 @@ Or if you want the Light Theme:
 
 ##### Example:  
 ```java
-import com.blunderer.materialdesignlibrary.activities.NavigationDrawerActivity;
+import benchmarking.activities.NavigationDrawerActivity;
 
 public class MyActivity extends NavigationDrawerActivity {
 
@@ -176,7 +176,7 @@ public class MyActivity extends NavigationDrawerActivity {
 
 ##### Example:  
 ```xml
-<com.blunderer.materialdesignlibrary.views.CardView
+<benchmarking.views.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:mdl_title="CardView"
